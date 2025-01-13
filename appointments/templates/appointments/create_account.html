@@ -1,0 +1,31 @@
+{% extends 'appointments/base.html' %}
+
+{% load static %}
+
+{% block title %}Create Account{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/create_account.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="center-container">
+    <div class="container">
+        <h1>Create Account</h1>
+        <p>Please select one of the options below:</p>
+
+        <div class="options">
+            <a href="{% url 'register_doctor' %}" class="option-box doctor">
+                <h2>Are you a doctor?</h2>
+            </a>
+            <a href="{% url 'register_client' %}" class="option-box client">
+                <h2>Are you a client?</h2>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

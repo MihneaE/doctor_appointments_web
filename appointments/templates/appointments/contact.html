@@ -1,0 +1,180 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Get in Touch{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<!-- If you're using Font Awesome for icons, also include this: -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<!-- TOP BAR WITH A DESCRIPTIVE TITLE -->
+<div class="contact-top-bar">
+    <h1>We’d Love to Hear From You!</h1>
+</div>
+
+<!-- MAIN WRAPPER: Two Columns (Left: Info, Right: Form) -->
+<div class="contact-wrapper">
+    
+    <!-- LEFT COLUMN: Info Container (Wider, Gray BG) -->
+    <div class="info-container">
+        <h2 class="column-title">Get In Touch With Us Now!</h2>
+    
+        <!-- 2x2 Info Cards -->
+        <div class="info-cards">
+            <!-- Card: Phone -->
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="info-card-text">
+                    <h3>Phone Number</h3>
+                    <!-- If you want phone in two lines, e.g.:
+                    <p>+1<br>80004 38640</p> -->
+                    <p>0744114609</p>
+                </div>
+            </div>
+    
+            <!-- Card: Email -->
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-card-text">
+                    <h3>Email</h3>
+                    <!-- Force two-line email using <br> -->
+                    <p>mihnea.encean2<br>@gmail.com</p>
+                </div>
+            </div>
+    
+            <!-- Card: Location -->
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="info-card-text">
+                    <h3>Location</h3>
+                    <p>Tanase Tudoran 25 Street,<br>Bistrita, Romania</p>
+                </div>
+            </div>
+    
+            <!-- Card: Working Hours -->
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="info-card-text">
+                    <h3>Working Hours</h3>
+                    <p>Monday - Saturday<br>09:00 AM to 06:00 PM</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Additional note below squares -->
+        <div class="info-note">
+            Have more questions? Reach out to us anytime for assistance with appointments, 
+            inquiries about our services, or anything else you need. 
+            We’re here to make your healthcare experience simpler and more convenient.
+        </div>
+    </div>
+    
+    <!-- RIGHT COLUMN: Contact Form Container (Wider) -->
+    <div class="form-column">
+        <h2 class="column-title">Contact Us</h2>
+
+        
+        <form method="POST" action="{% url 'send_contact_site_email' %}" class="contact-form">
+            {% csrf_token %}
+
+            {% if success_message %}
+                <div class="success-message" style="color: green; padding: 15px; border: 1px solid green; border-radius: 5px;">
+                    {{ success_message }}
+                 </div>
+            {% else %}
+            
+            <!-- Row: First/Last Name -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Enter First Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Enter Last Name" required>
+                </div>
+            </div>
+            
+            <!-- Row: Mobile/Email -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mobile">Mobile No *</label>
+                    <input type="text" id="mobile" name="mobile" placeholder="Enter Mobile Number" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email ID *</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
+                    {% if email_error %}
+                        <div class="error-message" style="color: red; font-size: 14px;">{{ email_error }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Message -->
+            <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+            </div>
+            
+            <!-- Basic Captcha -->
+            <div class="form-group captcha-group">
+                <label for="captcha">Please type the characters *</label>
+                
+                <div class="captcha-row">
+                    <!-- Captcha Input -->
+                    <input 
+                        type="text" 
+                        id="captcha" 
+                        name="captcha" 
+                        placeholder="e.g. p e ? $" 
+                        required
+                    >
+
+                    <img id="captchaImage" src="{% static 'images/captcha.png' %}" alt="CAPTCHA">
+
+                    <!-- Refresh Button -->
+                    <button 
+                        type="button" 
+                        class="captcha-refresh" 
+                        aria-label="Refresh Captcha"
+                        onclick="refreshCaptcha()"
+                    >
+                        <!-- Option 1: An image icon -->
+                        <img src="{% static 'images/refresh-icon.png' %}" alt="Refresh">
+                        
+                    </button>
+                </div>
+                {% if captcha_error %}
+                    <div class="error-message" style="color: red; font-size: 14px;">{{ captcha_error }}</div>
+                {% else %}
+                    <p class="captcha-note">This helps us prevent spam, thank you.</p>
+                {% endif %}
+            </div>
+            
+            
+            <button type="submit" class="submit-button">Submit</button>
+            {% endif %}
+        </form>
+    </div>
+    
+</div>
+
+{% include 'appointments/underground.html' %}
+{% endblock %}
+
+
+
+
+
+

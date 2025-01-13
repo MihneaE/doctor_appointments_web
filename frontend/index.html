@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medical Specialties</title>
+  
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  
+  <!-- Your custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Medical Specialties</h1>
+    <div class="mb-3">
+      <input
+        id="specialtyInput"
+        type="text"
+        class="form-control mb-2"
+        placeholder="Enter specialty name..."
+      />
+      <textarea
+        id="specialtyDescription"
+        class="form-control mb-2"
+        placeholder="Enter specialty description..."
+      ></textarea>
+      <button id="addSpecialtyBtn" class="btn btn-primary">
+        Add Specialty
+      </button>
+    </div>
+    <ul id="specialtyItems" class="list-group mt-4">
+      <!-- List of specialties will be rendered here -->
+    </ul>
+  </div>
+
+  <!-- jQuery and Bootstrap (Bundle includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <!-- Your custom JavaScript file -->
+  <script src="scripts.js"></script>
+</body>
+</html>
+
+
+
+

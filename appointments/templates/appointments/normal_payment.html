@@ -1,0 +1,86 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Payment{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/normal_payment.css' %}">
+<!-- If you're using Font Awesome for icons, also include this: -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+ <!-- Outer container to mimic a similar size to your previous subscription section -->
+ <div class="subscription-page-container">
+    <h2 class="page-title">Complete Your Normal Subscription</h2>
+    
+    <!-- Main wrapper that holds left (details) and right (payment) columns -->
+    <div class="subscription-wrapper">
+      
+      <!-- LEFT SIDE: Plan Details -->
+      <div class="subscription-left" style="text-align: center;">
+        <h3 class="plan-title">NORMAL Plan</h3>
+        <p class="plan-price">$1.99/month</p>
+        <p class="plan-savings">Save 50%</p>
+        
+        <ul class="plan-features">
+          <li>Up to 3 Doctors Linked</li>
+          <li>Manage 100 Appointments/Month</li>
+          <li>Email &amp; Chat Support</li>
+          <li>Basic Analytics</li>
+        </ul>
+      
+        <!-- NEW: Additional "about" text for the plan -->
+        <p class="plan-description">
+          Our Normal Plan is an excellent choice for practices ready to move beyond 
+          the limitations of a free subscription. With the ability to link up to 
+          three doctors and manage 100 appointments each month, you'll have the 
+          flexibility you need to keep your practice on track. 
+        </p>
+      
+        <p class="plan-description">
+          You’ll also gain access to both email and chat support for quick 
+          troubleshooting, plus Basic Analytics to monitor and refine your 
+          appointment workflow. It’s a perfect balance of simplicity and 
+          added features at a budget-friendly price.
+        </p>
+      </div>
+      
+      <!-- RIGHT SIDE: Payment/Card Details -->
+      <div class="subscription-right">
+        <h3 class="payment-title">Payment Details</h3>
+        
+        <!-- Example of a basic card form -->
+        <form class="payment-form">
+          <div class="form-group">
+            <label for="cardName">Name on Card</label>
+            <input type="text" id="cardName" name="cardName" placeholder="John Doe" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 1234 5678" required />
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiryDate">Expiry Date</label>
+              <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required />
+            </div>
+            <div class="form-group">
+              <label for="cvc">CVC</label>
+              <input type="text" id="cvc" name="cvc" placeholder="123" required />
+            </div>
+          </div>
+          
+          <button type="submit" class="submit-payment-btn">Submit Payment</button>
+        </form>
+      </div>
+      
+    </div> <!-- end .subscription-wrapper -->
+  </div> <!-- end .subscription-page-container -->
+
+  {% include 'appointments/underground.html' %}
+  {% endblock %}
+

@@ -1,0 +1,294 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/medicine_blocks.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+
+    <!-- =================== HERO + SEARCH WRAPPER =================== -->
+    <div class="hero-search-wrapper"
+         style="
+            /* Increased max-width by 150px (now 1350px) */
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px auto;
+            width: 90%;
+            max-width: 1350px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+         "
+    >
+        <!-- =================== HERO SECTION =================== -->
+        <div class="hero-section"
+             style="
+                background: linear-gradient(to right, #6a11cb, #2575fc);
+                color: #fff;
+                padding: 40px 20px;
+                border-radius: 10px;
+                text-align: center;
+                margin-bottom: 30px;
+             "
+        >
+            <h1 style="font-size: 36px; margin-bottom: 20px;">Find the Right Doctor for You</h1>
+            <p style="font-size: 18px; max-width: 800px; margin: 0 auto 20px auto; line-height: 1.6;">
+                At <strong>Doctor Appointments</strong>, we help you discover 
+                the best doctors and specialists around you. Whether you’re in need 
+                of routine check-ups, a second opinion, or specialized care, 
+                our platform makes it easy to schedule and manage your appointments.
+            </p>
+            <a href="#medical-specialties"
+               style="
+                   display: inline-block;
+                   background-color: #007bff;
+                   color: #fff;
+                   padding: 15px 30px;
+                   border-radius: 8px;
+                   font-size: 16px;
+                   text-decoration: none;
+                   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                   margin-top: 10px;
+               "
+            >
+                Explore Specialties
+            </a>
+        </div>
+
+        <!-- =================== SEARCH BOX SECTION =================== -->
+        <div class="search-container"
+             style="
+                background-color: #116669;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+             "
+        >
+            <h2 style="text-align: center; font-size: 24px; color: #eeeeee; margin: 0;">
+                Welcome to Doctor Appointments
+            </h2>
+            <p style="text-align: center; font-size: 16px; color: #cec5c5; margin-bottom: 20px;">
+                Manage your doctor appointments easily.
+            </p>
+            <form class="search-form" method="GET" action="" 
+                  style="
+                     display: flex; 
+                     gap: 10px; 
+                     justify-content: center; 
+                     align-items: center; 
+                     margin-bottom: 0;
+                  "
+            >
+                <input
+                    type="text"
+                    name="q"
+                    class="search-input"
+                    placeholder="Search for doctors, specialties, or appointments..."
+                    value="{{ request.GET.q }}"
+                    style="
+                        padding: 15px;
+                        width: 80%;
+                        border-radius: 8px;
+                        border: 1px solid #ccc;
+                        font-size: 16px;
+                        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+                    "
+                >
+                <button
+                    type="submit"
+                    class="search-button"
+                    style="
+                        padding: 15px 25px;
+                        background-color: #007bff;
+                        color: white;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+                    "
+                >
+                    Search
+                </button>
+            </form>
+        </div>
+    </div> <!-- End .hero-search-wrapper -->
+
+    <!-- =================== EXTRA SECTION (NEW) =================== -->
+    <div class="extra-info-container" 
+     style="
+        /* Still uses max-width: 1350px if desired */
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        margin: 30px auto;
+        width: 90%;
+        max-width: 1350px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+     "
+>
+    <h2 style="text-align: center; color: #333;">Our Statistics</h2>
+    <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 30px auto; line-height: 1.6;">
+        We’re proud to share some of the numbers that highlight our commitment 
+        to making healthcare more accessible and convenient for everyone.
+    </p>
+
+    <!-- Stats Row: 4 Boxes -->
+    <div class="stats-grid"
+         style="
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+            justify-content: center; 
+            margin-top: 30px;
+         "
+    >
+        <!-- Box 1: Medical Specialties -->
+        <div class="stat-box"
+             style="
+                background-color: #f7f7f7; 
+                border-radius: 8px; 
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                flex: 1 1 200px;
+                max-width: 250px;
+                text-align: center;
+                padding: 20px;
+             "
+        >
+            <h3 style="font-size: 30px; margin: 0; color: #333;">{{ total_specialties }}+</h3>
+            <p style="font-size: 14px; margin: 5px 0 10px; color: #666;">Medical Specialties</p>
+            <p style="color: #888; font-size: 14px;">
+                Explore our wide range of specialties, each dedicated to a different aspect of care.
+            </p>
+        </div>
+
+        <!-- Box 2: Doctors -->
+        <div class="stat-box"
+             style="
+                background-color: #f7f7f7; 
+                border-radius: 8px; 
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                flex: 1 1 200px;
+                max-width: 250px;
+                text-align: center;
+                padding: 20px;
+             "
+        >
+            <h3 style="font-size: 30px; margin: 0; color: #333;">{{ total_doctors }}+</h3>
+            <p style="font-size: 14px; margin: 5px 0 10px; color: #666;">Doctors</p>
+            <p style="color: #888; font-size: 14px;">
+                Our network of trusted professionals is here to provide top-quality healthcare.
+            </p>
+        </div>
+
+        <!-- Box 3: Appointments -->
+        <div class="stat-box"
+             style="
+                background-color: #f7f7f7; 
+                border-radius: 8px; 
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                flex: 1 1 200px;
+                max-width: 250px;
+                text-align: center;
+                padding: 20px;
+             "
+        >
+            <h3 style="font-size: 30px; margin: 0; color: #333;">{{ total_appointments }}+</h3>
+            <p style="font-size: 14px; margin: 5px 0 10px; color: #666;">Appointments</p>
+            <p style="color: #888; font-size: 14px;">
+                Seamlessly schedule and track all your medical appointments in one place.
+            </p>
+        </div>
+
+        <!-- Box 4: Users -->
+        <div class="stat-box"
+             style="
+                background-color: #f7f7f7; 
+                border-radius: 8px; 
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                flex: 1 1 200px;
+                max-width: 250px;
+                text-align: center;
+                padding: 20px;
+             "
+        >
+            <h3 style="font-size: 30px; margin: 0; color: #333;">{{ total_users }}+</h3>
+            <p style="font-size: 14px; margin: 5px 0 10px; color: #666;">Happy Users</p>
+            <p style="color: #888; font-size: 14px;">
+                Join thousands of satisfied patients who’ve streamlined their healthcare journey.
+            </p>
+        </div>
+    </div>
+</div>
+
+    <!-- =================== MEDICAL SPECIALTIES SECTION =================== -->
+    <div id="medical-specialties" class="medicine-container" 
+         style="
+            /* Also increased max-width by 150px (now 1350px) */
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px auto;
+            width: 90%;
+            max-width: 1350px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+         "
+    >
+        <h2 style="text-align: center; color: #333;">Medical Specialties</h2>
+        <div class="medicine-grid"
+             style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+                margin-top: 20px;
+             "
+        >
+            {% if medical_specialties %}
+                {% for specialty in medical_specialties %}
+                    <div class="medicine-card"
+                         style="
+                            background-color: #f7f7f7; 
+                            flex: 1 1 calc(25% - 40px);
+                            min-width: 200px;
+                            border-radius: 8px;
+                            padding: 20px; 
+                            text-align: center;
+                            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+                         "
+                    >
+                        <h3>{{ specialty.name }}</h3>
+                        <p>{{ specialty.description }}</p>
+                        <a href="{% url 'specialty_details' specialty.name %}" 
+                           style="color: #007bff;">
+                           View Details
+                        </a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No specialties found for your search.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- =================== SOCIAL MEDIA & CONTACT SECTION =================== -->
+    {% include 'appointments/underground.html' %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

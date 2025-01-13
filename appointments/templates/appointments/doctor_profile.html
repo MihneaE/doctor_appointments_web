@@ -1,0 +1,941 @@
+{% extends 'appointments/base.html' %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}Client Profile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/client_profile.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Left Side -->
+    <div class="left-section">
+        <div class="profile-picture">
+            <img 
+                {% if doctor.profile_picture %}
+                    src="{{ doctor.profile_picture.url }}"
+                {% else %}
+                    src="https://via.placeholder.com/150"
+                {% endif %}
+                alt="Profile Picture" 
+                style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+            <button class="edit-photo-btn" data-bs-toggle="modal" data-bs-target="#updatePhotoModal">Edit Photo</button>
+        </div>
+        <div class="buttons">
+            <button class="section-btn" data-section="dashboard">Dashboard</button>
+            <button class="section-btn" data-section="professional-details">Professional Details</button>
+            <button class="section-btn" data-section="work-details">Work Details</button>
+            <button class="section-btn" data-section="contact-details">Contact Details</button>
+            <button class="section-btn" data-section="additional-details">Additional Details</button>
+            <button class="section-btn" data-section="availability-d">Availability Details</button> <!-- data-section="availability-details"-->
+            <button class="section-btn" data-section="upload-clinic-photo">Upload Clinic Photo</button>
+            <button class="edit-password-btn" data-bs-toggle="modal" data-bs-target="#editPasswordModal">Edit Password</button>
+        </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="right-section">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="details-section" style="max-height: 80vh; overflow-y: auto; padding: 15px;">
+            <h3>Dashboard</h3>
+        
+            <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr>
+                        <th style="background-color: #f4f4f4;">Category</th>
+                        <th style="background-color: #f4f4f4;">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Professional Details -->
+                    <tr>
+                        <td colspan="2" style="text-align: center; background-color: #f4f4f4; font-weight: bold;">Professional Details</td>
+                    </tr>
+                    <tr>
+                        <td>Specialization</td>
+                        <td>{{ doctor.specialization|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Qualification</td>
+                        <td>{{ doctor.qualification|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Experience</td>
+                        <td>{{ doctor.experience|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Certifications</td>
+                        <td>{{ doctor.certifications|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Professional Description</td>
+                        <td>{{ doctor.professional_description|default:"Not specified" }}</td>
+                    </tr>
+            
+                    <!-- Work Details -->
+                    <tr>
+                        <td colspan="2" style="text-align: center; background-color: #f4f4f4; font-weight: bold;">Work Details</td>
+                    </tr>
+                    <tr>
+                        <td>Clinic/Hospital</td>
+                        <td>{{ doctor.clinic_hospital|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td>{{ doctor.address|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Services</td>
+                        <td>{{ doctor.services|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Consultation Fee</td>
+                        <td>{{ doctor.consultation_fee|default:"Not specified" }}</td>
+                    </tr>
+            
+                    <!-- Contact Details -->
+                    <tr>
+                        <td colspan="2" style="text-align: center; background-color: #f4f4f4; font-weight: bold;">Contact Details</td>
+                    </tr>
+                    <tr>
+                        <td>Contact</td>
+                        <td>{{ doctor.contact|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Website</td>
+                        <td>
+                            {% if doctor.website %}
+                                <a href="{{ doctor.website }}" target="_blank">{{ doctor.website }}</a>
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Languages Spoken</td>
+                        <td>{{ doctor.languages_spoken|default:"Not specified" }}</td>
+                    </tr>
+            
+                    <!-- Additional Details -->
+                    <tr>
+                        <td colspan="2" style="text-align: center; background-color: #f4f4f4; font-weight: bold;">Additional Details</td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td>{{ doctor.user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>Real Name</td>
+                        <td>{{ doctor.user.first_name }} {{ doctor.user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ doctor.user.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date of Birth</td>
+                        <td>{{ doctor.date_of_birth|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>{{ doctor.gender|default:"Not specified" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Rating</td>
+                        <td>{{ doctor.rating|default:"0.0" }}</td>
+                    </tr>
+                    
+                    <!-- Availability Section -->
+                    <tr>
+                        <td colspan="2" style="text-align: center; background-color: #f4f4f4; font-weight: bold;">Availability</td>
+                    </tr>
+                    <tr>
+                        <td>Monday</td>
+                        <td>{{ doctor.monday_start|default:"Not available" }} - {{ doctor.monday_end|default:"Not available" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td>{{ doctor.tuesday_start|default:"Not available" }} - {{ doctor.tuesday_end|default:"Not available" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td>{{ doctor.wednesday_start|default:"Not available" }} - {{ doctor.wednesday_end|default:"Not available" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td>{{ doctor.thursday_start|default:"Not available" }} - {{ doctor.thursday_end|default:"Not available" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td>{{ doctor.friday_start|default:"Not available" }} - {{ doctor.friday_end|default:"Not available" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+
+
+        <!-- Professional Details -->
+        <div id="professional-details" class="details-section" style="display: none; max-height: 80vh; overflow-y: auto; padding: 15px;">
+            <h3>Professional Details</h3>
+            <form method="post" enctype="multipart/form-data" action="{% url 'update_doctor_profile_proffessional' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="specialization">Specialization</label>
+                    <input type="text" id="specialization" name="specialization" value="{{ doctor.specialization }}">
+                </div>
+                <div class="form-group">
+                    <label for="qualification">Qualification</label>
+                    <input type="text" id="qualification" name="qualification" value="{{ doctor.qualification }}">
+                </div>
+                <div class="form-group">
+                    <label for="experience">Experience</label>
+                    <textarea id="experience" name="experience">{{ doctor.experience }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="certifications">Certifications</label>
+                    <textarea id="certifications" name="certifications">{{ doctor.certifications }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="professional_description">Professional Description</label>
+                    <textarea id="professional_description" name="professional_description">{{ doctor.professional_description }}</textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Work Details -->
+        <div id="work-details" class="details-section" style="display: none; max-height: 80vh; overflow-y: auto; padding: 15px;">
+        <form method="post" enctype="multipart/form-data" action="{% url 'update_doctor_profile_work' %}">
+            {% csrf_token %}
+            
+                <h3>Work Details</h3>
+                <div class="form-group">
+                    <label for="clinic_hospital">Clinic/Hospital</label>
+                    <input type="text" id="clinic_hospital" name="clinic_hospital" value="{{ doctor.clinic_hospital }}">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address">{{ doctor.address }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="services">Services</label>
+                    <textarea id="services" name="services">{{ doctor.services }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="consultation_fee">Consultation Fee</label>
+                    <input type="text" id="consultation_fee" name="consultation_fee" value="{{ doctor.consultation_fee }}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </div>
+            
+        </form>
+        </div>
+
+        <!-- Contact Details -->
+        <form method="post" enctype="multipart/form-data" action="{% url 'update_doctor_profile_details' %}">
+            {% csrf_token %}
+            <div id="contact-details" class="details-section" style="display: none;">
+                <h3>Contact Details</h3>
+                <div class="form-group">
+                    <label for="contact">Contact</label>
+                    <input type="text" id="contact" name="contact" value="{{ doctor.contact }}">
+                </div>
+                <div class="form-group">
+                    <label for="website">Website</label>
+                    <input type="url" id="website" name="website" value="{{ doctor.website }}">
+                </div>
+                <div class="form-group">
+                    <label for="languages_spoken">Languages Spoken</label>
+                    <input type="text" id="languages_spoken" name="languages_spoken" value="{{ doctor.languages_spoken }}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Additional Details -->
+        <form method="post" enctype="multipart/form-data" action="{% url 'update_doctor_profile_additional' %}">
+            {% csrf_token %}
+            <div id="additional-details" class="details-section" style="display: none;">
+                <h3>Additional Details</h3>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" value="{{ doctor.user.username }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="realName">Real Name</label>
+                    <input type="text" id="realName" name="realName" value="{{ doctor.user.first_name }} {{ doctor.user.last_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ doctor.user.email }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" value="{{ doctor.date_of_birth }}">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="male" {% if doctor.gender == "male" %}selected{% endif %}>Male</option>
+                        <option value="female" {% if doctor.gender == "female" %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <input type="number" step="0.1" id="rating" name="rating" value="{{ doctor.rating }}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Availability Section -->
+        <div id="availability-d" class="details-section">
+        <form method="post" enctype="multipart/form-data" 
+        action="{% url 'update_doctor_profile_availability' %}"
+        style="max-height: 80vh; overflow-y: auto; padding: 15px;">
+      {% csrf_token %}
+  
+      <!-- Heading -->
+      <h2>Doctor Availability</h2>
+      <div class="row">
+          {% for slot in availability_list %}
+              <!-- Day Start -->
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="{{ slot.day_lower }}-start">
+                          {{ slot.day }} Start:
+                      </label>
+                      <select id="{{ slot.day_lower }}-start" 
+                              name="{{ slot.day_lower }}_start" 
+                              class="form-control">
+                          {% for hour in hours %}
+                              <option value="{{ hour }}:00"
+                                  {% if slot.start == hour|add:":00" %}selected{% endif %}>
+                                  {{ hour }}:00
+                              </option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              </div>
+  
+              <!-- Day End -->
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="{{ slot.day_lower }}-end">
+                          {{ slot.day }} End:
+                      </label>
+                      <select id="{{ slot.day_lower }}-end" 
+                              name="{{ slot.day_lower }}_end" 
+                              class="form-control">
+                          {% for hour in hours %}
+                              <option value="{{ hour }}:00"
+                                  {% if slot.end == hour|add:":00" %}selected{% endif %}>
+                                  {{ hour }}:00
+                              </option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+  
+      <!-- Save Changes button right under Doctor Availability -->
+      <div class="form-group" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-primary">
+              Save Changes
+          </button>
+      </div>
+  
+      <!-- Appointment Duration -->
+      <h2>Appointment Duration</h2>
+      <div class="form-group">
+          <label for="appointment-duration">Appointment Duration (minutes):</label>
+          <select id="appointment-duration" name="appointment_duration" class="form-control">
+              {% for duration in duration_list %}
+                  <option value="{{ duration }}" {% if duration == 30 %}selected{% endif %}>
+                      {{ duration }} Minutes
+                  </option>
+              {% endfor %}
+          </select>
+      </div>
+  
+      <!-- Generate Slots button under Appointment Duration -->
+      <div class="form-group" style="margin-top: 10px;">
+          <button type="button" class="btn btn-success" onclick="generateSlots()">
+              Generate Slots
+          </button>
+      </div>
+  
+      <!-- Manual Slot Creation -->
+      <h2>Manual Slot Creation</h2>
+      <div class="row">
+          
+          <div class="col-md-6">
+
+            <!-- Start Time -->
+            <div class="form-group">
+                <label for="manual-slot-start">Start Time:</label>
+                <select id="manual-slot-start" name="manual_slot_start" class="form-control">
+                    {% for hour in hours %}
+                        {% for minute in minutes %}
+                            <option value="{{ hour }}:{{ minute|add:"00"|slice:"-2" }}">{{ hour }}:{{ minute|add:"00"|slice:"-2" }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Day Selection -->
+            <div class="form-group">
+                <label for="manual-slot-day">Day:</label>
+                <select id="manual-slot-day" name="manual_slot_day" class="form-control">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <!-- End Time -->
+            <div class="form-group">
+                <label for="manual-slot-end">End Time:</label>
+                <select id="manual-slot-end" name="manual_slot_end" class="form-control">
+                    {% for hour in hours %}
+                        {% for minute in minutes %}
+                            <option value="{{ hour }}:{{ minute|add:"00"|slice:"-2" }}">{{ hour }}:{{ minute|add:"00"|slice:"-2" }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+      </div>
+  
+      <!-- Add Slot Button under the fields -->
+      <div class="form-group" style="margin-top: 10px;">
+          <button type="button" class="btn btn-success" onclick="addManualSlot()">
+              Add Slot
+          </button>
+      </div>
+  
+      <!-- Optional: View Slots Button -->
+      <div class="form-group" style="margin-top: 10px;">
+          <button type="button" class="btn btn-info" onclick="openSlotModal()">
+              View Slots
+          </button>
+      </div>
+  
+  </form>
+  </div>
+        
+
+        <!-- Upload Clinic Photo Section -->
+        <div id="upload-clinic-photo" class="details-section" style="display: none;">
+            <h3>Upload Clinic Photo</h3>
+
+            <!-- Display the clinic photo -->
+            <div class="clinic-photo-preview" style="margin-top: 20px; text-align: center;">
+                {% if doctor.clinic_picture %}
+                    <img src="{{ doctor.clinic_picture.url }}" alt="Clinic Photo" style="width: 400px; height: 400px; object-fit: cover; border: 1px solid #ddd; border-radius: 8px;">
+                {% else %}
+                    <img src="https://via.placeholder.com/400" alt="No Clinic Photo Available" style="width: 400px; height: 400px; object-fit: cover; border: 1px solid #ddd; border-radius: 8px;">
+                    <p style="color: gray; margin-top: 10px;">No clinic photo uploaded yet</p>
+                {% endif %}
+            </div>
+
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload_clinic_photo' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="clinic_photo">Choose a photo</label>
+                    <input type="file" id="clinic_photo" name="clinic_photo" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="save-btn">Upload Photo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Edit Password -->
+<div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPasswordModalLabel">Reset Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/send-reset-email-doctor/" id="resetPasswordForm">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="emailInput" class="form-label">Enter your email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" form="resetPasswordForm" class="btn btn-primary">Send Email</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Update Photo -->
+<div class="modal fade" id="updatePhotoModal" tabindex="-1" aria-labelledby="updatePhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatePhotoModalLabel">Update Profile Photo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'update_photo' %}" id="updatePhotoForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="photoInput" class="form-label">Upload a new photo</label>
+                        <input type="file" class="form-control" id="photoInput" name="profile_picture" accept="image/*" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Upload Photo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Viewing Slots -->
+<div id="slotsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div style="position: relative; margin: 50px auto; background: white; width: 80%; height: 70%; border-radius: 10px; overflow: hidden; padding: 20px;">
+        <h3 style="margin-bottom: 15px;">Slots</h3>
+        <button id="closeSlotsModal" style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        ">Close</button>
+        <button id="deleteAllSlots" style="
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #ff6347;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        ">Delete All</button>
+
+        <div id="slotsContent" style="overflow-y: auto; max-height: 80%;">
+            <!-- Dynamic slots will be injected here -->
+        </div>
+    </div>
+</div>
+
+<!-- Overwrite generated slots modal-->
+<div id="warningModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div style="position: relative; margin: 20vh auto; background: white; width: 400px; padding: 20px; border-radius: 10px; text-align: center;">
+        <h3>Warning</h3>
+        <p>Slots are already generated. Do you want to overwrite them?</p>
+        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+            <button onclick="overwriteSlots(); hideWarningModal();" style="background: #ff6347; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Yes</button>
+            <button onclick="hideWarningModal();" style="background: #ccc; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">No</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Confirmation Delete Slots Modal -->
+<div id="confirmDeleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1100;">
+    <div style="position: relative; margin: 20vh auto; background: white; width: 400px; padding: 20px; border-radius: 10px; text-align: center;">
+        <h3>Confirm Delete</h3>
+        <p>Are you sure you want to delete all slots?</p>
+        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+            <button id="confirmYes" style="background: #ff6347; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Yes</button>
+            <button id="confirmNo" style="background: #ccc; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- Load Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+    document.querySelectorAll('.section-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            // Hide all sections
+            document.querySelectorAll('.details-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Show the selected section
+            const sectionId = button.getAttribute('data-section');
+            document.getElementById(sectionId).style.display = 'block';
+        });
+    });
+
+    function openSlotModal() {
+        document.getElementById('slotsModal').style.display = 'block';
+    }
+    
+    document.getElementById('closeSlotsModal').addEventListener('click', function () {
+        document.getElementById('slotsModal').style.display = 'none';
+    });
+
+    function addManualSlot() {
+    const day = document.getElementById('manual-slot-day').value;  // Get selected day
+    const startTime = document.getElementById('manual-slot-start').value;
+    const endTime = document.getElementById('manual-slot-end').value;
+
+    // Check if start time is before end time
+    if (new Date(`1970-01-01T${startTime}`) >= new Date(`1970-01-01T${endTime}`)) {
+        alert('Start time must be before end time.');
+        return;
+    }
+
+    fetch('/add-manual-slot/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({
+            day: day,  // Pass the selected day
+            start_time: startTime,
+            end_time: endTime
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Slot successfully created.');
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to add the slot.');
+    });
+}
+
+    function generateSlots() {
+    fetch('/check-slots/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            if (data.slots_exist) {
+                // Show warning modal if slots already exist
+                showWarningModal();
+            } else {
+                // Proceed with generating slots
+                createSlots();
+            }
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to check slots.');
+    });
+}
+
+    function createSlots() {
+    const appointmentDuration = document.getElementById('appointment-duration').value;
+
+    fetch('/generate-slots/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({ appointment_duration: appointmentDuration })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Display the created slots
+            const slotsContainer = document.getElementById('slotsContent'); // Updated to match modal
+            if (!slotsContainer) {
+                console.error('Element with ID "slotsContent" not found.');
+                return;
+            }
+
+            data.created_slots.forEach(slot => {
+                const slotDiv = document.createElement('div');
+                slotDiv.innerText = `${slot.day}: ${slot.start_time} - ${slot.end_time}`;
+                slotsContainer.appendChild(slotDiv);
+            });
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to generate slots.');
+    });
+}
+
+function overwriteSlots() {
+
+    fetch('/delete-all-slots/', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                
+                const appointmentDuration = document.getElementById('appointment-duration').value;
+
+                fetch('/generate-slots/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({ appointment_duration: appointmentDuration })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Display the created slots
+            const slotsContainer = document.getElementById('slotsContent'); // Updated to match modal
+            if (!slotsContainer) {
+                console.error('Element with ID "slotsContent" not found.');
+                return;
+            }
+
+            data.created_slots.forEach(slot => {
+                const slotDiv = document.createElement('div');
+                slotDiv.innerText = `${slot.day}: ${slot.start_time} - ${slot.end_time}`;
+                slotsContainer.appendChild(slotDiv);
+            });
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to generate slots.');
+    });
+
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete all slots.');
+        }); 
+}
+
+function openSlotModal() {
+    const slotsContent = document.getElementById('slotsContent');
+    slotsContent.innerHTML = '<p>Loading...</p>'; // Show a loading message
+
+    fetch('/get-slots/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Clear the loading message
+                const slots = data.slots;
+                slotsContent.innerHTML = '';
+
+                // Check if there are any slots
+                if (Object.keys(slots).length === 0) {
+                    // No slots available
+                    slotsContent.innerHTML = `
+                    <p style="
+                    text-align: center; 
+                    color: #888; 
+                    font-size: 1.5rem; 
+                    font-weight: bold; 
+                    margin-top: 20px;">
+                    No slots set
+                    </p>`;
+                    return;
+                }
+
+                // Populate slots by day
+                for (const [day, slots] of Object.entries(data.slots)) {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.style.marginBottom = '20px';
+                    dayDiv.innerHTML = `<h4>${day}</h4>`;
+                    
+                    const slotsWrapper = document.createElement('div');
+                    slotsWrapper.style.display = 'flex';
+                    slotsWrapper.style.gap = '10px';
+                    slotsWrapper.style.flexWrap = 'wrap';
+
+                    slots.forEach(slot => {
+                        const slotDiv = document.createElement('div');
+                        slotDiv.style = `
+                            padding: 10px;
+                            background: ${slot.reserved ? '#ffc0cb' : '#f8f9fa'};
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                            text-align: center;
+                            width: 100px;
+                            position: relative;
+                        `;
+                        slotDiv.innerHTML = `
+                            ${slot.start_time} - ${slot.end_time}
+                            <button class="delete-slot-btn" data-slot-id="${slot.id}" style="
+                                position: absolute;
+                                top: -5px;
+                                right: -5px;
+                                background: red;
+                                color: white;
+                                border: none;
+                                border-radius: 50%;
+                                width: 20px;
+                                height: 20px;
+                                cursor: pointer;
+                                font-size: 12px;
+                            ">×</button>
+                        `;
+
+                        // Append slot to wrapper
+                        slotsWrapper.appendChild(slotDiv);
+                    });
+                    dayDiv.appendChild(slotsWrapper);
+                    slotsContent.appendChild(dayDiv);
+                }
+
+                document.querySelectorAll('.delete-slot-btn').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const slotId = this.getAttribute('data-slot-id');
+                        console.log(`Slot ID: ${slotId}`); // Check if slotId is undefined
+
+                        deleteSlot(slotId);
+                    });
+                });
+            } 
+            else 
+            {
+                slotsContent.innerHTML = `<p>Error: ${data.message}</p>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            slotsContent.innerHTML = '<p>Failed to load slots. Please try again later.</p>';
+        });
+
+    // Show the modal
+    document.getElementById('slotsModal').style.display = 'block';
+}
+
+        // Delete a specific slot
+        function deleteSlot(slotId) {
+            fetch(`/delete-slot/${slotId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    openSlotModal(); // Refresh the slots
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete the slot.');
+            });
+        }
+
+    document.getElementById('deleteAllSlots').addEventListener('click', function () {
+        document.getElementById('confirmDeleteModal').style.display = 'block';
+    });
+
+    document.getElementById('confirmYes').addEventListener('click', function() {
+        
+        fetch('/delete-all-slots/', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Close both modals on success
+                document.getElementById('confirmDeleteModal').style.display = 'none';
+                openSlotModal();
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete all slots.');
+        });
+    });
+
+    document.getElementById('confirmNo').addEventListener('click', function () {
+        document.getElementById('confirmDeleteModal').style.display = 'none';
+    });
+
+// Close the modal
+document.getElementById('closeSlotsModal').addEventListener('click', function () {
+    document.getElementById('slotsModal').style.display = 'none';
+});
+
+function showWarningModal() {
+    const modal = document.getElementById('warningModal');
+    modal.style.display = 'block';
+}
+
+function hideWarningModal() {
+    const modal = document.getElementById('warningModal');
+    modal.style.display = 'none';
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Payment - Plus Plan{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/plus_payment.css' %}">
+<!-- Optional Font Awesome for icons, if you want -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="subscription-page-container">
+  <h2 class="page-title">Complete Your Plus Subscription</h2>
+  
+  <div class="subscription-wrapper">
+    
+    <!-- LEFT: Plan Details (Centered text, extended "about" info) -->
+    <div class="subscription-left" style="text-align: center;">
+      <h3 class="plan-title">PLUS Plan</h3>
+      <p class="plan-price">$4.99/month</p>
+      <p class="plan-savings">Save 60%</p>
+      
+      <ul class="plan-features">
+        <li>Up to 10 Doctors Linked</li>
+        <li>Unlimited Appointments</li>
+        <li>Priority Chat &amp; Phone Support</li>
+        <li>Advanced Analytics</li>
+      </ul>
+
+      <!-- Additional "about" style text -->
+      <p class="plan-description">
+        Our Plus Plan is designed for doctors and practices aiming for maximum flexibility 
+        and advanced features. With the ability to link up to ten doctors and handle 
+        unlimited appointments, you’ll never have to worry about hitting a cap. 
+      </p>
+      <p class="plan-description">
+        Enjoy priority chat and phone support for immediate assistance, and 
+        take advantage of advanced analytics to gain deeper insights into your practice. 
+        This plan is the perfect choice if you want the ultimate subscription package 
+        at an affordable price.
+      </p>
+    </div>
+    
+    <!-- RIGHT: Payment Details Form -->
+    <div class="subscription-right">
+      <h3 class="payment-title">Payment Details</h3>
+      <form class="payment-form">
+        <div class="form-group">
+          <label for="cardName">Name on Card</label>
+          <input type="text" id="cardName" name="cardName" placeholder="John Doe" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 1234 5678" required />
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="expiryDate">Expiry Date</label>
+            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required />
+          </div>
+          <div class="form-group">
+            <label for="cvc">CVC</label>
+            <input type="text" id="cvc" name="cvc" placeholder="123" required />
+          </div>
+        </div>
+        
+        <button type="submit" class="submit-payment-btn">Submit Payment</button>
+      </form>
+    </div>
+
+  </div> <!-- end .subscription-wrapper -->
+</div> <!-- end .subscription-page-container -->
+
+{% include 'appointments/underground.html' %}
+{% endblock %}

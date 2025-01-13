@@ -1,0 +1,46 @@
+<!-- Search and Filter Section -->
+<div class="search-filter" style="background-color: #e793a1; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+    <form class="search-section" method="GET" action="">
+        <input 
+            type="text" 
+            name="q" 
+            placeholder="Search for doctors or clinics..." 
+            value="{{ request.GET.q|default:'' }}"
+        />
+        <button type="submit">Search</button>
+    </form>
+    
+    <div class="filter-section">
+        <label for="gender-filter">Gender:</label>
+        <select id="gender-filter">
+            <option value="all">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <label for="experience-filter">Experience:</label>
+        <select id="experience-filter">
+            <option value="all">All</option>
+            <option value="5">5+ years</option>
+            <option value="10">10+ years</option>
+            <option value="15">15+ years</option>
+        </select>
+
+        <label for="fee-filter">Fee:</label>
+        <select id="fee-filter">
+            <option value="all">All</option>
+            <option value="low">Below ₹500</option>
+            <option value="medium">₹500 - ₹1000</option>
+            <option value="high">Above ₹1000</option>
+        </select>
+
+        <label for="sort-filter">Sort By:</label>
+        <select id="sort-filter">
+            <option value="relevance">Relevance</option>
+            <option value="fee-low">Fee: Low to High</option>
+            <option value="fee-high">Fee: High to Low</option>
+        </select>
+
+        <button onclick="applyFilters()">Apply Filters</button>
+    </div>
+</div>
