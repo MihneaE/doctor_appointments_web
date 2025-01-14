@@ -1,0 +1,284 @@
+/*********************************************************
+ * TOP BAR
+ *********************************************************/
+ .contact-top-bar {
+    width: 100%;
+    background-color: #1c1c3d; /* Dark color or brand color */
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px;       /* Slightly bigger padding for top bar */
+    margin-bottom: 40px;
+    border-radius: 0 0 10px 10px; /* optional corner rounding */
+}
+
+.contact-top-bar h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/*********************************************************
+ * MAIN WRAPPER: 2 COLUMNS
+ *********************************************************/
+.contact-wrapper {
+    max-width: 1300px; /* Slightly larger container */
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 0 20px; /* side padding */
+}
+
+/*********************************************************
+ * COLUMN TITLES
+ *********************************************************/
+.column-title {
+    text-align: center; 
+    font-size: 24px; 
+    font-weight: bold; 
+    margin-bottom: 25px;
+    color: #2c3e50;
+}
+
+/*********************************************************
+ * LEFT: INFO CONTAINER (Wider, bigger squares)
+ *********************************************************/
+/* Container that holds the four squares plus the subtitle and note */
+.info-container {
+    flex: 1 1 550px; /* or your desired width for the column */
+    min-width: 350px;
+    background-color: #f3f3f3;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Title above squares, center aligned */
+.column-title {
+    text-align: center; 
+    font-size: 24px; 
+    font-weight: bold; 
+    margin-bottom: 25px;
+    color: #2c3e50;
+}
+
+/*********************************************************
+ * 2X2 GRID for the squares
+ *********************************************************/
+.info-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* 2 columns side by side */
+    grid-gap: 30px;                  /* Spacing between squares */
+    grid-auto-rows: 1fr;            /* Each row has the same height for squares */
+    margin-bottom: 20px;
+}
+
+/*********************************************************
+ * INDIVIDUAL SQUARES
+ *********************************************************/
+.info-card {
+    background-color: #fff;
+    padding: 30px; 
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    /* Center content horizontally & vertically within the card */
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* center horizontally */
+    justify-content: center;  /* center vertically if the row is taller */
+    text-align: center;       /* ensures text is also centered */
+    gap: 15px;
+}
+
+/* Icon: bigger size */
+.info-card-icon {
+    font-size: 36px;
+    color: #1c1c3d;
+}
+
+/* Text is also centered & slightly larger */
+.info-card-text h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 6px;
+}
+.info-card-text p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+    line-height: 1.4;
+    /* If you want the text to wrap mid-word, you can add:
+       word-wrap: break-word; 
+       or just keep normal flow. 
+    */
+}
+
+/*********************************************************
+ * NOTE BELOW THE CARDS
+ *********************************************************/
+.info-note {
+    margin-top: 20px;
+    text-align: center;
+    color: #444;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/*********************************************************
+ * RIGHT: FORM COLUMN
+ *********************************************************/
+.form-column {
+    flex: 1 1 550px; /* Also bigger for a wide form column */
+    min-width: 350px;
+    background-color: #f3f3f3;
+    padding: 30px;
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* The form itself: bigger spacing */
+.contact-form {
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 12px; 
+    border-radius: 4px; 
+    border: 1px solid #ccc;
+    font-size: 15px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #1c1c3d;
+}
+
+/* Captcha note styling */
+.captcha-note {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #666;
+}
+
+/* SUBMIT BUTTON: bigger */
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    align-self: flex-start; 
+    transition: background-color 0.3s ease;
+}
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+/*********************************************************
+ * RESPONSIVE 
+ *********************************************************/
+ @media (max-width: 768px) {
+    .info-cards {
+        grid-template-columns: 1fr; /* stack the squares */
+    }
+}
+
+@media (max-width: 480px) {
+    .info-card-icon {
+        font-size: 30px;
+    }
+    .info-card-text h3 {
+        font-size: 16px;
+    }
+    .info-card-text p {
+        font-size: 14px;
+    }
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Captcha container if needed */
+.captcha-group {
+    /* position: relative;  -- only if you want absolute child elements */
+}
+
+/* Make the captcha input and the refresh button appear side by side */
+.captcha-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* space between input and button */
+}
+
+/* Style the refresh button */
+.captcha-refresh {
+    background-color: #fff; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Example styling for the icon/image */
+.captcha-refresh img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+#captchaImage {
+    width: 240px;
+    height: 50px;
+    object-fit: cover; /* Adjust how the image fits within the dimensions */
+    border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+    border-radius: 5px; /* Optional: Add rounded corners */
+}
+
+
+
+
+
+
+
+
+

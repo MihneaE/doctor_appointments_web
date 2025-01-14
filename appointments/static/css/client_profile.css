@@ -1,0 +1,137 @@
+/* General Styles */
+body {
+    height: 100vh; /* Make the body take full viewport height */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    overflow: hidden; /* Prevent scrolling the entire page */
+}
+
+.container {
+    height: 100%; 
+    display: flex;
+    min-height: 1200px;
+    max-width: 1200px;
+    margin: 50px auto;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Left Section */
+.left-section {
+    overflow-y: auto; /* Enable vertical scrolling for the left section */
+    width: 30%;
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+} 
+
+.left-section .profile-picture img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.left-section .edit-photo-btn {
+    display: inline-block;
+    background: #3a9406;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.left-section .edit-photo-btn:hover {
+    background: #bdc918; /* Same hover background color */
+    color: #000; /* Black text for better contrast */
+}
+
+.left-section .buttons {
+    margin-top: 20px;
+}
+
+.left-section .section-btn,
+.left-section .edit-password-btn {
+    display: block;
+    width: 100%;
+    background: #3a9406;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.left-section .section-btn:hover,
+.left-section .edit-password-btn:hover {
+    background: #004494;
+}
+
+/* Right Section */
+.right-section {
+    width: 70%;
+    padding: 40px;
+    overflow-y: auto; /* Enable vertical scrolling if the content inside the right section overflows */
+}
+
+.right-section h2 {
+    margin-top: 0;
+}
+
+.right-section h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: none;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+

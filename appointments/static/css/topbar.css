@@ -1,0 +1,93 @@
+/* Topbar Container */
+.topbar {
+    background-color: #000; /* Black background */
+    position: fixed; /* Fix topbar to the top */
+    top: 0; /* Align it to the top */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between; /* Space between logo and buttons */
+    align-items: center;
+    padding: 10px 100px; /* Margins of 100px on left and right */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+/* Logo Styling */
+.topbar .logo img {
+    height: 60px; /* Slightly bigger logo height */
+    width: auto;  /* Maintain aspect ratio */
+}
+
+/* Navigation Buttons */
+.topbar .nav-buttons {
+    display: flex;
+    gap: 30px; /* More space between buttons */
+}
+
+.topbar .nav-buttons a {
+    color: #777; /* White text */
+    font-size: 20px; /* Bigger buttons */
+    font-weight: bold;
+    padding: 12px 24px; /* Larger padding */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+.topbar .nav-buttons a:hover {
+    background-color: #333; /* Dark grey hover background */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Profile Picture Styling */
+.topbar .profile-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: cover; /* Ensure the image fits within the dimensions */
+    border-radius: 50%; /* Make it circular */
+    cursor: pointer; /* Pointer cursor on hover */
+    border: 2px solid #fff; /* White border for visibility */
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+
+/* Profile Picture Hover Effect */
+.profile-logo:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+    background-color: #000; /* Black background for dropdown */
+    color: #2c2727; /* White text */
+    border: none; /* Remove border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slight shadow */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Adjust font size */
+}
+
+/* Dropdown Menu Items */
+.dropdown-menu .dropdown-item {
+    color: #4b4545; /* Black text for items */
+    padding: 10px 20px; /* Spacing for dropdown items */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover effect */
+}
+
+/* Dropdown Menu Items Hover Effect */
+.dropdown-menu .dropdown-item:hover {
+    background-color: #333; /* Dark grey hover effect */
+    color: #423d3d; /* White text on hover for contrast */
+}
+
+/* Dropdown Divider */
+.dropdown-menu .dropdown-divider {
+    border-color: #444; /* Grey divider color */
+}
+
+/* Content Styling */
+.content {
+    margin-top: 90px; /* Ensure content is below the fixed topbar */
+}
+
+

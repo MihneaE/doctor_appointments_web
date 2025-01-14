@@ -1,0 +1,117 @@
+/* Body Styling test */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #5e4ad0, #9f8ce6); /* Gradient background like login */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center content vertically */
+    min-height: 100vh; /* Full viewport height */
+}
+
+/* Create Account Container */
+.container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px; /* Softer rounded corners */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+    width: 90%;
+    max-width: 400px; /* Match the login form width */
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out; /* Subtle fade-in animation */
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Header Styling */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 15px; /* Less spacing for compact design */
+}
+
+/* Description Styling */
+.container p {
+    font-size: 16px;
+    color: #555555; /* Softer text color */
+    margin-bottom: 25px;
+}
+
+/* Options Container */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between buttons */
+}
+
+/* Option Button Styling */
+.option-box {
+    padding: 12px 20px;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 18px; /* Consistent with login button font */
+    font-weight: bold;
+    color: #ffffff; /* White text */
+    transition: background-color 0.3s, transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* Doctor Button */
+.option-box.doctor {
+    background-color: #007bff; /* Blue */
+}
+
+.option-box.doctor:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+.option-box.doctor:active {
+    transform: translateY(0); /* Reset lift on click */
+    box-shadow: none;
+}
+
+/* Client Button */
+.option-box.client {
+    background-color: #28a745; /* Green */
+}
+
+.option-box.client:hover {
+    background-color: #1e7e34;
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+.option-box.client:active {
+    transform: translateY(0); /* Reset lift on click */
+    box-shadow: none;
+}
+
+/* Footer Text */
+.container a {
+    display: inline-block;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.container a:hover {
+    text-decoration: underline;
+}
+

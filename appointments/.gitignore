@@ -53,6 +53,6 @@ htmlcov/
 
 # Static and build files
 node_modules/
-static/
+
 dist/
 build/

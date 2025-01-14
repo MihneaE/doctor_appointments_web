@@ -1,0 +1,200 @@
+/**********************************************************
+ * CONTAINER & GENERAL LAYOUT
+ **********************************************************/
+ .subscription-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+/* MAIN TITLE & SUBTITLE */
+.subscription-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.subscription-subtitle {
+    font-size: 16px;
+    margin-bottom: 40px;
+    color: #666;
+}
+
+/**********************************************************
+ * PLANS-CONTAINER - The new block around the plans
+ **********************************************************/
+.plans-container {
+    background-color: #ffffff;          /* White or any color for the container */
+    padding: 30px;                     /* Space around the plans */
+    border-radius: 10px;               /* Soft corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow to distinguish container */
+}
+
+/* The row that holds the 3 plan cards horizontally */
+.plans-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+/**********************************************************
+ * PLAN CARDS
+ **********************************************************/
+.plan-card {
+    background-color: #f8f8f8;
+    flex: 1 1 250px;
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 30px 20px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Distinct backgrounds / color themes */
+.plan-free {
+    background-color: #e9f9fa;
+}
+.plan-normal {
+    background-color: #f0f4ff;
+}
+.plan-plus {
+    background-color: #e0ffe5;
+    border: 2px solid #34c759; /* Subtle highlight border */
+}
+
+/**********************************************************
+ * PLAN TEXT
+ **********************************************************/
+.plan-name {
+    margin: 0;
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.plan-price {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+.plan-save {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+/* Feature List */
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    line-height: 1.8;
+    text-align: left;
+    width: 100%;
+    max-width: 220px;
+    color: #333;
+}
+.plan-features li {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+/**********************************************************
+ * BUTTONS
+ **********************************************************/
+.subscribe-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+}
+.subscribe-button:hover {
+    background-color: #0056b3;
+}
+
+/* Distinct color for each plan's button (optional) */
+.free-button {
+    background-color: #00bcd4;
+}
+.free-button:hover {
+    background-color: #0097a7;
+}
+.normal-button {
+    background-color: #007bff;
+}
+.normal-button:hover {
+    background-color: #0056b3;
+}
+.plus-button {
+    background-color: #34c759;
+}
+.plus-button:hover {
+    background-color: #1eae42;
+}
+
+/**********************************************************
+ * BADGE (BEST DEAL)
+ **********************************************************/
+.plan-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #34c759;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+/**********************************************************
+ * RESPONSIVE BREAKPOINTS
+ **********************************************************/
+@media (max-width: 768px) {
+    .plan-card {
+        max-width: 350px;
+    }
+    .plan-price {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .subscription-container {
+        padding: 30px 10px;
+    }
+    .plans-container {
+        padding: 20px;
+    }
+    .plan-card {
+        max-width: 320px;
+        margin: 0 auto 20px;
+    }
+    .plan-price {
+        font-size: 18px;
+    }
+    .subscribe-button {
+        font-size: 13px;
+        padding: 10px 16px;
+    }
+}
+
+

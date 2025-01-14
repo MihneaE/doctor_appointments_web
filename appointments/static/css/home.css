@@ -1,0 +1,80 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('{% static "images/background.jpg" %}') no-repeat center center fixed; 
+    background-size: cover; /* Full-screen background image */
+    color: #ffffff; /* Text color */
+}
+
+/* Main Home Container */
+.home-container {
+    background-color: #901994;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    padding: 20px;
+    text-align: center;
+}
+
+/* Content Box */
+.content-box {
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+    padding: 40px 60px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 90%;
+}
+
+/* Heading */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #f0f0f0;
+}
+
+/* Paragraph */
+p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #dcdcdc;
+}
+
+/* Search Form */
+.search-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Search Input */
+.search-input {
+    width: 70%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Search Button */
+.search-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #007bff; /* Blue button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}

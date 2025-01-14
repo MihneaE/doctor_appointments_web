@@ -1,0 +1,139 @@
+/* Container */
+.subscription-page-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* Page title */
+  .page-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #2c3e50;
+  }
+  
+  /* Wrapper for two columns */
+  .subscription-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  /* Left column (Plan details) */
+  .subscription-left {
+    flex: 1 1 300px;
+    background-color: #e7ffe7; /* A subtle green-ish background maybe */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    text-align: center; /* Center text */
+  }
+  
+  .plan-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .plan-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #27ae60;
+    margin-bottom: 5px;
+  }
+  
+  .plan-savings {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 15px;
+  }
+  
+  .plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+  }
+  
+  .plan-features li {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .plan-description {
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  /* Right column (Payment form) */
+  .subscription-right {
+    flex: 1 1 300px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  
+  .payment-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Input and label styling */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .submit-payment-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .submit-payment-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .subscription-wrapper {
+      flex-direction: column;
+    }
+  }
+  

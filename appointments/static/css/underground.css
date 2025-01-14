@@ -1,0 +1,139 @@
+/* FOOTER CONTAINER STYLING */
+.footer-container {
+    background-color: #1c1c3d; /* Dark blue background */
+    color: #fff;
+    padding: 40px 60px;
+    font-family: sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 40px;
+}
+
+/* FOOTER LINKS WRAPPER */
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Evenly distribute columns */
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* FOOTER COLUMN - BOXED CONTAINER */
+.footer-column {
+    background-color: #2a2a5e;  /* Slightly lighter box color than the footer background */
+    border-radius: 8px;        /* Rounded corners */
+    padding: 20px;             /* Create spacing within each box */
+    flex: 1 1 150px;
+    min-width: 150px;
+    text-align: left;          /* Align text to the left by default */
+    display: flex;             /* Use flex to align the content within the box */
+    flex-direction: column;    
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+/* Column Heading */
+.footer-column h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;         /* Make the heading bolder */
+}
+
+/* Use standard discs for bullet points */
+.footer-column ul {
+    list-style-type: disc;     /* Standard bullet points */
+    padding-left: 20px;        /* Indent to show bullets near text */
+    margin: 0;
+    line-height: 1.8;
+}
+
+.footer-column ul li {
+    margin-bottom: 6px;
+}
+
+.footer-column ul li a {
+    color: #ddd;
+    text-decoration: none;
+    font-weight: 600;          /* Slightly bolder link text */
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #fff;
+}
+
+/* FOOTER BOTTOM STYLING */
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;          /* Space between the column row and bottom row */
+}
+
+.footer-bottom h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #fff;
+    font-weight: bold;         /* Emphasize site name */
+}
+
+.footer-bottom p {
+    font-size: 14px;
+    color: #ccc;
+    margin-top: 5px;
+}
+
+/* RESPONSIVE DESIGN: TABLETS */
+@media (max-width: 768px) {
+    .footer-links {
+        justify-content: center; /* Center columns on tablet */
+    }
+
+    .footer-column {
+        flex: 1 1 200px;
+        max-width: 300px;       /* Optionally cap the width for more uniform boxes */
+        margin: 0 auto;         /* Center each box horizontally */
+    }
+}
+
+/* RESPONSIVE DESIGN: MOBILE */
+@media (max-width: 480px) {
+    .footer-container {
+        padding: 30px 20px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        align-items: center;    /* Center columns on mobile */
+    }
+
+    .footer-column {
+        width: 100%;           /* Full width on mobile */
+        max-width: 320px;      /* Optional limit */
+        margin-bottom: 20px;   /* Spacing between each box */
+        text-align: center;
+    }
+
+    .footer-column ul {
+        padding-left: 25px;    /* Adjust indentation for mobile */
+    }
+
+    .footer-column h4 {
+        font-size: 1.1rem;
+    }
+
+    .footer-bottom h2 {
+        font-size: 20px;
+    }
+
+    .footer-bottom p {
+        font-size: 13px;
+    }
+}
+
+
+
+
+
+

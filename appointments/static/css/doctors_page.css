@@ -1,0 +1,162 @@
+body {
+    background-color: #14c9c9;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px;
+}
+
+.left-section, .right-section {
+    padding: 20px;
+}
+
+.left-section {
+    flex: 3;
+}
+
+.right-section {
+    flex: 1;
+    background: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+}
+
+/* Search and Filter Section */
+.search-filter {
+    text-align: center;
+    margin-bottom: 20px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-section,
+.filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    flex: 1;
+    max-width: 780px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-section button:hover {
+    background: #0056b3;
+}
+
+.filter-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-section label {
+    font-size: 14px;
+    margin-right: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.filter-section select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filter-section button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.filter-section button:hover {
+    background: #218838;
+}
+
+/* Doctor and Medication Cards */
+.doctor-card,
+.med-card {
+    background: #ffffff;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-card h3,
+.med-card h3 {
+    margin: 0;
+}
+
+.doctor-card p,
+.med-card p {
+    margin: 5px 0;
+}
+
+.book-button {
+    padding: 10px 15px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.book-button:hover {
+    background: #218838;
+}
+
+.clinic-card {
+    background: #ffffff;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.clinic-card h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.clinic-card p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+

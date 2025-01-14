@@ -1,0 +1,139 @@
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #5e4ad0, #9f8ce6); /* Gradient background like login */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center content vertically */
+    height: 100vh; /* Full viewport height */
+}
+
+/* Form Container */
+.form-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slight transparency for elegant look */
+    padding: 30px 40px;
+    border-radius: 15px; /* Softer corners like login form */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for depth */
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out; /* Smooth fade-in animation */
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header Styling */
+h1 {
+    color: #333333;
+    font-size: 2rem; /* Larger font size for the title */
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px; /* Subtle letter spacing for style */
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555555;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 8px; /* Rounded input fields */
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #007bff; /* Blue highlight on focus */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Subtle blue glow */
+}
+
+/* Button Group Styling */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Back Button */
+.back-button {
+    background-color: rgba(255, 255, 255, 0.8); /* Light background to match theme */
+    border: 1px solid #cccccc; /* Subtle border */
+    color: #333333;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #e0e0e0; /* Slightly darker on hover */
+    border-color: #b3b3b3;
+}
+
+/* Create Button */
+.create-button {
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.create-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Lift effect */
+}
+
+.create-button:active {
+    transform: translateY(0);
+}
+
+/* Footer Link */
+.form-container a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+.form-container a:hover {
+    text-decoration: underline;
+}
+
+

@@ -1,0 +1,111 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #7B5EA0, #6F87D2);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login Container */
+.login-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px 30px;
+    width: 350px;
+    text-align: center;
+}
+
+/* Heading */
+.login-container h1 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Options Section */
+.form-group.options {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group.options input {
+    width: auto;
+    margin-right: 5px;
+}
+
+.form-group.options a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+/* Button */
+.btn-login {
+    background: #4C6EF5;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.btn-login:hover {
+    background: #4058C9;
+}
+
+/* Additional Text */
+.login-container p {
+    color: #fff;
+    margin-top: 10px;
+}
+
+.login-container a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+/* Input Focus */
+input:focus {
+    outline: none;
+    box-shadow: 0 0 5px #4C6EF5;
+}
+
+/* Error Message (Optional) */
+.error-message {
+    color: #FF6B6B;
+    font-size: 14px;
+}
+
+
+

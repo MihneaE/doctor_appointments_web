@@ -1,0 +1,961 @@
+/* static/css/about.css */
+
+/* Reset Margins and Padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f4f4f9; /* Light gray background */
+    color: #333333; /* Dark text for better readability */
+    line-height: 1.6;
+}
+
+/* Full-Width Banner */
+.about-banner {
+    width: 100%;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    text-align: center;
+    padding: 80px 20px;
+    position: relative;
+}
+
+.banner-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.banner-content p {
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+/* CTA Button (Optional) */
+.cta-button {
+    display: inline-block;
+    background-color: #ff7f50; /* Coral color */
+    color: #ffffff;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #ff5722; /* Darker coral on hover */
+}
+
+/* About Content Container */
+.about-content {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 60px 20px;
+    box-sizing: border-box;
+}
+
+.content-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+/* About Sections */
+.about-section {
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-section .section-icon,
+.about-section .section-image,
+.about-section .list-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.about-section .section-icon {
+    float: left;
+    margin-right: 20px;
+}
+
+.about-section .section-image {
+    width: 100%;
+    max-width: 800px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.steps-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.step {
+    flex: 0 0 30%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 1rem;
+    color: #555555;
+}
+
+/* Why Choose Us List */
+.why-choose-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+.why-choose-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.list-icon {
+    margin-right: 15px;
+    width: 40px;
+    height: 40px;
+}
+
+/* Testimonials */
+.testimonials {
+    margin-top: 30px;
+}
+
+.testimonials h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.testimonials blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ff7f50;
+    margin: 20px auto;
+    padding: 20px;
+    font-style: italic;
+    position: relative;
+    max-width: 800px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.testimonials blockquote footer {
+    text-align: right;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #555555;
+}
+
+/* Join Us Section */
+.about-section a.cta-button {
+    margin-top: 20px;
+}
+
+/* Footer Styling */
+.full-width-footer {
+    width: 100%;
+    background-color: #333333;
+    color: #ffffff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.full-width-footer a {
+    color: #ff7f50; /* Coral links in footer */
+    text-decoration: none;
+}
+
+.full-width-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .steps-container {
+        flex: 1 1 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .banner-content p {
+        font-size: 1rem;
+    }
+
+    .content-wrapper h2 {
+        font-size: 1.8rem;
+    }
+
+    .content-wrapper p,
+    .content-wrapper ul li {
+        font-size: 1rem;
+    }
+
+    .steps-container {
+        flex-direction: column;
+    }
+
+    .step {
+        flex: 0 0 100%;
+    }
+
+    .about-section .section-icon {
+        float: none;
+        display: block;
+        margin: 0 auto 20px auto;
+    }
+
+    .why-choose-list li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .list-icon {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-content h1 {
+        font-size: 2rem;
+    }
+
+    .banner-content p {
+        font-size: 0.9rem;
+    }
+
+    .content-wrapper h2 {
+        font-size: 1.5rem;
+    }
+
+    .content-wrapper p,
+    .content-wrapper ul li {
+        font-size: 0.9rem;
+    }
+
+    .steps-container {
+        flex-direction: column;
+    }
+
+    .step {
+        flex: 0 0 100%;
+    }
+
+    .section-image {
+        max-width: 100%;
+    }
+}
+
+/* Vision Container Styling */
+.vision-container {
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 50px;
+}
+
+/* Vision Content Flexbox Layout */
+.vision-content {
+    display: flex;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Vision Icon Styling */
+.vision-icon {
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 30px;
+    flex-shrink: 0; /* Prevents the image from shrinking on smaller screens */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
+}
+
+/* Vision Text Styling */
+.vision-text {
+    flex: 1; /* Allows the text to take up the remaining space */
+}
+
+.vision-text h2 {
+    font-size: 2rem;
+    color: #007bff; /* Blue color for the heading */
+    margin-bottom: 15px;
+}
+
+.vision-text p {
+    font-size: 1.1rem;
+    color: #555555;
+    line-height: 1.8;
+    text-align: justify; /* Justifies the text for a clean block appearance */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .vision-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .vision-icon {
+        margin: 0 0 20px 0;
+    }
+
+    .vision-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .vision-text p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .vision-icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .vision-text h2 {
+        font-size: 1.5rem;
+    }
+
+    .vision-text p {
+        font-size: 0.95rem;
+    }
+}
+
+/* What We Do Container Styling */
+.what-we-do-container {
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 50px;
+}
+
+/* What We Do Content Flexbox Layout */
+.what-we-do-content {
+    display: flex;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* What We Do Icon Styling */
+.what-we-do-icon {
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 30px;
+    flex-shrink: 0; /* Prevents the image from shrinking on smaller screens */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
+}
+
+/* What We Do Text Styling */
+.what-we-do-text {
+    flex: 1; /* Allows the text to take up the remaining space */
+}
+
+.what-we-do-text h2 {
+    font-size: 2rem;
+    color: #007bff; /* Blue color for the heading */
+    margin-bottom: 15px;
+}
+
+.what-we-do-text p {
+    font-size: 1.1rem;
+    color: #555555;
+    line-height: 1.8;
+    text-align: justify; /* Justifies the text for a clean block appearance */
+}
+
+.what-we-do-text ul {
+    list-style-type: disc;
+    margin-left: 40px;
+    margin-top: 10px;
+}
+
+.what-we-do-text ul li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .what-we-do-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .what-we-do-icon {
+        margin: 0 0 20px 0;
+    }
+
+    .what-we-do-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .what-we-do-text p {
+        font-size: 1rem;
+    }
+
+    .what-we-do-text ul {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .what-we-do-icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .what-we-do-text h2 {
+        font-size: 1.5rem;
+    }
+
+    .what-we-do-text p {
+        font-size: 0.95rem;
+    }
+}
+
+.how-it-works-container {
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 50px;
+}
+
+/* How It Works Content Flexbox Layout */
+.how-it-works-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* How It Works Text Styling */
+.how-it-works-text {
+    flex: 1; /* Allows the text to take up the remaining space */
+    padding-right: 30px; /* Space between text and image */
+}
+
+.how-it-works-text h2 {
+    font-size: 2rem;
+    color: #007bff; /* Blue color for the heading */
+    margin-bottom: 15px;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.step {
+    flex: 0 0 30%;
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 1rem;
+    color: #555555;
+    line-height: 1.8;
+}
+
+/* How It Works Icon Styling */
+.how-it-works-icon {
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 50%; /* Makes the image circular */
+    margin-left: 30px;
+    flex-shrink: 0; /* Prevents the image from shrinking on smaller screens */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .steps-container {
+        flex: 1 1 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .how-it-works-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .how-it-works-text {
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .how-it-works-icon {
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+
+    .steps-container {
+        flex-direction: column;
+    }
+
+    .step {
+        flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .how-it-works-icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .how-it-works-text h2 {
+        font-size: 1.5rem;
+    }
+
+    .how-it-works-text p,
+    .step p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Why Choose Us Container Styling */
+.why-choose-us-container {
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 50px;
+}
+
+.why-choose-us-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.why-choose-us-content h2 {
+    font-size: 2rem;
+    color: #007bff; /* Blue color for the heading */
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Why Choose Us List Styling */
+.why-choose-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.why-choose-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.why-choose-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.why-choose-icon {
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 30px;
+    flex-shrink: 0; /* Prevents the image from shrinking on smaller screens */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
+}
+
+.why-choose-text {
+    flex: 1; /* Allows the text to take up the remaining space */
+}
+
+.why-choose-text strong {
+    color: #007bff; /* Blue color for emphasis */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .why-choose-item {
+        flex: 1 1 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .why-choose-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .why-choose-icon {
+        margin: 0 0 20px 0;
+    }
+
+    .why-choose-text {
+        flex: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .why-choose-icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .why-choose-us-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .why-choose-text {
+        font-size: 0.95rem;
+    }
+}
+
+/* Commitment to Quality Container Styling */
+.commitment-container {
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #ffffff; /* White background for contrast */
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 50px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow for depth */
+}
+
+.commitment-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.commitment-content h2 {
+    font-size: 2rem;
+    color: #007bff; /* Blue color for the heading */
+    margin-bottom: 20px;
+}
+
+.commitment-content p {
+    font-size: 1.1rem;
+    color: #555555;
+    line-height: 1.8;
+    text-align: justify; /* Justifies the text for a clean block appearance */
+    margin-bottom: 30px;
+}
+
+/* Testimonials Styling */
+.testimonials {
+    margin-top: 20px;
+}
+
+.testimonials h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.testimonial {
+    display: flex;
+    align-items: flex-start;
+    background: #f9f9f9;
+    border-left: 5px solid #ff7f50; /* Coral color for the border */
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.testimonial-photo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 20px;
+    flex-shrink: 0; /* Prevents the image from shrinking on smaller screens */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds subtle shadow for depth */
+}
+
+.testimonial-text {
+    flex: 1; /* Allows the text to take up the remaining space */
+}
+
+.testimonial-text p {
+    font-size: 1rem;
+    color: #555555;
+    line-height: 1.6;
+    margin: 0;
+    position: relative;
+}
+
+.testimonial-text footer {
+    text-align: right;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #777777;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .testimonial {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .testimonial-photo {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .testimonial-text {
+        flex: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .commitment-container {
+        padding: 30px 15px;
+    }
+
+    .commitment-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .commitment-content p {
+        font-size: 1rem;
+    }
+
+    .testimonials h3 {
+        font-size: 1.3rem;
+    }
+
+    .testimonial-photo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .testimonial-text p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Join Us Container Styling */
+.join-us-container {
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #f4f4f9; /* Light gray background for contrast */
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 50px;
+}
+
+.join-us-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.join-us-content h2 {
+    font-size: 2rem;
+    color: #007bff; /* Blue color for the heading */
+    margin-bottom: 20px;
+}
+
+.join-us-content p {
+    font-size: 1.1rem;
+    color: #555555;
+    line-height: 1.8;
+    text-align: justify; /* Justifies the text for a clean block appearance */
+    margin-bottom: 30px;
+}
+
+/* Community Links Styling */
+.community-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.community-link {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.community-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.community-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain; /* Ensures the image covers the area without distortion */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds subtle shadow for depth */
+}
+
+.community-link span {
+    font-size: 1.2rem;
+    color: #333333;
+    font-weight: 500;
+}
+
+/* Optional: CTA Button Styling (if included) */
+.join-us-content .cta-button {
+    display: inline-block;
+    background-color: #ff7f50; /* Coral color */
+    color: #ffffff;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.join-us-content .cta-button:hover {
+    background-color: #ff5722; /* Darker coral on hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .community-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .community-link {
+        width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .join-us-container {
+        padding: 30px 15px;
+    }
+
+    .join-us-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .join-us-content p {
+        font-size: 1rem;
+    }
+
+    .community-link {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    .community-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .community-link span {
+        font-size: 1rem;
+    }
+
+    .join-us-content .cta-button {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+    }
+}
+
+
+
+
