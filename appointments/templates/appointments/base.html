@@ -18,7 +18,7 @@
             <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="logo-resize">
         </div>
         <div class="nav-buttons d-flex align-items-center">
-            <!--<a href="{% url 'test_celery' %}">Celery</a> -->
+            <a href="{% url 'test_celery' %}">Celery</a>
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'about' %}">About</a>
             {% if user.is_authenticated %}
