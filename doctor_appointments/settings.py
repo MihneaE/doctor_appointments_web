@@ -35,7 +35,7 @@ EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
+EMAIL_HOST_PASSWORD = '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'
 
 
 STATIC_URL = '/static/'
@@ -186,7 +186,7 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_ACCEPT_CONTENT = ["json"]
 
 STRIPE_PUBLISHABLE_KEY = "pk_live_51QmXYuKKSSs4op9c0PzJ2WLpm1NDbR10gM0af0SeJCWB5WZEY0dq7sOTdV6VdL5qLOI9ccqB2maoJOvosQWftkic007GU0ldX1"  # Found in the Stripe Dashboard
-STRIPE_SECRET_KEY = os.environ.get("STRIPE_API_KEY")
+STRIPE_SECRET_KEY = "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" 
 
 LANGUAGE_CODE = 'en'  # Romanian as the default language
 USE_I18N = True
@@ -220,7 +220,7 @@ ACCOUNT_LOGIN_METHODS = {'username', 'email'}
 
 # settings.py
 
-TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_SID")
+TWILIO_ACCOUNT_SID = "ACd94e4e09ac04c038287ab8c93c6c9954"
 TWILIO_AUTH_TOKEN = "430d092a786113ba9ee42eb6b048cbe4"
 TWILIO_PHONE_NUMBER = "(989) 447-8613"
 
