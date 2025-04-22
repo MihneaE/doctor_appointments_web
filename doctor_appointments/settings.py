@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-u&b&!$@!2en$5z2tkyit_&s(h^x7=0vt2tz9x^g+npsq04evfy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '13.60.249.153',
+]
 
 LOGIN_REDIRECT_URL = 'home'
 
@@ -113,7 +117,7 @@ DATABASES = {
         'NAME': 'study_user',
         'USER': 'mihnea.encean',
         'PASSWORD': 'zm.mnx.csro',
-        'HOST': '127.0.0.1',  # Use the appropriate host
+        'HOST': '13.60.249.153',  # Use the appropriate host
         'PORT': '3306',       # Default MySQL port
     }
 }
