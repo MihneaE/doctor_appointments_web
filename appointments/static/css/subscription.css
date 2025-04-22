@@ -1,0 +1,224 @@
+/* -------------------------------------
+   Dark-Themed Subscription Section
+-------------------------------------- */
+
+/* Overall container on a dark gradient background */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(120deg, #11171e, #1c1f2a); 
+    color: #ffffff;
+}
+
+.content {
+    margin-top: 100px;
+}
+
+/**********************************************************
+ * MAIN SUBSCRIPTION CONTAINER
+ **********************************************************/
+.subscription-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #1f1f2f;   /* Dark container background */
+    border: 1px solid #efd959;   /* Gold accent border */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* MAIN TITLE & SUBTITLE */
+.subscription-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #efd959;  /* Gold accent color for heading */
+    text-transform: uppercase;
+}
+
+.subscription-subtitle {
+    font-size: 16px;
+    margin-bottom: 40px;
+    color: #cfcfcf;  /* Light grey for subtitle */
+}
+
+/**********************************************************
+ * PLANS CONTAINER & ROW
+ **********************************************************/
+.plans-container {
+    background-color: transparent; /* Keep the overall container dark */
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.plans-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/**********************************************************
+ * PLAN CARDS (dark backgrounds, subtle borders)
+ **********************************************************/
+.plan-card {
+    background-color: #2c2c3c; /* Dark card background */
+    flex: 1 1 250px;
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    padding: 30px 20px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #3e3b4e; /* Subtle border to distinguish each card */
+}
+
+/* Distinct color accent or border for each plan, if desired */
+.plan-free {
+    border: 1px solid #00bcd4;  /* Teal border for "Free" */
+}
+.plan-normal {
+    border: 1px solid #5865F2; /* Purple accent for "Normal" */
+}
+.plan-plus {
+    border: 2px solid #34c759; /* Bright green accent for "Plus" */
+}
+
+/**********************************************************
+ * PLAN TEXT
+ **********************************************************/
+.plan-name {
+    margin: 0;
+    font-size: 24px;
+    color: #efd959; /* Gold or any accent color for the plan name */
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.plan-price {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.plan-save {
+    font-size: 14px;
+    color: #cfcfcf;
+    margin-bottom: 20px;
+}
+
+/* Feature List */
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    line-height: 1.8;
+    text-align: left;
+    width: 100%;
+    max-width: 220px;
+    color: #cfcfcf;
+}
+.plan-features li {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+/**********************************************************
+ * BUTTONS
+ **********************************************************/
+.subscribe-button {
+    background-color: #5865F2;  /* Default purple button */
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: auto;
+}
+
+.subscribe-button:hover {
+    background-color: #4752C4;
+    transform: translateY(-2px);
+}
+
+/* Optional: Distinct colors for each button if you want them to differ */
+.free-button {
+    background-color: #00bcd4;
+}
+.free-button:hover {
+    background-color: #0097a7;
+}
+
+.normal-button {
+    background-color: #5865F2;
+}
+.normal-button:hover {
+    background-color: #4752C4;
+}
+
+.plus-button {
+    background-color: #34c759;
+}
+.plus-button:hover {
+    background-color: #1eae42;
+}
+
+/**********************************************************
+ * BADGE (BEST DEAL)
+ **********************************************************/
+.plan-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #34c759;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+/**********************************************************
+ * RESPONSIVE BREAKPOINTS
+ **********************************************************/
+@media (max-width: 768px) {
+    .plan-card {
+        max-width: 350px;
+    }
+    .plan-price {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .subscription-container {
+        padding: 30px 10px;
+    }
+    .plans-container {
+        padding: 20px;
+    }
+    .plan-card {
+        max-width: 320px;
+        margin: 0 auto 20px;
+    }
+    .plan-price {
+        font-size: 18px;
+    }
+    .subscribe-button {
+        font-size: 13px;
+        padding: 10px 16px;
+    }
+}
+
+
+

@@ -1,0 +1,129 @@
+/* --------------------------------
+   Dark-Themed "Create Account"
+--------------------------------- */
+
+/* Body: Dark gradient background */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(120deg, #11171e, #1c1f2a);
+    margin: 0;
+    padding: 0;
+
+    /* Center card in the viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Outer wrapper just to keep content centered */
+.center-container {
+    width: 100%;
+    padding: 20px;
+}
+
+/* Main container: a dark card instead of white */
+.container {
+    background: #1f1f2f; /* Dark background */
+    color: #ffffff;      /* Light text on dark */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+
+    border: 1px solid #efd959; /* Classic yellow color */
+}
+
+/* Title styling */
+.container h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+/* "Do you have an account?" text, including the link */
+.login-redirect p {
+    font-size: 14px;
+    color: #cccccc;
+    margin-bottom: 30px;
+}
+
+.login-redirect a {
+    color: #9AC3FB;       /* Accent link color */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-redirect a:hover {
+    text-decoration: underline;
+}
+
+/* Row with the two big buttons */
+.options-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Common styles for both buttons */
+.option-box {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color 0.3s, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Purple button for doctors */
+/* Doctor Button - dark gradient with purple accent */
+.option-box.doctor {
+    background: linear-gradient(135deg, #2c2c3c 40%, rgba(44,44,60,0) 100%);
+    color: #ffffff;
+    border: 2px solid #6f42c1;
+    transition: transform 0.2s ease, background 0.3s;
+  }
+  
+  .option-box.doctor:hover {
+    background: linear-gradient(135deg, #3d3d53 40%, rgba(61,61,83,0) 100%);
+    border-color: #593a9b;
+    transform: translateY(-3px);
+  }
+  
+  /* Client Button - dark gradient with orange accent */
+  .option-box.client {
+    background: linear-gradient(135deg, #2c2c3c 40%, rgba(44,44,60,0) 100%);
+    color: #ffffff;
+    border: 2px solid #fd7e14;
+    transition: transform 0.2s ease, background 0.3s;
+  }
+  
+  .option-box.client:hover {
+    background: linear-gradient(135deg, #3d3d53 40%, rgba(61,61,83,0) 100%);
+    border-color: #e66a0c;
+    transform: translateY(-3px);
+  }
+  
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+

@@ -1,0 +1,1176 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/medicine_blocks.css' %}">
+<link rel="stylesheet" href="{% static 'css/underground.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+
+    <!-- =================== HERO + SEARCH WRAPPER =================== -->
+
+    <div class="hero-search-wrapper"
+    style="
+       /* Increased max-width by 150px (now 1350px) */
+       background-color: #1c1f2a; /* Dark background */
+       padding: 10px;
+       border-radius: 10px;
+       margin: 30px auto;
+       width: 90%;
+       max-width: 1350px;
+       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4); /* Darker shadow */
+       border: 1px solid #efd959;  /* Gold accent border */
+    "
+>
+   <!-- =================== HERO SECTION =================== -->
+   <div class="hero-section"
+        style="
+           /* Dark gradient background */
+           background: linear-gradient(to right, #1f1f2f, #2c2c3c);
+           color: #ffffff;
+           padding: 40px 20px;
+           border-radius: 10px;
+           text-align: center;
+           margin-bottom: 10px;
+           border: 1px solid #efd959;  /* Gold accent border */
+        "
+   >
+       <h1 style="
+           font-size: 36px; 
+           margin-bottom: 20px; 
+           color: #efd959; /* Gold accent for heading */
+       ">
+           Find the Right Doctor for You
+       </h1>
+
+       <p style="
+           font-size: 18px; 
+           max-width: 800px; 
+           margin: 0 auto 20px auto; 
+           line-height: 1.6;
+           color: #cfcfcf; /* Light grey for text */
+       ">
+           At <strong>Doctor Appointments</strong>, we help you discover 
+           the best doctors and specialists around you. Whether you're in need 
+           of routine check-ups, a second opinion, or specialized care, 
+           our platform makes it easy to schedule and manage your appointments.
+       </p>
+
+       <a href="javascript:void(0);" 
+          onclick="scrollToSpecialties()"
+          style="
+              display: inline-block;
+              background-color: #5865F2; /* Purple/blue accent */
+              color: #fff;
+              padding: 15px 30px;
+              border-radius: 8px;
+              font-size: 16px;
+              text-decoration: none;
+              box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+              margin-top: 10px;
+              transition: background-color 0.3s ease, transform 0.2s ease;
+          "
+          onmouseover="this.style.backgroundColor='#4752C4'; this.style.transform='scale(1.05)'"
+          onmouseout="this.style.backgroundColor='#5865F2'; this.style.transform='scale(1.0)'"
+       >
+           Explore Specialties
+       </a>
+   </div>
+
+   <!-- =================== SEARCH BOX SECTION =================== -->
+   <div class="search-container"
+        style="
+           background-color: #2c2c3c;
+           padding: 30px;
+           border-radius: 10px;
+           box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+           border: 1px solid #efd959;  /* Gold accent border */
+        "
+   >
+       <h2 style="
+           text-align: center; 
+           font-size: 24px; 
+           color: #efd959; /* Gold accent */
+           margin: 0;
+       ">
+           Welcome to Doctor Appointments
+       </h2>
+       <p style="
+           text-align: center; 
+           font-size: 16px; 
+           color: #cec5c5; 
+           margin-bottom: 20px;
+       ">
+           Manage your doctor appointments easily.
+       </p>
+       <form class="search-form" method="GET" action="" 
+             style="
+                display: flex; 
+                gap: 10px; 
+                justify-content: center; 
+                align-items: center; 
+                margin-bottom: 0;
+             "
+             onsubmit="handleSearch(event)"
+       >
+           <input
+               type="text"
+               name="q"
+               class="search-input"
+               placeholder="Search for doctors, specialties, or appointments..."
+               value="{{ request.GET.q }}"
+               style="
+                   padding: 15px;
+                   width: 80%;
+                   border-radius: 8px;
+                   border: 1px solid #444; /* Subtle dark border */
+                   font-size: 16px;
+                   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+                   background-color: #1f1f2f;
+                   color: #ffffff;
+                   height: 50px;
+               "
+           >
+           <button
+               type="submit"
+               class="search-button"
+               style="
+                   padding: 15px 25px;
+                   background-color: #5865F2; /* Purple/blue accent */
+                   color: white;
+                   font-size: 16px;
+                   border: none;
+                   border-radius: 8px;
+                   cursor: pointer;
+                   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+                   transition: background-color 0.3s ease, transform 0.2s ease;
+                   height: 50px;
+               "
+               onmouseover="this.style.backgroundColor='#4752C4'; this.style.transform='scale(1.05)'"
+               onmouseout="this.style.backgroundColor='#5865F2'; this.style.transform='scale(1.0)'"
+           >
+               Search
+           </button>
+           <a href="{% url 'home' %}"
+           class="all-specialities-button"
+           style="
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               background-color: #5865F2; /* Purple/blue accent */
+               color: white;
+               font-size: 16px;
+               border: none;
+               border-radius: 8px;
+               cursor: pointer;
+               box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+               transition: background-color 0.3s ease, transform 0.2s ease;
+               height: 50px;
+               width: 50px;
+           "
+           onmouseover="this.style.backgroundColor='#4752C4'; this.style.transform='scale(1.05)'"
+           onmouseout="this.style.backgroundColor='#5865F2'; this.style.transform='scale(1.0)'"
+        >
+          <img 
+            src="{% static 'images/home_all.png' %}" 
+            alt="Home All" 
+            style="width: 40px; height: 40px; filter: invert(100%);" 
+          />
+        </a>
+       </form>
+   </div>
+</div>
+    <!-- End .hero-search-wrapper -->
+
+    <!-- =================== EXTRA SECTION (NEW) =================== -->
+    <div class="extra-info-container" 
+    style="
+       background-color: #1c1f2a; /* Dark background */
+       padding: 10px;
+       border-radius: 10px;
+       margin: 30px auto;
+       width: 90%;
+       max-width: 1350px;
+       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6); /* Darker shadow */
+       border: 1px solid #efd959;  /* Gold accent border */
+    "
+>
+   <h2 style="
+       text-align: center; 
+       font-size: 28px; 
+       margin-top: 20px; 
+       color: #efd959; /* Gold accent */
+   ">
+       Our Statistics
+   </h2>
+   <p style="
+       text-align: center; 
+       color: #cfcfcf; /* Light grey text */
+       max-width: 800px; 
+       margin: 0 auto 30px auto; 
+       line-height: 1.6;
+   ">
+       We're proud to share some of the numbers that highlight our commitment 
+       to making healthcare more accessible and convenient for everyone.
+   </p>
+
+   <!-- Stats Row: 4 Boxes -->
+   <div class="stats-grid"
+        style="
+           display: flex; 
+           flex-wrap: wrap; 
+           gap: 10px; 
+           justify-content: center; 
+           margin-top: 30px;
+        "
+   >
+       <!-- Box 1: Medical Specialties -->
+       <div class="stat-box"
+            style="
+               background: #2c2c3c; 
+               border-radius: 8px; 
+               box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+               flex: 1 1 300px;
+               max-width: 350px;
+               min-height: 250px;
+               text-align: center;
+               padding: 30px;
+               border: 1px solid #efd959;  /* Gold accent border */
+            "
+       >
+           <h3 style="
+               font-size: 36px; 
+               margin: 0; 
+               color: #efd959; /* Gold accent for stats */
+           ">
+               {{ total_specialties }}+
+           </h3>
+           <p style="
+               font-size: 20px; 
+               margin: 5px 0 10px; 
+               color: #ffffff; 
+               font-weight: bold;
+           ">
+               Medical Specialties
+           </p>
+           <p style="
+               color: #cfcfcf; 
+               font-size: 18px; 
+               margin-bottom: 0;
+           ">
+               Explore our wide range of specialties, each dedicated to a different aspect of care.
+           </p>
+       </div>
+
+       <!-- Box 2: Doctors -->
+       <div class="stat-box"
+            style="
+               background: #2c2c3c; 
+               border-radius: 8px; 
+               box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+               flex: 1 1 300px;
+               max-width: 350px;
+               min-height: 250px;
+               text-align: center;
+               padding: 30px;
+               border: 1px solid #efd959;  /* Gold accent border */
+            "
+       >
+           <h3 style="
+               font-size: 36px; 
+               margin: 0; 
+               color: #efd959;
+           ">
+               {{ total_doctors }}+
+           </h3>
+           <p style="
+               font-size: 20px; 
+               margin: 5px 0 10px; 
+               color: #ffffff; 
+               font-weight: bold;
+           ">
+               Doctors
+           </p>
+           <p style="
+               color: #cfcfcf; 
+               font-size: 18px;
+               margin-bottom: 0;
+           ">
+               Our network of trusted professionals is here to provide top-quality healthcare.
+           </p>
+       </div>
+
+       <!-- Box 3: Appointments -->
+       <div class="stat-box"
+            style="
+               background: #2c2c3c; 
+               border-radius: 8px; 
+               box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+               flex: 1 1 300px;
+               max-width: 350px;
+               min-height: 250px;
+               text-align: center;
+               padding: 30px;
+               border: 1px solid #efd959;  /* Gold accent border */
+            "
+       >
+           <h3 style="
+               font-size: 36px; 
+               margin: 0; 
+               color: #efd959;
+           ">
+               {{ total_appointments }}+
+           </h3>
+           <p style="
+               font-size: 20px; 
+               margin: 5px 0 10px; 
+               color: #ffffff; 
+               font-weight: bold;
+           ">
+               Appointments
+           </p>
+           <p style="
+               color: #cfcfcf; 
+               font-size: 18px;
+               margin-bottom: 0;
+           ">
+               Seamlessly schedule and track all your medical appointments in one place.
+           </p>
+       </div>
+
+       <!-- Box 4: Users -->
+       <div class="stat-box"
+            style="
+               background: #2c2c3c; 
+               border-radius: 8px; 
+               box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+               flex: 1 1 300px;
+               max-width: 350px;
+               min-height: 250px;
+               text-align: center;
+               padding: 30px;
+               border: 1px solid #efd959;  /* Gold accent border */
+            "
+       >
+           <h3 style="
+               font-size: 36px; 
+               margin: 0; 
+               color: #efd959;
+           ">
+               {{ total_users }}+
+           </h3>
+           <p style="
+               font-size: 20px; 
+               margin: 5px 0 10px; 
+               color: #ffffff; 
+               font-weight: bold;
+           ">
+               Happy Users
+           </p>
+           <p style="
+               color: #cfcfcf; 
+               font-size: 18px;
+               margin-bottom: 0;
+           ">
+               Join thousands of satisfied patients who've streamlined their healthcare journey.
+           </p>
+       </div>
+   </div>
+</div>
+
+
+
+            <!-- Buttons Container (Matches Stats Container width) -->
+            <div class="action-container" 
+     style="
+         margin: 30px auto;
+         width: 90%;
+         max-width: 1350px;
+         background-color: #1c1f2a;  /* Dark background */
+         border-radius: 10px;
+         padding: 10px;
+         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6); /* Darker shadow */
+         display: flex;
+         gap: 10px;  /* space between buttons */
+         justify-content: center;
+     "
+>
+    <!-- Book Now Button -->
+    <a href="#" 
+       class="action-button"
+       id="bookNowButton"
+       style="
+           flex: 1; 
+           display: flex;
+           flex-direction: column;   /* stack text above image */
+           align-items: center;
+           justify-content: center;
+           text-decoration: none;
+           background-color: #2c2c3c; /* Purple/blue accent */
+           color: #fff;
+           border-radius: 10px;
+           font-size: 24px;
+           font-weight: 600;
+           min-height: 150px;
+           text-align: center;
+           transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+           border: 1px solid #efd959;  /* Gold accent border */
+       "
+       onmouseover="this.style.backgroundColor='#4752C4'; this.style.transform='scale(1.05)'"
+       onmouseout="this.style.backgroundColor='#5865F2'; this.style.transform='scale(1.0)'"
+    >
+       <span>Book Now</span>
+       <!-- Book Appointment Image -->
+       <img 
+         src="{% static 'images/book_appointment_v2.png' %}" 
+         alt="Book Appointment" 
+         style="
+            margin-top: 10px; 
+            width: 80px; 
+            height: 80px;
+            filter: invert(100%);
+         "
+       />
+    </a>
+
+    <!-- Message Now Button -->
+    <a href="#" 
+       class="action-button"
+       id="messageNowButton"
+       style="
+           flex: 1;
+           display: flex;
+           flex-direction: column;  /* stack text above image */
+           align-items: center;
+           justify-content: center;
+           text-decoration: none;
+           background-color: #2c2c3c; /* Purple/blue accent */
+           color: #fff;
+           border-radius: 10px;
+           font-size: 24px;
+           font-weight: 600;
+           min-height: 150px;
+           text-align: center;
+           transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+           border: 1px solid #efd959;  /* Gold accent border */
+
+       "
+       onmouseover="this.style.backgroundColor='#4752C4'; this.style.transform='scale(1.05)'"
+       onmouseout="this.style.backgroundColor='#5865F2'; this.style.transform='scale(1.0)'"
+    >
+       <span>Message Now</span>
+       <!-- Message Now Image -->
+       <img 
+         src="{% static 'images/message_now.png' %}" 
+         alt="Message Now" 
+         style="
+            margin-top: 10px; 
+            width: 80px; 
+            height: 80px;
+            filter: invert(100%);
+         "
+       />
+    </a>
+</div>
+
+
+    <!-- =================== MEDICAL SPECIALTIES SECTION =================== -->
+    <div id="medical-specialties" class="medicine-container"
+    style="
+       background-color: #1c1f2a;  /* Dark container background */
+       border-radius: 10px;
+       margin: 30px auto;
+       width: 90%;
+       max-width: 1350px;
+       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+       padding-bottom: 20px; /* space at bottom */
+       border: 1px solid #efd959;  /* Gold accent border */
+    "
+>
+   <!-- Dark heading container -->
+   <div style="
+       background-color: #2c2c3c;
+       border-radius: 6px;
+       padding: 10px;
+       margin: 20px auto;  
+       text-align: center;
+       max-width: 98%;
+       border: 1px solid #efd959;  /* Gold accent border */
+    ">
+       <h2 style="color: #efd959; margin: 0; font-size: 24px;">
+           Medical Specialties
+       </h2>
+   </div>
+
+   <!-- The rest of the specialties remain the same -->
+   <div class="medicine-grid"
+        style="
+           display: flex;
+           flex-wrap: wrap;
+           gap: 10px;
+           justify-content: center;
+           margin-top: 20px;
+        "
+   >
+       {% if medical_specialties %}
+           {% for specialty in medical_specialties %}
+               <div class="medicine-card"
+                    style="
+                       /* Dark fade gradient for each card */
+                       background: linear-gradient(135deg, #1f1f2f, #2c2c3c);
+                       flex: 1 1 calc(25% - 40px);
+                       min-width: 200px;
+                       max-width: {% if medical_specialties|length == 1 %}300px{% else %}none{% endif %};
+                       border-radius: 8px;
+                       padding: 20px; 
+                       text-align: center;
+                       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+                       margin: {% if medical_specialties|length == 1 %}0 auto{% else %}0{% endif %};
+                       border: 1px solid #efd959;  /* Gold accent border */
+                    "
+               >
+                   <h3 style="
+                       margin-top: 0; 
+                       margin-bottom: 10px; 
+                       font-size: 20px; 
+                       color: #efd959;  /* Gold accent for headings */
+                   ">
+                       {{ specialty.name }}
+                   </h3>
+                   <p style="
+                       color: #cfcfcf; 
+                       margin-bottom: 15px;
+                       line-height: 1.4;
+                   ">
+                       {{ specialty.description }}
+                   </p>
+                   <a href="{% url 'specialty_details' specialty.name %}" 
+                      style="
+                          color: #5865F2; 
+                          text-decoration: none; 
+                          font-weight: bold; 
+                          transition: color 0.2s ease;
+                      "
+                      onmouseover="this.style.color='#4752C4'"
+                      onmouseout="this.style.color='#5865F2'"
+                   >
+                       View Details
+                   </a>
+               </div>
+           {% endfor %}
+       {% else %}
+           <p style="color: #cfcfcf;">
+               No specialties found for your search.
+           </p>
+       {% endif %}
+   </div>
+</div>
+
+
+<!-- =================== SOCIAL MEDIA & CONTACT SECTION =================== -->
+
+<!-- ====== The Modal Overlay (hidden by default) ====== -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <!-- ====== Modal Header ====== -->
+      <div class="modal-header">
+        <span>Book Now</span>
+        <span class="modal-close" id="modalCloseBtn">&times;</span>
+      </div>
+      
+      <!-- ====== Modal Body ====== -->
+      <div class="modal-body">
+        
+        <!-- STEP 1: Select Country -->
+        <div class="step" id="step1">
+          
+          <!-- Gray container for "Your Selection" -->
+          <div class="selection-container">
+            <span class="selection-title">Your Selection</span>
+            <div class="square-container">
+              <div class="square" id="countrySquareStep1"></div>
+              <div class="square" id="citySquareStep1"></div>
+              <div class="square" id="specialtySquareStep1"></div>
+            </div>
+          </div>
+          
+          <div class="search-container-modal">
+            <input 
+              type="text" 
+              class="modal-search-input" 
+              id="searchCountry" 
+              placeholder="Search Country..."
+            />
+          </div>          
+          
+          <!-- Country list -->
+          <ul id="countryList"></ul>
+          
+          <!-- Navigation buttons (Back/Next) -->
+          <div class="nav-buttons">
+            <button class="back-btn" id="step1Back">Close</button>
+            <button class="next-btn" id="step1Next">Next</button>
+          </div>
+        </div>
+  
+        <!-- STEP 2: Select City -->
+        <div class="step" id="step2">
+          
+          <!-- "Your Selection" area -->
+          <div class="selection-container">
+            <span class="selection-title">Your Selection</span>
+            <div class="square-container">
+              <div class="square" id="countrySquareStep2"></div>
+              <div class="square" id="citySquareStep2"></div>
+              <div class="square" id="specialtySquareStep2"></div>
+            </div>
+          </div>
+          
+          <!-- Search bar above the list -->
+          <div class="search-container-modal">
+            <input 
+              type="text" 
+              class="modal-search-input" 
+              id="searchCity" 
+              placeholder="Search City..."
+            />
+          </div>  
+          
+          <!-- City list -->
+          <ul id="cityList"></ul>
+          
+          <!-- Navigation buttons (Back/Next) -->
+          <div class="nav-buttons">
+            <button class="back-btn" id="step2Back">Back</button>
+            <button class="next-btn" id="step2Next">Next</button>
+          </div>
+        </div>
+  
+        <!-- STEP 3: Select Specialty -->
+        <div class="step" id="step3">
+          
+          <!-- "Your Selection" area -->
+          <div class="selection-container">
+            <span class="selection-title">Your Selection</span>
+            <div class="square-container">
+              <div class="square" id="countrySquareStep3"></div>
+              <div class="square" id="citySquareStep3"></div>
+              <div class="square" id="specialtySquareStep3"></div>
+            </div>
+          </div>
+          
+          <!-- Search bar above the list -->
+          <div class="search-container-modal">
+            <input 
+              type="text" 
+              class="modal-search-input" 
+              id="searchSpecialty" 
+              placeholder="Search Medical Specialty..."
+            />
+          </div>  
+          
+          <!-- Specialty list -->
+          <ul id="specialtyList"></ul>
+          
+          <!-- Navigation buttons (Back/Finish) -->
+          <div class="nav-buttons">
+            <button class="back-btn" id="step3Back">Back</button>
+            <button class="next-btn" id="finishBtn">Search</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<!-- ====== Messages Overlay (hidden by default) ====== -->
+<div class="messages-overlay" id="messagesOverlay">
+  <div class="messages-box" style="width: 500px; height: 800px;">
+    
+    <!-- ====== Modal Header ====== -->
+    <div class="messages-header">
+      <span>Messages</span>
+      <span class="messages-close" id="messagesCloseBtn">&times;</span>
+    </div>
+    
+    <!-- ====== Modal Body ====== -->
+    <div class="messages-body">
+
+      <!-- Current Messages Section -->
+      <div class="messages-section current-section">
+          <div class="section-header green-header">
+              <h3>Current Messages</h3>
+          </div>
+          <ul class="message-list">
+              {% for chat in current_messages %}
+              <li class="message-item">
+                <!-- Left Column -->
+                <div class="message-left">
+                  {% if chat.partner_photo %}
+                    <img src="{{ chat.partner_photo.url }}" alt="User Photo" class="user-photo" />
+                  {% else %}
+                    <img src="{% static 'images/user1.png' %}" alt="User Photo" class="user-photo" />
+                  {% endif %}
+                  <div class="message-info">
+                    <div class="user-name"><strong>{{ chat.partner_name }}</strong></div>
+                    <div class="message-text">{{ chat.last_message }}</div>
+                  </div>
+                </div>
+                <!-- Right Column (icon) -->
+                <div class="message-right">
+                  <a href="{% url 'chat_detail' chat.chat_id %}">
+                    <img src="{% static 'images/message_now.png' %}" alt="Message Now Icon" class="message-icon" />
+                  </a>
+                </div>
+              </li>
+              {% empty %}
+              <li class="message-item">No current messages.</li>
+              {% endfor %}
+            </ul>
+        </div>
+
+      <hr />  <!-- A simple divider line (optional) -->
+
+      <!-- Old Messages Section -->
+      <div class="messages-section old-section">
+          <div class="section-header blue-header">
+              <h3>Old Messages</h3>
+          </div>
+        <ul class="message-list">
+          {% for chat in old_messages %}
+          <li class="message-item">
+            <!-- Left Column -->
+            <div class="message-left">
+              {% if chat.partner_photo %}
+                <img src="{{ chat.partner_photo.url }}" alt="User Photo" class="user-photo" />
+              {% else %}
+                <img src="{% static 'images/user1.png' %}" alt="User Photo" class="user-photo" />
+              {% endif %}
+              <div class="message-info">
+                <div class="user-name"><strong>{{ chat.partner_name }}</strong></div>
+                <div class="message-text">{{ chat.last_message }}</div>
+              </div>
+            </div>
+            <!-- Right Column (icon) -->
+            <div class="message-right">
+              <a href="{% url 'chat_detail' chat.chat_id %}">
+                <img src="{% static 'images/message_now.png' %}" alt="Message Now Icon" class="message-icon" />
+              </a>
+            </div>
+          </li>
+          {% empty %}
+          <li class="message-item">No old messages.</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+    
+    <!-- ====== Modal Footer ====== -->
+    <div class="messages-footer" style="display: flex; justify-content: space-between; align-items: center;">
+      <button id="messagesFooterCloseBtn" class="close-btn" style="padding: 8px 12px; border: none; border-radius: 4px; background: #ccc; cursor: pointer;">
+        Close
+      </button>
+      <a href="{% url 'message_chat' %}?showNewChatModal=true" id="addChatLink" class="add-chat-btn"
+      style="
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 4px;
+        background: #007BFF;
+        color: #fff;
+        text-decoration: none; 
+        cursor: pointer;
+      "
+    >
+      + Add Chat
+    </a>
+    
+    
+    </div>
+  </div>
+</div>
+
+
+<script>
+        // GET data from the <script> tags above
+          const countryData = JSON.parse('{{ country_json|safe }}');
+          const cityData = JSON.parse('{{ city_json|safe }}');
+          const specData = JSON.parse('{{ spec_json|safe }}');
+    
+        /*
+          countryData, cityData, and specData are now arrays of objects.
+          Example structure (assuming your models have fields: id, name, etc.):
+    
+          countryData = [
+            {"id": 1, "name": "France"},
+            {"id": 2, "name": "Germany"},
+            ...
+          ]
+    
+          cityData = [
+            {"id": 10, "name": "Paris", "country": 1},
+            {"id": 11, "name": "Marseille", "country": 1},
+            {"id": 12, "name": "Berlin", "country": 2},
+            ...
+          ]
+    
+          specData = [
+            {"id": 1, "name": "Cardiology"},
+            {"id": 2, "name": "Orthopedics"},
+            ...
+          ]
+        */
+    
+        // SELECTORS
+        const bookNowButton = document.getElementById('bookNowButton');
+        const modalOverlay  = document.getElementById('modalOverlay');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+    
+        // Steps
+        const step1Container = document.getElementById('step1');
+        const step2Container = document.getElementById('step2');
+        const step3Container = document.getElementById('step3');
+    
+        // Search inputs
+        const searchCountryEl   = document.getElementById('searchCountry');
+        const searchCityEl      = document.getElementById('searchCity');
+        const searchSpecialtyEl = document.getElementById('searchSpecialty');
+    
+        // Lists
+        const countryListEl     = document.getElementById('countryList');
+        const cityListEl        = document.getElementById('cityList');
+        const specialtyListEl   = document.getElementById('specialtyList');
+    
+        // Navigation buttons
+        const step1BackBtn      = document.getElementById('step1Back');
+        const step1NextBtn      = document.getElementById('step1Next');
+        const step2BackBtn      = document.getElementById('step2Back');
+        const step2NextBtn      = document.getElementById('step2Next');
+        const step3BackBtn      = document.getElementById('step3Back');
+        const finishBtn         = document.getElementById('finishBtn');
+    
+        // State variables
+        let selectedCountry     = null;  // Will store {id, name, ...}
+        let selectedCity        = null;  // Will store {id, name, country, ...}
+        let selectedSpecialty   = null;  // Will store {id, name, ...}
+
+        // The messages overlay container
+const messagesOverlay = document.getElementById('messagesOverlay');
+
+// Close elements (the top "×" and the footer "Close" button)
+const messagesCloseBtn       = document.getElementById('messagesCloseBtn');
+const messagesFooterCloseBtn = document.getElementById('messagesFooterCloseBtn');
+
+// The button/link that opens the messages modal
+const messageNowButton = document.getElementById('messageNowButton');
+
+// ========== Open/Close Logic ==========
+
+// Open the messages modal
+if (messageNowButton) {
+  messageNowButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    messagesOverlay.style.display = 'flex';
+  });
+}
+
+// Close function
+function closeMessagesModal() {
+  messagesOverlay.style.display = 'none';
+}
+
+// Close the modal when the "×" is clicked
+if (messagesCloseBtn) {
+  messagesCloseBtn.addEventListener('click', closeMessagesModal);
+}
+
+// Close the modal when the "Close" button in footer is clicked
+if (messagesFooterCloseBtn) {
+  messagesFooterCloseBtn.addEventListener('click', closeMessagesModal);
+}
+    
+        // ========== STEP NAVIGATION ==========
+        function showStep(stepNumber) {
+          step1Container.style.display = 'none';
+          step2Container.style.display = 'none';
+          step3Container.style.display = 'none';
+    
+          if (stepNumber === 1) step1Container.style.display = 'block';
+          else if (stepNumber === 2) step2Container.style.display = 'block';
+          else if (stepNumber === 3) step3Container.style.display = 'block';
+        }
+    
+        // ========== POPULATE / CLEAR ==========
+    
+        // Countries
+        function populateCountries() {
+          countryListEl.innerHTML = '';
+          countryData.forEach(country => {
+            const li = document.createElement('li');
+            li.textContent = country.name;
+            li.addEventListener('click', () => {
+              selectedCountry = country;
+              selectedCity = null;
+              selectedSpecialty = null;
+              highlightSelection(countryListEl, li);
+              updateSelections();
+            });
+            countryListEl.appendChild(li);
+          });
+        }
+    
+        // Cities
+        function populateCities() {
+          cityListEl.innerHTML = '';
+          if (!selectedCountry) return;
+          const filteredCities = cityData.filter(
+            city => city.country === selectedCountry.id
+          );
+          filteredCities.forEach(city => {
+            const li = document.createElement('li');
+            li.textContent = city.name;
+            li.addEventListener('click', () => {
+              selectedCity = city;
+              selectedSpecialty = null;
+              highlightSelection(cityListEl, li);
+              updateSelections();
+            });
+            cityListEl.appendChild(li);
+          });
+        }
+    
+        // Specialties
+        function populateSpecialties() {
+          specialtyListEl.innerHTML = '';
+          specData.forEach(spec => {
+            const li = document.createElement('li');
+            li.textContent = spec.name;
+            li.addEventListener('click', () => {
+              selectedSpecialty = spec;
+              highlightSelection(specialtyListEl, li);
+              updateSelections();
+            });
+            specialtyListEl.appendChild(li);
+          });
+        }
+    
+        // ========== HIGHLIGHT + FILTER UTILS ==========
+    
+        function highlightSelection(listEl, selectedLi) {
+          [...listEl.children].forEach(item => {
+            item.style.backgroundColor = '';
+            item.style.color = '';
+          });
+          selectedLi.style.backgroundColor = '#9c3419';
+          selectedLi.style.color = '#fff';
+        }
+    
+        function filterList(listEl, searchValue) {
+          const items = [...listEl.children];
+          items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            item.style.display = text.includes(searchValue.toLowerCase()) ? 'block' : 'none';
+          });
+        }
+    
+        // ========== UPDATE DISPLAY SELECTIONS ==========
+    
+        function updateSelections() {
+          // For Step 1
+          const c1 = document.getElementById('countrySquareStep1');
+          const ci1 = document.getElementById('citySquareStep1');
+          const s1 = document.getElementById('specialtySquareStep1');
+          if (c1) {
+            c1.textContent  = selectedCountry ? `Country: ${selectedCountry.name}` : 'Country: —';
+            ci1.textContent = selectedCity    ? `City: ${selectedCity.name}`       : 'City: —';
+            s1.textContent  = selectedSpecialty ? `Specialty: ${selectedSpecialty.name}` : 'Specialty: —';
+          }
+    
+          // For Step 2
+          const c2 = document.getElementById('countrySquareStep2');
+          const ci2 = document.getElementById('citySquareStep2');
+          const s2 = document.getElementById('specialtySquareStep2');
+          if (c2) {
+            c2.textContent  = selectedCountry ? `Country: ${selectedCountry.name}` : 'Country: —';
+            ci2.textContent = selectedCity    ? `City: ${selectedCity.name}`       : 'City: —';
+            s2.textContent  = selectedSpecialty ? `Specialty: ${selectedSpecialty.name}` : 'Specialty: —';
+          }
+    
+          // For Step 3
+          const c3 = document.getElementById('countrySquareStep3');
+          const ci3 = document.getElementById('citySquareStep3');
+          const s3 = document.getElementById('specialtySquareStep3');
+          if (c3) {
+            c3.textContent  = selectedCountry ? `Country: ${selectedCountry.name}` : 'Country: —';
+            ci3.textContent = selectedCity    ? `City: ${selectedCity.name}`       : 'City: —';
+            s3.textContent  = selectedSpecialty ? `Specialty: ${selectedSpecialty.name}` : 'Specialty: —';
+          }
+        }
+    
+        // ========== EVENT LISTENERS ==========
+    
+        // 1) Open the modal
+        bookNowButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Reset selections
+          selectedCountry = null;
+          selectedCity = null;
+          selectedSpecialty = null;
+          // Clear searches
+          searchCountryEl.value = '';
+          searchCityEl.value = '';
+          searchSpecialtyEl.value = '';
+          // Populate Step 1
+          populateCountries();
+          updateSelections();
+          showStep(1);
+          // Show modal
+          modalOverlay.style.display = 'flex';
+        });
+    
+        // 2) Close the modal (X)
+        modalCloseBtn.addEventListener('click', () => {
+          modalOverlay.style.display = 'none';
+        });
+    
+        // Step 1: close or next
+        step1BackBtn.addEventListener('click', () => {
+          modalOverlay.style.display = 'none';
+        });
+        step1NextBtn.addEventListener('click', () => {
+          if (!selectedCountry) {
+            alert("Please select a country first.");
+            return;
+          }
+          populateCities();
+          searchCityEl.value = '';
+          updateSelections();
+          showStep(2);
+        });
+    
+        // Step 2: back or next
+        step2BackBtn.addEventListener('click', () => {
+          showStep(1);
+        });
+        step2NextBtn.addEventListener('click', () => {
+          if (!selectedCity) {
+            alert("Please select a city first.");
+            return;
+          }
+          populateSpecialties();
+          searchSpecialtyEl.value = '';
+          updateSelections();
+          showStep(3);
+        });
+    
+        // Step 3: back or finish
+        step3BackBtn.addEventListener('click', () => {
+          showStep(2);
+        });
+        
+        finishBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+
+        // Ensure user has selected all 3 (country, city, specialty)
+        if (!selectedCountry) {
+          alert("Please select a country.");
+          return;
+        }
+        
+        if (!selectedCity) {
+          alert("Please select a city.");
+          return;
+        }
+
+        if (!selectedSpecialty) {
+          alert("Please select a medical specialty.");
+          return;
+        }
+
+         // Get names from the selection objects
+        const countryName = encodeURIComponent(selectedCountry.name);
+        const cityName = encodeURIComponent(selectedCity.name);
+        const specialtyName = encodeURIComponent(selectedSpecialty.name);
+
+       // Redirect to your "book_now" route
+        // e.g. /book_now/<country_name>/<city_name>/<specialty_name>/
+      window.location.href = `/book_now/${countryName}/${cityName}/${specialtyName}/`;
+      });
+
+
+    
+        // Search event listeners
+        searchCountryEl.addEventListener('input', (e) => {
+          filterList(countryListEl, e.target.value);
+        });
+        searchCityEl.addEventListener('input', (e => {
+          filterList(cityListEl, e.target.value);
+        }));
+        searchSpecialtyEl.addEventListener('input', (e => {
+          filterList(specialtyListEl, e.target.value);
+        }));
+
+// Replace the handleSearch function with this updated version
+function handleSearch(event) {
+    event.preventDefault(); // Prevent form submission
+    
+    // Get the search input value
+    const searchInput = document.querySelector('.search-input');
+    const searchValue = searchInput.value;
+    
+    // Store the search value in sessionStorage
+    sessionStorage.setItem('searchValue', searchValue);
+    
+    // Submit the form normally
+    const form = event.target;
+    form.submit();
+}
+
+// Add this new function to handle scroll position after page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we have a stored search value
+    const searchValue = sessionStorage.getItem('searchValue');
+    if (searchValue) {
+        // Clear the stored value
+        sessionStorage.removeItem('searchValue');
+        
+        // Wait a short moment for the page to fully load
+        setTimeout(() => {
+            const specialtiesSection = document.getElementById('medical-specialties');
+            if (specialtiesSection) {
+                specialtiesSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 100);
+    }
+});
+
+// Add this new function for the Explore Specialties button
+function scrollToSpecialties() {
+    const specialtiesSection = document.getElementById('medical-specialties');
+    if (specialtiesSection) {
+        specialtiesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+</script>
+
+{% include 'appointments/underground.html' %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

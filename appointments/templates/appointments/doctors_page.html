@@ -1,0 +1,1007 @@
+{% extends 'appointments/base.html' %}
+
+{% load static %}
+
+{% block title %}Doctors{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/doctors_page.css' %}">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+{% endblock %}
+
+{% block content %}
+
+<!-- Search and Filter Section -->
+<!-- Include the Search and Filter Section -->
+{% include 'appointments/search_filter.html' %}
+
+<!-- Main Container -->
+<div class="container" 
+     style="display:flex; align-items: stretch;   background-color: #2c2c3c;   max-width: 1350px; border-radius: 8px; padding: 10px; border: 1px solid #efd959;  /* Gold accent border */ /* space between left and right sections */">
+
+    <!-- Left Section: Doctors List -->
+    <div class="left-section-container" 
+    style=" flex: 3;
+    background-color: #1c1f2a; /* Dark background */
+    color: #cfcfcf;           /* Light text for contrast */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Darker shadow */
+    margin-bottom: 20px;
+    border: 1px solid #efd959;  /* Gold accent border */
+    ">
+
+        {% if country_name and city_name %}
+        <h2 style="
+        margin-bottom: 20px;
+        font-size: 25px;
+        font-weight: 600;
+        color: #efd959; /* Gold accent heading */
+    ">
+                Available doctors in {{ country_name }}, {{ city_name }} for {{ specialty_name }}
+            </h2>
+        {% else %}
+        <h2 style="
+        margin-bottom: 20px;
+        font-size: 25px;
+        font-weight: 600;
+        color: #efd959; /* Gold accent heading */
+    ">Available doctors in {{ specialty_name }}</h2>
+        {% endif %}
+
+        <!-- Doctors List -->
+        <div class="doctors-list">
+            {% if doctors.exists %}
+                {% for doctor in doctors %}
+                <div class="doctor-card"
+                style="
+                    display: flex; 
+                    flex-wrap: wrap; 
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    border: 1px solid #444;         /* Darker border */
+                    padding: 15px; 
+                    border-radius: 8px; 
+                    margin-bottom: 15px;
+                    background-color: #2c2c3c;      /* Dark card background */
+                    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+                    color: #cfcfcf;                 /* Light text inside the card */
+                    border: 1px solid #efd959;  /* Gold accent border */
+                "
+                >
+                    
+                    <!-- Left Section: Image and Profile Button -->
+                    <div style="display: flex; flex-direction: column; align-items: center; margin-right: 20px;">
+                        <img 
+                            {% if doctor.profile_picture %}
+                              src="{{ doctor.profile_picture.url }}"
+                             {% else %}
+                              src="https://via.placeholder.com/150"
+                             {% endif %}
+                             alt="Doctor Profile Picture" 
+                             style="width: 150px; height: 150px; border-radius: 8px; object-fit: cover; margin-bottom: 10px; border: 2px solid #efd959;">
+                        
+                        <!-- View Profile Button -->
+                        <a href="{% url 'view_doctor_profile_by_cli' doctor.user.username %}" style="text-decoration: none;">
+                            <button style="background: #1c1f2a; color: white; padding: 10px 15px; border: 1px solid #efd959; border-radius: 5px; cursor: pointer; width: 150px;">
+                                View Profile
+                            </button>
+                        </a>
+                    </div>
+                    
+                    <!-- Middle Section: Doctor's Info -->
+                    <div style="flex: 1;">
+                        <h3 style="margin: 0;">{{ doctor.user.username }}</h3>
+                        <p style="margin: 0; color: gray;">{{ doctor.specialization }}</p>
+                        <p style="margin: 5px 0;">{{ doctor.experience }}</p>
+                        <p style="margin: 0;">
+                            <strong>{{ doctor.address }}</strong> • {{ doctor.clinic_hospital }}
+                        </p>
+                        <p style="margin: 5px 0;">Consultation fee: ₹{{ doctor.consultation_fee }}</p>
+                    </div>
+                    
+                    <!-- Right Section: Availability & Action Buttons -->
+                    <div style="text-align: right;">
+                        <!-- Availability Section -->
+                        {% if doctor.monday_start or doctor.tuesday_start or doctor.wednesday_start or doctor.thursday_start or doctor.friday_start %}
+                            <p style="margin: 0; color: gray; font-size: 14px;">Availability:</p>
+                            <ul style="margin: 5px 0; padding: 0; list-style-type: none; color: gray; font-size: 14px;">
+                                {% if doctor.monday_start and doctor.monday_end %}
+                                    <li>Monday: {{ doctor.monday_start }} - {{ doctor.monday_end }}</li>
+                                {% endif %}
+                                {% if doctor.tuesday_start and doctor.tuesday_end %}
+                                    <li>Tuesday: {{ doctor.tuesday_start }} - {{ doctor.tuesday_end }}</li>
+                                {% endif %}
+                                {% if doctor.wednesday_start and doctor.wednesday_end %}
+                                    <li>Wednesday: {{ doctor.wednesday_start }} - {{ doctor.wednesday_end }}</li>
+                                {% endif %}
+                                {% if doctor.thursday_start and doctor.thursday_end %}
+                                    <li>Thursday: {{ doctor.thursday_start }} - {{ doctor.thursday_end }}</li>
+                                {% endif %}
+                                {% if doctor.friday_start and doctor.friday_end %}
+                                    <li>Friday: {{ doctor.friday_start }} - {{ doctor.friday_end }}</li>
+                                {% endif %}
+                            </ul>
+                        {% else %}
+                            <p style="margin: 0; color: gray; font-size: 14px;">Availability not specified</p>
+                        {% endif %}
+                        
+                        <!-- Action Buttons -->
+                        <button 
+                        onclick="openBookAppointmentModalFirst('{{ doctor.id }}')" 
+                        style="background: #1c1f2a; color: white; padding: 10px 15px; border: 1px solid #efd959; 
+                            border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                        Book Appointment
+                        </button>
+
+                        <button onclick="openContactModal('{{ doctor.id }}')" 
+                                style="background: #1c1f2a; color: white; padding: 10px 15px; border: 1px solid #efd959; border-radius: 5px; cursor: pointer; margin-top: 25px;">
+                            Contact Clinic
+                        </button>
+                    </div>
+                </div>  
+                
+                <!-- Single Book Appointment Modal -->
+                <div id="appointment-modal{{ doctor.id }}" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="width: 90%; max-width: 800px; background: #1c1f2a; border-radius: 10px; padding: 20px; box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); overflow-y: auto; max-height: 90%; border: 1px solid #efd959;">
+                        <!-- Close Button -->
+                        <button onclick="closeBookAppointmentModal('{{ doctor.id }}')" aria-label="Close Modal" style="background: transparent; border: none; font-size: 24px; float: right; cursor: pointer; color: #efd959;">&times;</button>
+                        
+                        <!-- Header -->
+                        <h2 id="modal-title" style="margin-bottom: 20px; font-size: 22px; font-weight: bold; text-align: center; color: #efd959;">Book an Appointment</h2>
+                        
+                        <!-- Calendar Section -->
+                        <div style="margin-bottom: 30px; background-color: #2c2c3c; border-radius: 10px; padding: 20px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); border: 1px solid #efd959;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                                <button id="prev-week-btn" onclick="navigateDays(-7, '{{ doctor.id }}')" style="border: none; background-color: transparent; cursor: pointer; font-size: 18px; color: #efd959;">&#8592;</button>
+                                <div id="calendar-days-{{ doctor.id }}" style="display: flex; gap: 15px; align-items: center; justify-content: center; flex: 1;">
+                                    <!-- Calendar days will be rendered dynamically -->
+                                </div>
+                                <button id="next-week-btn" onclick="navigateDays(7, '{{ doctor.id }}')" style="border: none; background-color: transparent; cursor: pointer; font-size: 18px; color: #efd959;">&#8594;</button>
+                            </div>
+                            
+                            <!-- Available Slots -->
+                            <div>
+                                <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #efd959;">Available Slots</h3>
+                                <div id="available-slots-{{ doctor.id }}" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <!-- Slots will be rendered dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Appointment Form Section -->
+                        <form action="{% url 'book_appointment' %}" method="POST">
+                            {% csrf_token %}
+
+                            <input type="hidden" id="doctor_id" name="doctor_id" value="{{ doctor.id }}">
+                            
+                            <!-- Select Clinic and Start Date -->
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <div style="flex: 1;">
+                                    <label for="clinic" style="display: block; font-weight: bold; color: #efd959;">Select Clinic</label>
+                                    <select id="clinic" name="clinic" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                        <option value="memorial">{{ doctor.clinic_hospital }}</option>
+                                    </select>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="date" style="display: block; font-weight: bold; color: #efd959;">Start Date</label>
+                                    <input type="date" id="date" name="start_date" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                            </div>
+                            
+                            <!-- Start Time and End Time -->
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <div style="flex: 1;">
+                                    <label for="time" style="display: block; font-weight: bold; color: #efd959;">Start Time</label>
+                                    <input type="time" id="time" name="start_time" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="end_time" style="display: block; font-weight: bold; color: #efd959;">End Time</label>
+                                    <input type="time" id="end_time" name="end_time" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                            </div>
+                            
+                            <!-- Slot Duration -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="slot_duration" style="display: block; font-weight: bold; color: #efd959;">Slot Duration (minutes)</label>
+                                <input type="text" id="slot_duration" name="slot_duration" min="1" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                            </div>
+                            
+                            <!-- One-Time Appointment -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="one_time" style="color: white;">
+                                    <input type="checkbox" id="one_time" name="one_time" style="margin-right: 5px;">
+                                    One-Time Appointment
+                                </label>
+                            </div>
+                            
+                            <!-- Repeat Every, Unit, Ends On -->
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <div style="flex: 1;">
+                                    <label for="repeat_every" style="display: block; font-weight: bold; color: #efd959;">Repeat Every</label>
+                                    <input type="number" id="repeat_every" name="repeat_every" value="1" min="1" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="repeat_unit" style="display: block; font-weight: bold; color: #efd959;">Unit</label>
+                                    <select id="repeat_unit" name="repeat_unit" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                        <option value="week" selected>Week</option>
+                                        <option value="month">Month</option>
+                                    </select>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="end_date" style="display: block; font-weight: bold; color: #efd959;">Ends On</label>
+                                    <input type="date" id="end_date" name="end_date" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <button type="submit" id="book-appointment-btn" style="width: 100%; padding: 10px; border: 1px solid #efd959; border-radius: 5px; background-color: #1c1f2a; color: white; font-size: 16px; font-weight: bold; cursor: pointer;">
+                                Book Appointment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Single Online Appointment Modal -->
+                <div id="online-appointment-modal{{ doctor.id }}" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="width: 90%; max-width: 800px; background: #1c1f2a; border-radius: 10px; padding: 20px; box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); overflow-y: auto; max-height: 90%; border: 1px solid #efd959;">
+                        <!-- Close Button -->
+                        <button onclick="closeOnlineBookAppointmentModal('{{ doctor.id }}')" aria-label="Close Modal" style="background: transparent; border: none; font-size: 24px; float: right; cursor: pointer; color: #efd959;">&times;</button>
+                        
+                        <!-- Header -->
+                        <h2 id="modal-title" style="margin-bottom: 20px; font-size: 22px; font-weight: bold; text-align: center; color: #efd959;">Book an Online Appointment</h2>
+                        
+                        <!-- Calendar Section -->
+                        <div style="margin-bottom: 30px; background-color: #2c2c3c; border-radius: 10px; padding: 20px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); border: 1px solid #efd959;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                                <button id="prev-week-btn" onclick="navigateDays(-7, '{{ doctor.id }}', true)" style="border: none; background-color: transparent; cursor: pointer; font-size: 18px; color: #efd959;">&#8592;</button>
+                                <div id="calendar-days-online-{{ doctor.id }}" style="display: flex; gap: 15px; align-items: center; justify-content: center; flex: 1;">
+                                    <!-- Calendar days will be rendered dynamically -->
+                                </div>
+                                <button id="next-week-btn" onclick="navigateDays(7, '{{ doctor.id }}', true)" style="border: none; background-color: transparent; cursor: pointer; font-size: 18px; color: #efd959;">&#8594;</button>
+                            </div>
+                            
+                            <!-- Available Slots -->
+                            <div>
+                                <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #efd959;">Available Slots</h3>
+                                <div id="available-slots-online-{{ doctor.id }}" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <!-- Slots will be rendered dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Appointment Form Section -->
+                        <form action="{% url 'book_appointment' %}" method="POST">
+                            {% csrf_token %}
+
+                            <input type="hidden" id="doctor_id" name="doctor_id" value="{{ doctor.id }}">
+                            
+                            <!-- Select Clinic and Start Date -->
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <div style="flex: 1;">
+                                    <label for="date" style="display: block; font-weight: bold; color: #efd959;">Start Date</label>
+                                    <input type="date" id="date" name="start_date" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="time" style="display: block; font-weight: bold; color: #efd959;">Start Time</label>
+                                    <input type="time" id="time" name="start_time" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="end_time" style="display: block; font-weight: bold; color: #efd959;">End Time</label>
+                                    <input type="time" id="end_time" name="end_time" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                            </div>
+                            
+                            <!-- Slot Duration -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="slot_duration" style="display: block; font-weight: bold; color: #efd959;">Slot Duration (minutes)</label>
+                                <input type="text" id="slot_duration" name="slot_duration" min="1" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                            </div>
+                            
+                            <!-- One-Time Appointment -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="one_time" style="color: white;">
+                                    <input type="checkbox" id="one_time" name="one_time" style="margin-right: 5px;">
+                                    One-Time Appointment
+                                </label>
+                            </div>
+                            
+                            <!-- Repeat Every, Unit, Ends On -->
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <div style="flex: 1;">
+                                    <label for="repeat_every" style="display: block; font-weight: bold; color: #efd959;">Repeat Every</label>
+                                    <input type="number" id="repeat_every" name="repeat_every" value="1" min="1" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="repeat_unit" style="display: block; font-weight: bold; color: #efd959;">Unit</label>
+                                    <select id="repeat_unit" name="repeat_unit" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                        <option value="week" selected>Week</option>
+                                        <option value="month">Month</option>
+                                    </select>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="end_date" style="display: block; font-weight: bold; color: #efd959;">Ends On</label>
+                                    <input type="date" id="end_date" name="end_date" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #efd959; background-color: #2c2c3c; color: white;">
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <button type="submit" id="book-appointment-btn" style="width: 100%; padding: 10px; border: 1px solid #efd959; border-radius: 5px; background-color: #1c1f2a; color: white; font-size: 16px; font-weight: bold; cursor: pointer;">
+                                Book Appointment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Book Appointment Modal -->
+                <div id="bookAppointmentModal{{ doctor.id }}" class="modal-overlay" style="display: none;">
+                    <div class="modal-content" style="max-width: 600px; margin: auto; background: #1c1f2a; padding: 20px; border-radius: 8px; position: relative; border: 1px solid #efd959;">
+                      <!-- Close button -->
+                      <span class="modal-close" onclick="closeBookAppointmentModalFirst('{{ doctor.id }}')" style="position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #efd959;">&times;</span>
+                      <h2 style="text-align: center; color: #efd959;">Book Appointment</h2>
+                      <div class="appointment-options" style="display: flex; justify-content: space-around; margin-top: 20px;">
+                        <!-- In Clinic Appointment Button -->
+                        <button onclick="closeBookAppointmentModalFirst('{{ doctor.id }}'); openBookAppointmentModal('{{ doctor.id }}');" style="
+                            width: 45%;
+                            height: 150px;
+                            border: 1px solid #efd959;
+                            background: #2c2c3c;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 10px;
+                            color: white;
+                        ">
+                          <img src="{% static 'images/in_clinic_appointment.png' %}" alt="In Clinic Appointment" style="max-width: 80%; max-height: 80%; filter: invert(100%);">
+                          <span style="margin-top: 10px; font-size: 18px; font-weight: bold;">In Clinic Appointment</span>
+                        </button>
+                        <!-- Online Appointment Button -->
+                        <button onclick="closeBookAppointmentModalFirst('{{ doctor.id }}'); openOnlineBookAppointmentModal('{{ doctor.id }}');" style="
+                            width: 45%;
+                            height: 150px;
+                            border: 1px solid #efd959;
+                            background: #2c2c3c;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 10px;
+                            color: white;
+                        ">
+                          <img src="{% static 'images/online_appointment.png' %}" alt="Online Appointment" style="max-width: 80%; max-height: 80%; filter: invert(100%);">
+                          <span style="margin-top: 10px; font-size: 18px; font-weight: bold;">Online Appointment</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+  
+                
+                <!-- Contact Modal for Each Doctor -->
+                <div id="contactModal{{ doctor.id }}" 
+                     style="display: none;  position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+                    <div style="background: #1c1f2a; height: 220px; width: 400px; margin: 100px auto; padding: 20px; border-radius: 10px; text-align: center; position: relative; border: 1px solid #efd959; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h2 style="color: #efd959; margin-top: 0;">Contact Information</h2>
+                            <p style="font-size: 20px; color: white; margin: 20px 0;">
+                                Phone Number: <strong>{{ doctor.contact }}</strong>
+                            </p>
+                        </div>
+                        <button 
+                            onclick="closeContactModal('{{ doctor.id }}')" 
+                            style="background: #1c1f2a; color: white; padding: 10px 15px; border: 1px solid #efd959; border-radius: 5px; cursor: pointer; margin-top: 20px; align-self: center;">
+                            Close
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No doctors found for this specialty.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Right Section: Clinics List -->
+    <div class="right-section"
+    style="
+        flex: 1;
+        background-color: #1c1f2a; /* Dark background */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+        margin-bottom: 20px;
+        border: 1px solid #efd959; /* Gold accent border */
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Match the height of the parent container */
+    "
+>
+   <h2 style="
+       font-size: 25px;
+       font-weight: 600;
+       color: #efd959; /* Gold accent for heading */
+       margin-top: 0;
+       margin-bottom: 20px;
+   ">
+       Nearby Clinics
+   </h2>
+
+   <div style="
+       overflow-y: auto;
+       flex: 1;
+       padding-right: 10px;
+   ">
+   {% if doctors.exists %}
+       {% for doctor in doctors %}
+           <div class="clinic-card"
+                style="
+                    background-color: #2c2c3c; /* Dark card background */
+                    border: 1px solid #444;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin-bottom: 15px;
+                    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+                    border: 1px solid #efd959; /* Gold accent border */
+                "
+           >
+               <!-- Clinic Title -->
+               <h3 style="
+                   margin: 0;
+                   font-size: 18px;
+                   color: #ffffff;
+               ">
+                   {{ doctor.clinic_hospital }}
+               </h3>
+
+               <!-- Square Clinic Image -->
+               <img
+                   {% if doctor.clinic_picture %}
+                       src="{{ doctor.clinic_picture.url }}"
+                   {% else %}
+                       src="https://via.placeholder.com/150"
+                   {% endif %}
+                   alt="Clinic Photo"
+                   style="
+                       width: 120px;
+                       height: 120px;
+                       border-radius: 8px;
+                       margin: 10px auto;
+                       display: block;
+                       object-fit: cover;
+                   "
+               />
+
+               <!-- Clinic Details -->
+               <p style="
+                   margin: 5px 0;
+                   color: #cfcfcf;
+                   line-height: 1.4;
+               ">
+                   <strong>Location:</strong> {{ doctor.address }}
+               </p>
+               <p style="
+                   margin: 5px 0;
+                   color: #cfcfcf;
+                   line-height: 1.4;
+               ">
+                   <strong>Services:</strong> {{ doctor.services }}
+               </p>
+
+               <!-- View on Map Button -->
+               <button
+                   data-lat="{{ doctor.latitude }}"
+                   data-lng="{{ doctor.longitude }}"
+                   data-name="{{ doctor.clinic_hospital }}"
+                   onclick="openMapModal(this)"
+                   style="
+                       background: #1c1f2a; /* Dark background */
+                       color: white;
+                       padding: 10px 15px;
+                       border: 1px solid #efd959; /* Gold border */
+                       border-radius: 5px;
+                       cursor: pointer;
+                       margin-top: 10px;
+                       width: 275px;
+                       transition: background-color 0.2s ease, transform 0.2s ease;
+                   "
+                   onmouseover="this.style.backgroundColor='#2c2c3c'; this.style.transform='scale(1.05)'"
+                   onmouseout="this.style.backgroundColor='#1c1f2a'; this.style.transform='scale(1)'"
+               >
+                   View on Map
+               </button>
+           </div>
+       {% endfor %}
+   {% else %}
+       <p style="
+           color: #cfcfcf;
+           text-align: center;
+           margin-top: 20px;
+       ">
+           No nearby clinics available at the moment.
+       </p>
+   {% endif %}
+   </div>
+</div>
+
+
+
+</div>
+
+<!-- Map Modal -->
+<div id="mapModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div style="position: relative; margin: 50px auto; background: white; width: 80%; height: 80%; border-radius: 10px; overflow: hidden;">
+        <!-- Close Button -->
+        <button id="closeMap" style="position: absolute; top: 10px; right: 10px; background: red; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; z-index: 1001;">
+            Close
+        </button>
+        <!-- Map Container -->
+        <div id="map" style="width: 100%; height: 100%; z-index: 1;"></div>
+    </div>
+</div>
+
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script>
+    // Function to match heights of doctors list and clinics list
+    function matchHeights() {
+        const doctorsList = document.querySelector('.doctors-list');
+        const clinicsContainer = document.querySelector('.right-section');
+        
+        if (doctorsList && clinicsContainer) {
+            // Set the clinics container height to match the doctors list height plus 100px
+            clinicsContainer.style.height = (doctorsList.offsetHeight + 106) + 'px';
+        }
+    }
+    
+    // Call the function when the page loads
+    window.addEventListener('load', matchHeights);
+    
+    // Call the function when the window is resized
+    window.addEventListener('resize', matchHeights);
+
+    function applyFilters() {
+        const gender = document.getElementById('gender-filter').value;
+        const experience = document.getElementById('experience-filter').value;
+        const fee = document.getElementById('fee-filter').value;
+        const sort = document.getElementById('sort-filter').value;
+
+        const params = new URLSearchParams();
+
+        if (gender != 'all')
+            params.append('gender', gender);
+        if (experience != 'all')
+            params.append('experience', experience)
+        if (fee != 'all')
+            params.append('fee', fee)
+        if (sort != 'relevance')
+            params.append('sort', sort)
+
+        const currentUrl = window.location.pathname;
+        window.location.href = `${currentUrl}?${params.toString()}`;
+    }
+
+    function openMapModal(button) {
+        const latitude = parseFloat(button.getAttribute('data-lat'));
+        const longitude = parseFloat(button.getAttribute('data-lng'));
+        const doctorName = button.getAttribute('data-name');
+        const doctorAddress = button.getAttribute('data-address');
+        
+        // Show the modal
+        document.getElementById('mapModal').style.display = 'flex';
+        
+        // Initialize the map after a short delay to ensure the container is visible
+        setTimeout(() => {
+            // Initialize the map
+            const map = L.map('map').setView([latitude, longitude], 15);
+            
+            // Add the OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Add a marker for the doctor's location
+            L.marker([latitude, longitude])
+                .addTo(map)
+                .bindPopup(`<strong>${doctorName}</strong><br>${doctorAddress}`)
+                .openPopup();
+                
+            // Force a map refresh
+            map.invalidateSize();
+        }, 100);
+    }
+
+    document.getElementById('closeMap').addEventListener('click', function () {
+        const mapModal = document.getElementById('mapModal');
+        mapModal.style.display = 'none';
+        // Refresh the page after closing the map modal
+        window.location.reload();
+    });
+
+    function openContactModal(doctorId) {
+        document.getElementById('contactModal' + doctorId).style.display = 'flex';
+    }
+
+    function closeContactModal(doctorId) {
+        document.getElementById('contactModal' + doctorId).style.display = 'none';
+    }
+
+    const daysContainer = document.getElementById('calendar-days');
+const slotsContainer = document.getElementById('available-slots');
+const prevButton = document.getElementById('prev-week-btn');
+const nextButton = document.getElementById('next-week-btn');
+
+const today = new Date(); // Current day
+const twoWeeksLater = new Date();
+twoWeeksLater.setDate(today.getDate() + 13); // Limit to next 14 days
+let currentStartDate = new Date(today); // Start date for visible calendar days
+let visibleDays = 7; // Show 7 days at a time
+let doctorSlots = {}; // Map doctor IDs to their slots
+
+    // Get the One-Time Appointment checkbox
+const oneTimeCheckbox = document.getElementById('one_time');
+
+// Get the fields to disable/enable
+const repeatEveryField = document.getElementById('repeat_every');
+const repeatUnitField = document.getElementById('repeat_unit');
+const endsOnField = document.getElementById('end_date');
+
+    document.getElementById('slot_duration').disabled = true;
+
+// Add event listener to the checkbox
+oneTimeCheckbox.addEventListener('change', () => {
+    if (oneTimeCheckbox.checked) {
+        // Disable the repeat fields
+        repeatEveryField.disabled = true;
+        repeatUnitField.disabled = true;
+        endsOnField.disabled = true;
+
+        // Optionally clear the values
+        repeatEveryField.value = '';
+        repeatUnitField.value = 'week'; // Reset to default value if needed
+        endsOnField.value = '';
+    } else {
+        // Enable the repeat fields
+        repeatEveryField.disabled = false;
+        repeatUnitField.disabled = false;
+        endsOnField.disabled = false;
+    }
+});
+
+/*
+const startTimeInput = document.getElementById('time');
+const endTimeInput = document.getElementById('end_time');
+const durationInput = document.getElementById('slot_duration');
+
+// Restrict Start Time based on selected End Time
+function restrictStartTimeInput() {
+    const endTime = endTimeInput.value; // Get the value of End Time input
+
+    if (endTime) {
+        startTimeInput.max = endTime; // Set the max attribute of Start Time input
+    } else {
+        startTimeInput.removeAttribute('max'); // Remove restriction if End Time is cleared
+    }
+}
+
+// Restrict End Time based on selected Start Time
+function restrictEndTimeInput() {
+    const startTime = startTimeInput.value; // Get the value of Start Time input
+
+    if (startTime) {
+        endTimeInput.min = startTime; // Set the min attribute of End Time input
+    } else {
+        endTimeInput.removeAttribute('min'); // Remove restriction if Start Time is cleared
+    }
+}
+
+// Update Slot Duration based on Start Time and End Time
+function updateSlotDuration() {
+    const startTime = startTimeInput.value;
+    const endTime = endTimeInput.value;
+
+    if (startTime && endTime) {
+        const startDate = new Date(`1970-01-01T${startTime}`);
+        const endDate = new Date(`1970-01-01T${endTime}`);
+
+        if (startDate < endDate) {
+            const durationMinutes = (endDate - startDate) / (1000 * 60); // Calculate difference in minutes
+            durationInput.value = `${durationMinutes} minutes`;
+        } else {
+            durationInput.value = ''; // Clear duration if times are invalid
+        }
+    } else {
+        durationInput.value = ''; // Clear duration if either time is missing
+    }
+}
+
+// Attach Event Listeners
+startTimeInput.addEventListener('change', () => {
+    restrictEndTimeInput(); // Restrict End Time based on Start Time
+    updateSlotDuration();  // Update Slot Duration
+});
+
+endTimeInput.addEventListener('change', () => {
+    restrictStartTimeInput(); // Restrict Start Time based on End Time
+    updateSlotDuration();    // Update Slot Duration
+});
+*/
+
+
+// Extract doctor username from the URLconst today = new Date(); // Current day
+
+    function openBookAppointmentModal(doctorId) {
+        document.getElementById('appointment-modal' + doctorId).style.display = 'flex';
+        fetchSlotsModal(doctorId, false);
+    }
+
+    function closeBookAppointmentModal(doctorId) {
+        document.getElementById('appointment-modal' + doctorId).style.display = 'none';
+    }
+
+    function openOnlineBookAppointmentModal(doctorId) {
+        document.getElementById('online-appointment-modal' + doctorId).style.display = 'flex';
+        fetchSlotsModal(doctorId, true);
+    }
+
+    function closeOnlineBookAppointmentModal(doctorId) {
+        document.getElementById('online-appointment-modal' + doctorId).style.display = 'none';
+    }
+
+function getDoctorUsernameFromUrl() {
+    // Assuming the URL structure is /view_doctor_profile_by_cli/<doctor_username>/
+    const pathParts = window.location.pathname.split('/');
+    // The username is the last part of the URL after "view_doctor_profile_by_cli"
+    return pathParts[pathParts.length - 2]; // Get the second-to-last part
+}
+
+
+// Fetch slots dynamically from the backend
+function fetchSlotsModal(doctorId, isOnline = false) {
+    // Clear any existing slots for this doctor
+    doctorSlots[doctorId] = {};
+    
+    fetch(`/fetch_slots_by_id/${doctorId}/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status === 'success') {
+                doctorSlots[doctorId] = data.slots; // Store slots for this specific doctor
+                renderDays(doctorId, isOnline); // Pass doctorId and isOnline to renderDays
+                renderSlots(new Date(), doctorId, isOnline); // Pass doctorId and isOnline to renderSlots
+            } else {
+                console.error('Error fetching slots:', data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching slots:', error);
+        });
+}
+
+// Function to render the calendar days
+function renderDays(doctorId, isOnline = false) {
+    const modalPrefix = isOnline ? 'online-appointment-modal' : 'appointment-modal';
+    const daysContainer = document.querySelector(`#${modalPrefix}${doctorId} #calendar-days-${isOnline ? 'online-' : ''}${doctorId}`);
+    const slotsContainer = document.querySelector(`#${modalPrefix}${doctorId} #available-slots-${isOnline ? 'online-' : ''}${doctorId}`);
+    const prevButton = document.querySelector(`#${modalPrefix}${doctorId} #prev-week-btn`);
+    const nextButton = document.querySelector(`#${modalPrefix}${doctorId} #next-week-btn`);
+    
+    daysContainer.innerHTML = ''; // Clear existing days
+
+    for (let i = 0; i < visibleDays; i++) {
+        const date = new Date(currentStartDate);
+        date.setDate(currentStartDate.getDate() + i);
+
+        // Stop rendering days beyond the limit
+        if (date > twoWeeksLater) break;
+
+        const dayElement = document.createElement('div');
+        dayElement.style.textAlign = 'center';
+        dayElement.style.flex = '1';
+        dayElement.style.cursor = 'pointer';
+
+        const isToday = today.toDateString() === date.toDateString();
+        dayElement.innerHTML = `
+            <p style="margin: 0; font-weight: ${isToday ? 'bold' : 'normal'}; color: ${
+            isToday ? '#007bff' : '#000'
+        };">${date.toLocaleDateString('en-US', { weekday: 'short' })}</p>
+            <p style="margin: 0; font-size: 14px; color: ${
+            isToday ? '#007bff' : '#555'
+        };">${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+        `;
+
+        dayElement.addEventListener('click', () => renderSlots(date, doctorId, isOnline));
+        daysContainer.appendChild(dayElement);
+    }
+
+    // Enable or disable navigation buttons
+    prevButton.disabled = currentStartDate <= today;
+    nextButton.disabled =
+        currentStartDate > twoWeeksLater ||
+        currentStartDate.getDate() + visibleDays > twoWeeksLater.getDate();
+}
+
+// Function to render slots for a selected date
+function renderSlots(selectedDate, doctorId, isOnline = false) {
+    const modalPrefix = isOnline ? 'online-appointment-modal' : 'appointment-modal';
+    const slotsContainer = document.querySelector(`#${modalPrefix}${doctorId} #available-slots-${isOnline ? 'online-' : ''}${doctorId}`);
+    slotsContainer.innerHTML = ''; // Clear existing slots
+    
+    const dateKey = selectedDate.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+    const availableSlots = doctorSlots[doctorId][dateKey] || [];
+
+    if (availableSlots.length === 0) {
+        slotsContainer.innerHTML = '<p style="color: #999;">No Slots Available</p>';
+        return;
+    }
+
+    availableSlots.forEach((slot) => {
+        const slotElement = document.createElement('button');
+        slotElement.textContent = `${slot.start_time} - ${slot.end_time}`;
+        slotElement.style.cssText =
+            'padding: 10px 15px; border: 1px solid #efd959; border-radius: 5px; background-color: #1c1f2a; color: #efd959; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; height: 50px; display: flex; align-items: center; justify-content: center;';
+
+        slotElement.addEventListener('click', () => {
+            // Autofill the form fields
+            const dateInput = document.querySelector(`#${modalPrefix}${doctorId} #date`);
+            const timeInput = document.querySelector(`#${modalPrefix}${doctorId} #time`);
+            const endTimeInput = document.querySelector(`#${modalPrefix}${doctorId} #end_time`);
+            const slotDurationInput = document.querySelector(`#${modalPrefix}${doctorId} #slot_duration`);
+            
+            dateInput.value = dateKey;
+            timeInput.value = slot.start_time_24h;
+            endTimeInput.value = slot.end_time_24h;
+            slotDurationInput.value = slot.end_time_24h - slot.start_time_24h;
+
+            // Calculate slot duration in minutes
+            const startTime = new Date(`1970-01-01T${slot.start_time_24h}:00`);
+            const endTime = new Date(`1970-01-01T${slot.end_time_24h}:00`);
+            const durationMinutes = (endTime - startTime) / (1000 * 60); // Difference in milliseconds converted to minutes
+
+            // Autofill the Slot Duration field with "minutes"
+            slotDurationInput.value = `${durationMinutes} minutes`;
+
+            // Reset all slot buttons to the default style
+            Array.from(slotsContainer.children).forEach((child) => {
+                child.style.backgroundColor = 'white';
+                child.style.color = '#007bff';
+            });
+
+            // Highlight the selected slot button
+            slotElement.style.backgroundColor = '#007bff';
+            slotElement.style.color = 'white';
+        });
+        
+        slotsContainer.appendChild(slotElement);
+    });
+}
+
+// Function to navigate weeks
+function navigateDays(step, doctorId, isOnline = false) {
+    currentStartDate.setDate(currentStartDate.getDate() + step);
+    renderDays(doctorId, isOnline);
+}
+
+function openBookAppointmentModalFirst(doctorId) {
+  // Optionally, you can use the doctorId for further logic.
+  document.getElementById('bookAppointmentModal' + doctorId).style.display = 'flex';
+}
+
+function closeBookAppointmentModalFirst(doctorId) {
+  document.getElementById('bookAppointmentModal' + doctorId).style.display = 'none';
+}
+
+/*
+        // Add event listener to the Book Appointment button
+        document.getElementById('book-appointment-btn').addEventListener('click', async (e) => {
+    // Prevent form submission
+    e.preventDefault();
+
+    // Get all form elements
+    const startDate = document.getElementById('date').value;
+    const startTime = document.getElementById('time').value;
+    const endTime = document.getElementById('end_time').value;
+    const oneTime = document.getElementById('one_time').checked;
+
+    const repeatEvery = document.getElementById('repeat_every').value;
+    const repeatUnit = document.getElementById('repeat_unit').value;
+    const endDate = document.getElementById('end_date').value;
+
+    // Validate Start Date
+    if (!startDate) {
+        alert('Please select a valid Start Date.');
+        return;
+    }
+
+    // Validate Start Time
+    if (!startTime) {
+        alert('Please select a valid Start Time.');
+        return;
+    }
+
+    // Validate End Time
+    if (!endTime) {
+        alert('Please select a valid End Time.');
+        return;
+    }
+
+    // Check that Start Time is less than End Time
+    const start = new Date(`1970-01-01T${startTime}`);
+    const end = new Date(`1970-01-01T${endTime}`);
+    if (start >= end) {
+        alert('Start Time must be earlier than End Time.');
+        return;
+    }
+
+    // Check slot availability
+    const slotExists = await checkSlotExists(startDate, startTime, endTime);
+
+    if (!slotExists) {
+        alert('The selected slot does not exist for the chosen date and time.');
+        return;
+    }
+    else
+    {
+        // Validate Repeat Fields if One-Time Appointment is not checked
+        if (!oneTime) {
+            if (!repeatEvery || repeatEvery <= 0) {
+            alert('Please specify how often to repeat (Repeat Every).');
+            return;
+            }
+
+            if (!repeatUnit) {
+            alert('Please select a valid Unit (Week or Month).');
+            return;
+        }
+
+            if (!endDate) {
+            alert('Please select an End Date for recurring appointments.');
+            return;
+        }      
+        }
+    }
+});
+
+
+async function checkSlotExists(startDate, startTime, endTime) {
+    try {
+        const response = await fetch('/check_slot_availability/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({
+                date: startDate, // Use correct variable names
+                start_time: startTime,
+                end_time: endTime
+            })
+        });
+
+        const data = await response.json();
+
+        return data.exists;
+    } catch (error) {
+        console.error('Error checking slot availability:', error);
+        return false;
+    }
+}
+*/
+
+</script>
+
+{% endblock %}
+
+

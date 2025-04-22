@@ -1,0 +1,63 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Light grey background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center vertically */
+    min-height: 100vh; /* Full viewport height */
+}
+
+/* Appointments Container Styling */
+.appointments-container {
+    background-color: #ffffff; /* White background for contrast */
+    padding: 40px; /* Spacious padding for better layout */
+    border-radius: 12px; /* Match rounded corners with contact section */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
+    text-align: center;
+    width: 100%; /* Full width to match contact window */
+    max-width: 1000px; /* Same width as contact window */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover Effect */
+.appointments-container:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Header Styling */
+.appointments-container h1 {
+    font-size: 2.5rem; /* Larger heading for emphasis */
+    color: #007bff; /* Blue heading for focus */
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/* Paragraph Styling */
+.appointments-container p {
+    font-size: 1.3rem; /* Slightly larger text for readability */
+    color: #555555;
+    line-height: 1.8; /* Better line spacing */
+    margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .appointments-container {
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .appointments-container h1 {
+        font-size: 2.2rem; /* Adjust heading size for smaller screens */
+    }
+
+    .appointments-container p {
+        font-size: 1.1rem; /* Smaller text for mobile */
+        line-height: 1.6;
+    }
+}
+
+

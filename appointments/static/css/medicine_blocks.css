@@ -1,0 +1,87 @@
+/* General Page Styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: auto; /* Enables full-page scroll */
+}
+
+/* Home Container */
+.home-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+}
+
+/* Content Box */
+.content-box {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Medicine Section */
+.medicine-section {
+    text-align: center;
+    margin-top: 40px; /* Space below the search box */
+    width: 100%;
+    max-width: 1200px; /* Adjust the width for 5 cards */
+}
+
+.medicine-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+/* Medicine Grid Layout */
+.medicine-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Five cards per row */
+    gap: 20px; /* Space between cards */
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Individual Medicine Card */
+.medicine-card {
+    background-color: #f2f2f2; /* Default background */
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Gradient Backgrounds */
+.medicine-card:nth-child(2n) {
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+}
+
+.medicine-card:nth-child(3n) {
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+}
+
+.medicine-card:nth-child(odd) {
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+}
+
+.medicine-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.medicine-card p {
+    font-size: 1rem;
+    color: #333333;
+}
+
+/* Hover Effects */
+.medicine-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+

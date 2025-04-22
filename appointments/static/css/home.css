@@ -1,0 +1,578 @@
+/* =========================
+   Dark-Themed Home Section
+========================= */
+
+/* General Body Styling (if not already set elsewhere) */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  /* Option 1: Keep the background image */
+  background: url('{% static "images/background.jpg" %}') no-repeat center center fixed; 
+  background-size: cover; 
+  color: #ffffff;
+
+  /* Option 2: Use a dark gradient instead of an image:
+     background: linear-gradient(120deg, #11171e, #1c1f2a);
+  */
+}
+
+/* Main Home Container */
+.home-container {
+  /* Dark gradient or dark color for the container */
+  background: linear-gradient(135deg, #1f1f2f, #2c2c3c);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Content Box */
+.content-box {
+  background: rgba(0, 0, 0, 0.8); /* Slightly darker overlay */
+  padding: 40px 60px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  max-width: 600px;
+  width: 90%;
+}
+
+/* Main Heading */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #efd959; /* Gold accent for headings */
+}
+
+/* Paragraphs */
+p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #cfcfcf; /* Light grey for text */
+}
+
+/* Search Form Container */
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Search Input */
+.search-input {
+  width: 70%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #2c2c3c;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Search Button */
+.search-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #5865F2; /* Purple accent (adjust as desired) */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.search-button:hover {
+  background-color: #4752C4;
+  transform: scale(1.05);
+}
+
+/* Container for the Big Square Buttons */
+.action-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  max-width: 1350px;
+  margin: 30px auto;
+  width: 90%;
+  border: 1px solid #efd959;  /* Gold accent border */
+}
+
+/* Each Big Square Button */
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  background-color: #2c2c3c;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Text Inside the Square Button */
+.action-button h3 {
+  font-size: 20px;
+  text-align: center;
+  margin: 0;
+}
+
+/* Hover/Focus Effects */
+.action-button:hover,
+.action-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  text-decoration: none;
+}
+
+
+/* =========================
+ Modal / Multi-Step Styles
+ ========================= */
+
+/* Modal overlay background */
+.modal-overlay {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none;         /* hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* The modal box itself */
+.modal-box {
+  background-color: #1f1f2f;
+  width: 500px;
+  max-height: 850px;
+  max-width: 90%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+  border: 1px solid #efd959;  /* Gold accent border */
+}
+
+/* Modal header, body, footer */
+.modal-header {
+  background-color: #2c2c3c;
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  color: #efd959; /* Gold accent text or #fff */
+  position: relative;
+}
+
+.modal-body {
+  padding: 16px;
+  color: #ffffff;
+  overflow-y: auto; /* If needed */
+}
+
+/* Close button (X) */
+.modal-close {
+  float: right;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: #cfcfcf;
+}
+
+/* Steps hidden by default */
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+/* Country/City/Specialties lists */
+#modalOverlay #countryList,
+#modalOverlay #cityList,
+#modalOverlay #specialtyList {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  height: 500px;
+  overflow-y: auto;
+  border: 1px solid #efd959; /* Gold accent border */
+  border-radius: 4px;
+  background-color: #2c2c3c;
+}
+
+/* For Book Now modal lists only */
+#modalOverlay #countryList li,
+#modalOverlay #cityList li,
+#modalOverlay #specialtyList li {
+  padding: 8px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+/* Hover effect for Book Now modal lists only */
+#modalOverlay #countryList li:hover,
+#modalOverlay #cityList li:hover,
+#modalOverlay #specialtyList li:hover {
+  background-color: #393c4f;
+}
+
+/* Buttons inside the modal */
+.modal-body button {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #5865F2;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 4px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-body button.search-btn {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.modal-body button:hover {
+  background-color: #4752C4;
+}
+
+/* “Your Selection” info area */
+.selection-info {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #cfcfcf;
+}
+
+/* Search field above the list */
+.modal-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px 10px;
+  font-size: 1rem;
+  height: 50px;
+  background-color: #2c2c3c;
+  color: #ffffff;
+}
+
+/* Nav buttons container */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Style for back/next/finish buttons */
+.back-btn, 
+.next-btn {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #5865F2;
+  color: #fff;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover, 
+.next-btn:hover {
+  background-color: #4752C4;
+}
+
+.search-container-modal {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  background-color: #2c2c3c;
+  border: 1px solid #5865F2;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #efd959;  /* Gold accent border */
+}
+
+.search-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+/* Container that holds the 3 squares side by side */
+.square-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+/* Each square for Country, City, Specialty */
+.square {
+  border: 1px solid #5865F2;
+  background-color: #393c4f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  border-radius: 4px;
+}
+
+/* Selection container styling */
+.selection-container {
+  background-color: #393c4f;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  color: #ffffff;
+  padding: 10px;
+  border: 1px solid #efd959;  /* Gold accent border */
+}
+
+.selection-title {
+  position: static;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #efd959; /* Gold accent if you want */
+}
+
+.selection-details {
+  position: absolute; /* If you want it overlaid, else remove */
+  bottom: 5px;
+  left: 10px;
+  font-size: 0.9rem;
+}
+
+/* List item separators */
+#countryList li:not(:last-child),
+#cityList li:not(:last-child),
+#specialtyList li:not(:last-child) {
+  border-bottom: 1px solid #5865F2;
+  padding-bottom: 8px;
+}
+
+/* =========================
+ Messages Modal
+ ========================= */
+
+/* Overlay for the Messages modal */
+.messages-overlay {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* The modal box container */
+.messages-box {
+  background-color: #1f1f2f;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+  border: 1px solid #efd959;  /* Gold accent border */
+}
+
+/* Header / Body / Footer */
+.messages-header {
+  background-color: #2c2c3c;
+  padding: 12px;
+  font-weight: bold;
+  color: #efd959; 
+  position: relative;
+}
+
+.messages-header span:nth-child(1) {
+  font-size: 1.1rem;
+}
+
+.messages-close {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  color: #cfcfcf;
+}
+
+.messages-body {
+  padding: 16px;
+  flex: 1;        
+  overflow-y: auto;
+  color: #ffffff;
+}
+
+.messages-footer {
+  background-color: #2c2c3c;
+  padding: 12px;
+  text-align: right;
+}
+
+/* Sections (Current / Old) */
+.messages-section {
+  margin-bottom: 20px;
+}
+
+.messages-section h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #efd959; 
+}
+
+.messages-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.messages-section li {
+  margin-bottom: 10px;
+}
+
+/* Optional divider line between sections */
+hr {
+  border: none;
+  border-top: 1px solid #5865F2;
+  margin: 15px 0;
+}
+
+/* Close button in the footer */
+.close-btn {
+  background-color: #5865F2; 
+  color: #fff; 
+  border: none; 
+  border-radius: 4px; 
+  padding: 8px 16px; 
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #4752C4;
+}
+
+/* Make each message item a horizontal flex container */
+.message-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 250px;
+}
+
+/* Each message "row" */
+.message-item {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #2c2c3c;
+  border: 1px solid #3e3b4e;
+  border-radius: 4px;
+}
+
+/* Left column (photo + text) */
+.message-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* The user’s photo: 50×50 */
+.user-photo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover; 
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* Container for name + text */
+.message-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+
+/* Right column (icon only) */
+.message-right {
+  /* no special rules needed, unless styling further */
+}
+
+/* 40×40 icon on the right */
+.message-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.user-name {
+  font-size: 1rem;
+  color: #efd959; /* Gold for name if you'd like */
+  
+}
+
+.message-text {
+  font-size: 0.95rem;
+  color: #cfcfcf;
+  text-align: left;
+}
+
+/* The generic wrapper for a section heading */
+.section-header {
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  max-height: 50px;
+}
+
+/* Green header for Current Messages */
+.green-header {
+  background-color: rgba(0,128,0,0.6); /* Slightly transparent dark green */
+  color: #fff; 
+}
+
+/* Blue header for Old Messages */
+.blue-header {
+  background-color: rgba(0,0,255,0.5);
+  color: #fff;
+  font-weight: bold;
+}
+
+.section-header h3 {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+  
+  
+  
+  
+  
+  
+  
+
+

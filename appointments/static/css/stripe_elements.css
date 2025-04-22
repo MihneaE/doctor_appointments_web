@@ -1,0 +1,74 @@
+/* Stripe Elements Custom Styling */
+
+/* Style the card element container */
+#card-element {
+  background-color: #1f1f2f; /* Dark background */
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #efd959; /* Gold accent border */
+  margin-bottom: 20px;
+}
+
+/* Style the error messages */
+#card-errors {
+  color: #ff3b30; /* Red error text */
+  font-size: 12px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+/* Style the Stripe Elements iframe */
+.StripeElement {
+  background-color: #1f1f2f; /* Dark background */
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Style the Stripe Elements focus state */
+.StripeElement--focus {
+  border-color: #efd959; /* Gold accent border */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(239, 217, 89, 0.25);
+}
+
+/* Style the Stripe Elements invalid state */
+.StripeElement--invalid {
+  border-color: #ff3b30; /* Red border for invalid */
+}
+
+/* Style the Stripe Elements complete state */
+.StripeElement--complete {
+  border-color: #34c759; /* Green border for complete */
+}
+
+/* Override Stripe's default styling for the card element */
+.StripeElement--webkit-autofill {
+  background-color: #1f1f2f !important; /* Dark background */
+  color: white !important; /* White text */
+}
+
+/* Style the submit button */
+.submit-payment-btn {
+  background-color: #efd959; /* Gold button */
+  color: #1f1f2f; /* Dark text */
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.submit-payment-btn:hover {
+  background-color: #cbb848; /* Darker gold on hover */
+}
+
+/* Style the payment title */
+.payment-title {
+  color: #efd959; /* Gold accent */
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+} 

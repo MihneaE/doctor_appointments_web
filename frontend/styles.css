@@ -1,0 +1,41 @@
+/* Example styling for the Medical Specialties page */
+
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    font-weight: bold;
+    color: #333333;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .list-group-item {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  
+  .list-group-item strong {
+    font-size: 1.1rem;
+    color: #0d6efd;
+  }
+  
+  .list-group-item p {
+    margin-bottom: 0;
+    color: #555555;
+  }
+  
+  .edit-btn {
+    margin-right: 5px;
+  }
+  
+  .btn {
+    min-width: 75px;
+  }
+  

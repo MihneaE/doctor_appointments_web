@@ -1,0 +1,306 @@
+<!-- Parent Container for Filters + Search (Dark Theme) -->
+{% load static %}
+<div class="search-filter-toolbar"
+     style="
+       width: 90%;
+       max-width: 1350px;
+       margin: 20px auto;
+       background-color: #1c1f2a; /* Dark background */
+       border-radius: 8px;
+       padding: 10px;
+       display: flex;
+       gap: 15px;
+       flex-wrap: wrap;
+       align-items: flex-start;
+       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6); /* Darker shadow */
+       border: 1px solid #efd959;  /* Gold accent border */
+     "
+>
+    <!-- FILTERS CONTAINER -->
+    <div class="filters-container"
+         style="
+           flex: 1; 
+           min-width: 300px; 
+           background-color: #2c2c3c; /* Sub-container dark background */
+           border-radius: 8px;
+           padding: 19px;
+           border: 1px solid #efd959;  /* Gold accent border */
+           height: 120px;
+         "
+    >
+        <!-- Title for filters (optional) -->
+        <h3 style="
+            margin-top: 0; 
+            margin-bottom: 10px; 
+            font-size: 16px; 
+            font-weight: 600;
+            color: #efd959; /* Gold accent */
+        ">
+            Filters
+        </h3>
+
+        <div class="filter-section"
+             style="
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                align-items: center;
+                margin: 0;
+             "
+        >
+            <!-- Gender Filter -->
+            <div style="display: flex; flex-direction: column;">
+                <label for="gender-filter" style="
+                    font-weight: 600; 
+                    margin-bottom: 3px; 
+                    font-size: 13px;
+                    color: #cfcfcf; 
+                ">
+                    Gender:
+                </label>
+                <select id="gender-filter"
+                        style="
+                           padding: 5px; 
+                           border-radius: 4px; 
+                           border: 1px solid #444; /* Darker border */
+                           font-size: 14px;
+                           background-color: #1f1f2f;
+                           color: #fff;
+                           height: 30px;
+                        "
+                >
+                    <option value="all">All</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <!-- Experience Filter -->
+            <div style="display: flex; flex-direction: column;">
+                <label for="experience-filter" style="
+                    font-weight: 600; 
+                    margin-bottom: 3px; 
+                    font-size: 13px;
+                    color: #cfcfcf; 
+                ">
+                    Experience:
+                </label>
+                <select id="experience-filter"
+                        style="
+                           padding: 5px; 
+                           border-radius: 4px; 
+                           border: 1px solid #444;
+                           font-size: 14px;
+                           background-color: #1f1f2f;
+                           color: #fff;
+                           height: 30px;
+                        "
+                >
+                    <option value="all">All</option>
+                    <option value="5">5+ years</option>
+                    <option value="10">10+ years</option>
+                    <option value="15">15+ years</option>
+                </select>
+            </div>
+
+            <!-- Fee Filter -->
+            <div style="display: flex; flex-direction: column;">
+                <label for="fee-filter" style="
+                    font-weight: 600; 
+                    margin-bottom: 3px; 
+                    font-size: 13px;
+                    color: #cfcfcf; 
+                ">
+                    Fee:
+                </label>
+                <select id="fee-filter"
+                        style="
+                           padding: 5px; 
+                           border-radius: 4px; 
+                           border: 1px solid #444;
+                           font-size: 14px;
+                           background-color: #1f1f2f;
+                           color: #fff;
+                           height: 30px;
+                        "
+                >
+                    <option value="all">All</option>
+                    <option value="low">Below ₹500</option>
+                    <option value="medium">₹500 - ₹1000</option>
+                    <option value="high">Above ₹1000</option>
+                </select>
+            </div>
+
+            <!-- Sort Filter -->
+            <div style="display: flex; flex-direction: column;">
+                <label for="sort-filter" style="
+                    font-weight: 600; 
+                    margin-bottom: 3px; 
+                    font-size: 13px;
+                    color: #cfcfcf; 
+                
+                ">
+                    Sort By:
+                </label>
+                <select id="sort-filter"
+                        style="
+                           padding: 5px; 
+                           border-radius: 4px; 
+                           border: 1px solid #444;
+                           font-size: 14px;
+                           background-color: #1f1f2f;
+                           color: #fff;
+                           height: 30px;
+                        "
+                >
+                    <option value="relevance">Relevance</option>
+                    <option value="fee-low">Fee: Low to High</option>
+                    <option value="fee-high">Fee: High to Low</option>
+                </select>
+            </div>
+
+            <!-- Apply Filters Button -->
+            <button onclick="applyFilters()"
+                    style="
+                       padding: 10px 16px; 
+                       background-color: #28a745; /* Green accent */
+                       color: #fff; 
+                       font-size: 14px;
+                       border: none; 
+                       border-radius: 4px; 
+                       cursor: pointer;
+                       transition: background-color 0.3s ease, transform 0.2s;
+                       align-self: flex-end; 
+                       height: 50px;
+                      
+                    "
+                    onmouseover="this.style.backgroundColor='#218838'; this.style.transform='scale(1.05)'"
+                    onmouseout="this.style.backgroundColor='#28a745'; this.style.transform='scale(1)'"
+            >
+                Apply Filters
+            </button>
+        </div>
+    </div> <!-- End .filters-container -->
+
+
+    <!-- SEARCH CONTAINER -->
+    <div class="search-container"
+         style="
+           flex: 1; 
+           min-width: 300px; 
+           background-color: #2c2c3c; 
+           border-radius: 8px;
+           padding: 15px;
+           display: flex;
+           flex-direction: column;
+           gap: 10px;
+           border: 1px solid #efd959;  /* Gold accent border */
+           height: 120px;
+         "
+    >
+        <!-- Title for search (optional) -->
+        <h3 style="
+            margin-top: 0; 
+            margin-bottom: 10px; 
+            font-size: 16px; 
+            font-weight: 600;
+            color: #efd959; /* Gold accent */
+        ">
+            Search
+        </h3>
+
+        <form class="search-section" 
+              method="GET" 
+              action=""
+              style="
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                margin: 0;
+              "
+        >
+            <input 
+                type="text" 
+                name="q" 
+                placeholder="Search for doctors or clinics..." 
+                value="{{ request.GET.q|default:'' }}"
+                style="
+                   flex: 1; 
+                   min-width: 100px;
+                   padding: 10px; 
+                   border: 1px solid #444; 
+                   border-radius: 4px;
+                   font-size: 14px;
+                   background-color: #1f1f2f;
+                   color: #fff;
+                   height: 50px;
+                   width: 50px;
+                "
+            />
+            <button type="submit"
+                style="
+                   padding: 10px 16px; 
+                   background-color: #007bff; /* Blue accent */
+                   color: #fff; 
+                   font-size: 14px;
+                   border: none; 
+                   border-radius: 4px; 
+                   cursor: pointer;
+                   transition: background-color 0.3s ease, transform 0.2s;
+                   height: 50px;
+                    width: 100px;
+                "
+                onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)'"
+                onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)'"
+            >
+                Search
+            </button>
+            <button onclick="clearAllFiltersAndSearch()"
+                    class="all-specialities-button"
+                    style="
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: #5865F2; /* Purple/blue accent */
+                        color: white;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+                        transition: background-color 0.3s ease, transform 0.2s ease;
+                        height: 50px;
+                        width: 50px;
+                    "
+                    onmouseover="this.style.backgroundColor='#4752C4'; this.style.transform='scale(1.05)'"
+                    onmouseout="this.style.backgroundColor='#5865F2'; this.style.transform='scale(1.0)'"
+            >
+                <img 
+                    src="{% static 'images/home_all.png' %}" 
+                    alt="Clear Filters" 
+                    style="width: 40px; height: 40px; filter: invert(100%);" 
+                />
+            </button>
+        </form>
+    </div> <!-- End .search-container -->
+
+</div> <!-- End .search-filter-toolbar -->
+
+<script>
+function clearAllFiltersAndSearch() {
+    // Reset all filter dropdowns to "all"
+    document.getElementById('gender-filter').value = 'all';
+    document.getElementById('experience-filter').value = 'all';
+    document.getElementById('fee-filter').value = 'all';
+    document.getElementById('sort-filter').value = 'relevance';
+    
+    // Clear search input
+    document.querySelector('input[name="q"]').value = '';
+    
+    // Reload the page with no query parameters
+    window.location.href = window.location.pathname;
+}
+</script>
+
+
+

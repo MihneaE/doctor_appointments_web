@@ -1,0 +1,115 @@
+/* -----------------------------------------------
+   Dark-Themed "About the Free Subscription" Page
+------------------------------------------------ */
+
+/* Page Background & Base Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(120deg, #11171e, #1c1f2a); 
+  color: #ffffff;
+}
+
+.content {
+  margin-top: 100px;
+}
+
+/* Main container, centered on the page */
+.about-free-container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #1f1f2f;       /* Dark background */
+  border: 1px solid #efd959;      /* Gold accent border */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  text-align: center;
+  color: #ffffff;                 /* Default text color */
+  position: relative;
+}
+
+/* Page title style */
+.about-title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #efd959; /* Gold accent for the title */
+  text-transform: uppercase; 
+}
+
+/* Content wrapper for spacing */
+.about-content {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #cfcfcf; /* Slightly lighter text color */
+}
+
+/* Pricing highlight (like $0/month) */
+.about-highlight {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff; /* Blue highlight, or #5865F2 if you want purple, or #efd959 for gold */
+  margin-bottom: 20px;
+}
+
+/* Feature list styling */
+.about-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 25px 0;
+}
+.about-features li {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #ffffff; /* White for the feature text */
+}
+
+/* Paragraph describing the free plan */
+.about-description {
+  margin-bottom: 20px;
+  color: #cfcfcf; /* Light grey text */
+}
+
+/* Extra note or closing statement */
+.about-note {
+  font-style: italic;
+  color: #999999; /* Slightly dimmer grey for emphasis */
+}
+
+/* Undo (Back) Button */
+.undo-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.undo-button:hover {
+  transform: scale(1.05);
+}
+.undo-button img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #3e3b4e; /* Subtle dark border if desired */
+}
+
+/* Responsive: smaller screens adjustments */
+@media (max-width: 600px) {
+  .about-free-container {
+    margin: 20px auto;
+    padding: 20px;
+  }
+  .about-title {
+    font-size: 24px;
+  }
+  .about-highlight {
+    font-size: 18px;
+  }
+}
+
+
+
+  

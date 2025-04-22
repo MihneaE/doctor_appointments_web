@@ -1,0 +1,1001 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Get in Touch{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/message_chat.css' %}">
+<!-- If you're using Font Awesome for icons, also include this: -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="messages-container">
+  <!-- ====== Left Pane (Contact List) ====== -->
+  <div class="sidebar">
+
+    <!-- Header Bar Above Search -->
+<div class="chat-header-bar">
+    <h2 class="chat-title">Chats</h2>
+    <div class="chat-actions">
+      <!-- New Chat Button -->
+      <button class="chat-action-btn" id="newChatBtn">
+        <img 
+          src="{% static 'images/add_icon_v2.png' %}"
+          alt="New Chat" 
+          class="chat-action-icon"
+        />
+      </button>
+      <!-- Filter Button -->
+      <button class="chat-action-btn" id="filterBtn">
+        <img 
+          src="{% static 'images/filter_icon_v2.png' %}" 
+          alt="Filter" 
+          class="chat-action-icon"
+        />
+      </button>
+    </div>
+  </div>
+  
+    
+    <!-- Search Bar -->
+    <form method="GET" action="{% url 'message_chat' %}" id="searchForm">
+    <div class="search-bar">
+      <!-- Search input -->
+      <input 
+        type="text"
+        id="searchUser" 
+        name="q" 
+        class="search-input" 
+        placeholder="Search or start new chat..."
+        autocomplete="off"
+      />
+      
+      <!-- Search icon button (kept for visual consistency) -->
+      <button type="submit" style="background: none; border: none;">
+        <img 
+            src="{% static 'images/search_icon_.png' %}" 
+            alt="Search Icon" 
+            style="width: 50px; height: 50px;"
+        />
+    </button>
+    </div>
+    </form>
+    
+    
+    <!-- Contact List -->
+<div id="contact-list" class="contact-list">
+
+  {% if contacts %}
+  {% for c in contacts %}
+  <div class="contact">
+    <!-- Left side: user photo + name & last message -->
+    <div class="contact-left">
+      <img 
+        {% if c.partner_photo %}
+            src="{{ c.partner_photo.url }}"
+        {% else %}
+            src="{% static 'images/user1.png' %}"
+        {% endif %}
+        alt="User Photo" 
+        class="contact-photo"
+      />
+      <div class="contact-info">
+        <div class="contact-name">{{ c.partner_name }}</div>
+        <div class="contact-last-message">
+          {{ c.last_message|default:"No messages"|truncatechars:30 }}
+        </div>
+        <!-- ^ 'truncatechars' is optional, shortens text if too long. -->
+      </div>
+    </div>
+    
+    <!-- Right side: message icon (click to open chat detail) -->
+    <a href="{% url 'chat_detail' c.chat_id %}">
+      <img
+        src="{% static 'images/message_now.png' %}" 
+        alt="Message Now Icon"
+        class="message-icon-right"
+      />
+    </a>
+  </div>
+  {% endfor %}
+  {% else %}
+    <div style="
+      text-align: center; 
+    margin-top: 20px; 
+    font-size: 1.1rem; 
+     color: #666;
+    ">
+      No contacts found
+    </div>
+  {% endif %}
+  
+  </div>
+  
+    
+  </div>
+
+  {% if chat %}
+  <!-- ====== Right Pane (Chat Area) ====== -->
+  <div class="chat-section">
+  
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <!-- Show partner's photo from context, or a placeholder -->
+        <img 
+          {% if selected_user.profile_picture %}
+            src="{{ selected_user.profile_picture.url }}"
+          {% else %}
+            src="{% static 'images/user1.png' %}"
+          {% endif %}
+          alt="Active Chat User" 
+          class="chat-user-photo"
+        />
+        <div class="chat-user-info">
+          <!-- Partner's name, from view logic -->
+          <div class="chat-username">{{ selected_user.user.username }}</div>
+          <!-- Hard-coded status or you can derive from partner model -->
+          <div class="chat-status">online</div>
+        </div>
+      </div>
+      
+      <!-- Right Section (search in conversation) -->
+      <div class="chat-header-right">
+        <div class="search-input-container" style="position: relative; display: flex; align-items: center; gap: 8px;">
+          <div style="position: relative; flex: 1;">
+            <input 
+              type="text" 
+              id="conversationSearch"
+              placeholder="Search in conversation..." 
+              class="chat-search-input"
+              style="padding-right: 50px;"
+            />
+            <button type="button" id="xButton" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0;">
+              <img 
+                src="{% static 'images/x-good-v2.webp' %}" 
+                alt="X Icon" 
+                style="width: 50px; height: 50px;"
+              />
+            </button>
+          </div>
+          <button type="button" id="searchButton" style="background: none; border: none; flex-shrink: 0;">
+            <img 
+              src="{% static 'images/search_icon_.png' %}" 
+              alt="Search Icon" 
+              style="width: 50px; height: 50px;"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Messages Container -->
+    <div class="chat-messages">
+      <!-- Loop over all messages -->
+      {% for msg in messages %}
+        {% if msg.sender == user %}
+          <!-- This user's message (me) -->
+          <div class="message me" data-message-id="{{ msg.id }}">
+            <p>{{ msg.content }}</p>
+            {% if msg.attachment %}
+              <a href="{{ msg.attachment.url }}" target="_blank">
+                Download Attachment
+              </a>
+            {% endif %}
+          </div>
+        {% else %}
+          <!-- Partner's message (you) -->
+          <div class="message you" data-message-id="{{ msg.id }}">
+            <p>{{ msg.content }}</p>
+            {% if msg.attachment %}
+              <a href="{{ msg.attachment.url }}" target="_blank">
+                Download Attachment
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+    <!-- Input Bar -->
+    <div class="chat-input-area">
+      <!-- Attach Button on the left (optional) -->
+      <button class="chat-attach-btn" id="attachBtn">
+        <img 
+          src="{% static 'images/attach_icon.png' %}" 
+          alt="Attach" 
+          class="chat-attach-icon"
+        />
+      </button>
+
+      <!-- Wrap the message input in a form so we can POST -->
+      <form method="POST" enctype="multipart/form-data" style="flex:1; display:flex; gap:8px;">
+        {% csrf_token %}
+        <input 
+          type="text" 
+          name="message"
+          class="chat-input" 
+          placeholder="Type a message..."
+        />
+
+        <!-- Hidden file input that will receive the file from the modal -->
+        <input 
+          type="file" 
+          name="attachment" 
+          id="attachmentHidden" 
+          style="display: none;"
+        />
+        <button type="submit" class="chat-send-btn">Send</button>
+      </form>
+    </div>
+  </div>
+{% else %}
+  <!-- Centered placeholder message -->
+  <div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ensure the container takes full height */
+    width: 100%; /* Ensure the container takes full width */
+    text-align: center;
+    font-size: 1.2rem; 
+    font-weight: bold;
+    color: #cfcfcf;
+  ">
+    No chat selected.
+  </div>
+{% endif %}
+
+</div>
+
+<!-- ====== New Chat Modal (hidden by default) ====== -->
+<div class="modal-overlay" id="newChatModal" style="display: none;">
+  <div class="modal-box">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <span>Start new chat</span>
+      <span class="modal-close" id="closeNewChatModalBtn">&times;</span>
+    </div>
+    
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <!-- Search field for contacts -->
+      <div class="search-bar">
+        <input 
+          type="text" 
+          class="search-input-new-chat" 
+          placeholder="Search name or number..."
+          id="searchInputNewChat"
+        />
+        <button 
+          type="button" 
+          id="searchButtonNewChat"
+          style="background: none; border: none;"
+        >
+          <img 
+              src="{% static 'images/search_icon_.png' %}" 
+              alt="Search Icon" 
+              style="width: 50px; height: 50px;"
+          />
+        </button>
+      </div>
+      
+      <!-- Contact list wrapped in a Django form -->
+      <form id="newChatForm" method="post" action="{% url 'start_new_chat' %}">
+        {% csrf_token %}
+        <div class="contact-list">
+          {% if new_chat_contacts %}
+            {% for c in new_chat_contacts %}
+              <div class="contact" onclick="selectContact(this)">
+                <div class="contact-left">
+                  <!-- Hidden radio input for selection -->
+                  <input 
+                    type="radio" 
+                    name="contact_username" 
+                    value="{{ c.username }}" 
+                    onclick="event.stopPropagation()"
+                  />
+                  <img
+                    {% if c.profile_picture %}
+                      src="{{ c.profile_picture.url }}"
+                    {% else %}
+                      src="{% static 'images/user1.png' %}"
+                    {% endif %}
+                    alt="User Photo"
+                    class="contact-photo"
+                  />
+                  <div class="contact-info">
+                    <div class="contact-name">
+                      {{ c.username|default:"Unknown User" }}
+                    </div>
+                    <div class="contact-last-message">Start new chat</div>
+                  </div>
+                </div>
+                <!-- Clicking the icon also selects the contact -->
+                <a href="javascript:void(0);" onclick="selectContact(this.closest('.contact'))">
+                  <img
+                    src="{% static 'images/message_now.png' %}"
+                    alt="Message Now Icon"
+                    class="message-icon-right"
+                  />
+                </a>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div style="text-align: center; color: #666; margin: 10px 0;">
+              No new contacts
+            </div>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+    
+    <!-- Modal Footer with Close/Start Chat buttons -->
+    <div class="modal-footer" style="display: flex; justify-content: space-between;">
+      <button type="button" class="close-modal-btn" id="cancelNewChatBtn">Close</button>
+      <button type="submit" form="newChatForm" class="start-chat-btn" id="startNewChatBtn">Start Chat</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== Filter Modal (hidden by default) ====== -->
+<div class="modal-overlay" id="filterModal" style="display: none;">
+  <div class="modal-box" style="width: 300px; height: 415px; max-width: 90%;">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <span>Filter Options</span>
+      <span class="modal-close" id="closeFilterModalBtn">&times;</span>
+    </div>
+    
+    <!-- Begin Form -->
+    <form id="filterForm" method="get" action="{% url 'filter_chats' %}">
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Order Section -->
+        <p style="font-weight: bold; margin-bottom: 6px;">Order</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+          <li style="margin-bottom: 6px;">
+            <label style="display: flex; align-items: center; gap: 6px;">
+              <input type="radio" name="order" value="asc">
+              <span>Ascending</span>
+            </label>
+          </li>
+          <li>
+            <label style="display: flex; align-items: center; gap: 6px;">
+              <input type="radio" name="order" value="desc">
+              <span>Descending</span>
+            </label>
+          </li>
+        </ul>
+      
+        <hr style="margin: 12px 0;" />
+      
+        <!-- Message Status Section -->
+        <p style="font-weight: bold; margin-bottom: 6px;">Message Status</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+          <li style="margin-bottom: 6px;">
+            <label style="display: flex; align-items: center; gap: 6px;">
+              <input type="radio" name="message_status" value="unread">
+              <span>Unread Messages</span>
+            </label>
+          </li>
+          <li>
+            <label style="display: flex; align-items: center; gap: 6px;">
+              <input type="radio" name="message_status" value="read">
+              <span>Read Messages</span>
+            </label>
+          </li>
+        </ul>
+      
+        <!-- Clear Selection Button -->
+        <button type="button" id="clearSelectionBtn" style="margin-top: 10px; background: #ccc; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer;">
+          Clear Selection
+        </button>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="modal-footer" style="display: flex; justify-content: space-between; margin-top: 10px;">
+        <button type="button" class="close-modal-btn" id="cancelFilterBtn" style="padding: 8px 12px; border: none; border-radius: 4px; background: #ccc; cursor: pointer;">Cancel</button>
+        <button type="submit" class="start-chat-btn" id="applyFilterBtn" style="padding: 8px 12px; border: none; border-radius: 4px; background: #007BFF; color: #fff; cursor: pointer;">Filter</button>
+      </div>
+    </form>
+    <!-- End Form -->
+  </div>
+</div>
+
+
+
+<!-- Modal for File Attachment -->
+<div id="fileModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="modal-close" id="modalClose">&times;</span>
+    <h2>Select a File</h2>
+    <p>Please choose a file to attach from your computer.</p>
+    <form id="fileForm" enctype="multipart/form-data">
+      <input type="file" id="fileInput" name="attachment" />
+      <div id="filePreview" class="file-preview" style="margin-top: 15px; display: none;">
+        <h4>File Preview:</h4>
+        <div id="imagePreview" style="max-width: 100%; max-height: 200px; margin-top: 10px;"></div>
+        <div id="fileInfo" style="margin-top: 10px;"></div>
+      </div>
+      <div class="modal-buttons" style="margin-top: 15px;">
+         <button type="submit" class="btn btn-primary">Attach</button>
+         <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<script>
+  // Add a version parameter to force cache refresh
+  const scriptVersion = new Date().getTime();
+  
+  const newChatBtn = document.getElementById('newChatBtn');
+  const newChatModal        = document.getElementById('newChatModal');
+  const closeNewChatModalBtn= document.getElementById('closeNewChatModalBtn');
+  const cancelNewChatBtn    = document.getElementById('cancelNewChatBtn');
+  const startNewChatBtn     = document.getElementById('startNewChatBtn');
+
+  const filterBtn          = document.getElementById('filterBtn');
+  const filterModal        = document.getElementById('filterModal');
+  const closeFilterModalBtn= document.getElementById('closeFilterModalBtn');
+  const cancelFilterBtn    = document.getElementById('cancelFilterBtn');
+  const applyFilterBtn     = document.getElementById('applyFilterBtn');
+
+  const attachBtn = document.getElementById('attachBtn'); // The paperclip or attach icon button
+  const fileModal = document.getElementById('fileModal');
+  const modalClose = document.getElementById('modalClose');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const fileForm = document.getElementById('fileForm');
+  const fileInput = document.getElementById('fileInput');
+  const filePreview = document.getElementById('filePreview');
+  const imagePreview = document.getElementById('imagePreview');
+  const fileInfo = document.getElementById('fileInfo');
+  
+  // Main chat form and its hidden file input
+  const mainChatForm = document.querySelector('form[method="POST"]');
+  const mainFileInput = document.getElementById('attachmentHidden');
+  const chatInput = document.querySelector('.chat-input'); // The text input for messages
+  
+  // Search functionality
+  const searchForm = document.getElementById('searchForm');
+  const searchInput = document.getElementById('searchUser');
+  
+  // Auto-submit form when user types in search field
+  searchInput.addEventListener('input', function() {
+    // Add a small delay to prevent too many requests while typing
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      // Store the current search value
+      const searchValue = this.value;
+      searchForm.submit();
+    }, 100); // Reduced to 100ms delay
+  });
+
+  // Preserve search value after form submission
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the search query from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('q');
+    
+    // If there's a search query, set it in the search input
+    if (searchQuery) {
+      searchInput.value = searchQuery;
+    }
+    
+    // Initialize auto-refresh for chat messages if we're in a chat
+    {% if chat %}
+    initChatAutoRefresh();
+    {% endif %}
+  });
+
+  // Function to initialize auto-refresh for chat messages
+  function initChatAutoRefresh() {
+    // Get the current chat ID from the URL
+    const pathParts = window.location.pathname.split('/');
+    console.log('Path parts:', pathParts);
+    
+    // Find the chat ID in the path
+    let chatId = null;
+    for (let i = 0; i < pathParts.length; i++) {
+      if (pathParts[i] === 'chat_detail' && i + 1 < pathParts.length) {
+        chatId = pathParts[i + 1];
+        break;
+      }
+    }
+    
+    console.log('Extracted chat ID:', chatId);
+    
+    // If no chat ID is found, exit the function
+    if (!chatId || chatId === '') {
+      console.error('No chat ID found in URL');
+      return;
+    }
+    
+    let lastMessageId = 0;
+    
+    // Find the last message ID in the current chat
+    const messages = document.querySelectorAll('.message');
+    if (messages.length > 0) {
+      // Get the last message's data attribute
+      const lastMessage = messages[messages.length - 1];
+      lastMessageId = parseInt(lastMessage.getAttribute('data-message-id') || '0');
+    }
+    
+    console.log('Last message ID:', lastMessageId);
+    
+    // Set up periodic checking for new messages
+    const refreshInterval = setInterval(function() {
+      // Only make the request if we have a valid chat ID
+      if (chatId && chatId !== '') {
+        // Create the URL with the correct path
+        const url = `/check_new_messages/${chatId}/?last_id=${lastMessageId}&v=${scriptVersion}`;
+        console.log('Making request to:', url);
+        
+        fetch(url)
+          .then(function(response) { 
+            if (!response.ok) {
+              console.error('Response not OK:', response.status, response.statusText);
+              throw new Error('Network response was not ok');
+            }
+            return response.json(); 
+          })
+          .then(function(data) {
+            if (data.new_messages && data.new_messages.length > 0) {
+              // Update the last message ID
+              lastMessageId = data.new_messages[data.new_messages.length - 1].id;
+              
+              // Add new messages to the chat
+              const chatMessages = document.querySelector('.chat-messages');
+              data.new_messages.forEach(function(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message ' + (message.is_sender ? 'me' : 'you');
+                messageDiv.setAttribute('data-message-id', message.id);
+                
+                let messageContent = '<p>' + message.content + '</p>';
+                if (message.attachment) {
+                  // Check if the attachment is an image
+                  const fileExtension = message.attachment.split('.').pop().toLowerCase();
+                  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                  
+                  if (imageExtensions.includes(fileExtension)) {
+                    messageContent += `<div class="attachment-preview"><img src="${message.attachment}" alt="Attachment" style="max-width: 200px; max-height: 200px;"></div>`;
+                  } else {
+                    messageContent += `<div class="attachment-link"><a href="${message.attachment}" target="_blank"><i class="fas fa-file"></i> Download Attachment</a></div>`;
+                  }
+                }
+                
+                messageDiv.innerHTML = messageContent;
+                chatMessages.appendChild(messageDiv);
+              });
+              
+              // Scroll to the bottom of the chat
+              chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+          })
+          .catch(function(error) { 
+            console.error('Error checking for new messages:', error);
+            // Don't show errors to the user, just log them
+          });
+      }
+    }, 3000); // Check every 3 seconds
+    
+    // Store the interval ID so we can clear it if needed
+    window.chatRefreshInterval = refreshInterval;
+  }
+
+  // Open the modal
+  newChatBtn.addEventListener('click', () => {
+    newChatModal.style.display = 'flex'; // show the overlay
+  });
+
+  // Close modal (×)
+  closeNewChatModalBtn.addEventListener('click', () => {
+    newChatModal.style.display = 'none';
+  });
+
+  // Close modal (Close button)
+  cancelNewChatBtn.addEventListener('click', () => {
+    newChatModal.style.display = 'none';
+  });
+
+  // Start Chat (placeholder action)
+  startNewChatBtn.addEventListener('click', () => {
+    alert("Starting a new chat...");
+    // Possibly get selected contact from the list, do an AJAX request, etc.
+    // Then hide the modal:
+    newChatModal.style.display = 'none';
+  });
+
+  // Optional: close if user clicks outside of modal
+  window.addEventListener('click', (e) => {
+    if (e.target === newChatModal) {
+      newChatModal.style.display = 'none';
+    }
+  });
+
+      // Open modal
+  filterBtn.addEventListener('click', () => {
+    filterModal.style.display = 'flex'; 
+  });
+
+  // Close modal (× in header)
+  closeFilterModalBtn.addEventListener('click', () => {
+    filterModal.style.display = 'none';
+  });
+
+  // Close modal (Cancel button)
+  cancelFilterBtn.addEventListener('click', () => {
+    filterModal.style.display = 'none';
+  });
+
+  // Apply filter (Filter button)
+  applyFilterBtn.addEventListener('click', () => {
+    // Example: gather form data
+    const form = document.getElementById('filterForm');
+    const formData = new FormData(form);
+
+    // For example: 
+    // let orderVal = formData.get('order'); // 'asc' or 'desc'
+    // let unread = formData.get('unread');  // 'true' or null
+    // let read = formData.get('read');      // 'true' or null
+
+    alert("Applying filter!");
+    // You can do an AJAX request or redirect with these parameters, etc.
+
+    filterModal.style.display = 'none';
+  });
+
+  // Optional: close if user clicks outside modal box
+  filterModal.addEventListener('click', (e) => {
+    if (e.target === filterModal) {
+      filterModal.style.display = 'none';
+    }
+  });
+
+  function selectContact(contactElement) {
+    // Remove the "selected" class and uncheck radio for all contacts
+    document.querySelectorAll('.contact').forEach(function(contact) {
+      contact.classList.remove('selected');
+      const radio = contact.querySelector('input[type="radio"]');
+      if (radio) radio.checked = false;
+    });
+    
+    // Mark this contact as selected and check its radio button
+    contactElement.classList.add('selected');
+    const radio = contactElement.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
+  }
+
+   // Open the modal
+  attachBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    fileModal.style.display = 'flex'; // Show the modal
+  });
+
+  // Close the modal with the X icon
+  modalClose.addEventListener('click', function() {
+    fileModal.style.display = 'none';
+  });
+
+  // Close the modal with the Cancel button
+  cancelBtn.addEventListener('click', function() {
+    fileModal.style.display = 'none';
+  });
+
+  // Close the modal if clicking outside the modal content
+  window.addEventListener('click', function(e) {
+    if (e.target === fileModal) {
+      fileModal.style.display = 'none';
+    }
+  });
+
+  // Preview file when selected
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const fileType = file.type;
+      const fileName = file.name;
+      const fileSize = (file.size / 1024).toFixed(2) + ' KB';
+      
+      // Show file info
+      fileInfo.innerHTML = `<strong>File:</strong> ${fileName}<br><strong>Size:</strong> ${fileSize}`;
+      
+      // Preview image if it's an image file
+      if (fileType.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; max-height: 200px;">`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // For non-image files, show an icon
+        imagePreview.innerHTML = `<i class="fas fa-file" style="font-size: 48px;"></i>`;
+      }
+      
+      filePreview.style.display = 'block';
+    } else {
+      filePreview.style.display = 'none';
+    }
+  });
+
+  // When the user clicks "Attach" in the modal
+  fileForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Make sure a file is selected
+    if (fileInput.files.length > 0) {
+      // Copy the selected file(s) into the hidden file input in the main chat form
+      // We'll use the DataTransfer API for modern browsers
+      const dT = new DataTransfer();
+      for (let i = 0; i < fileInput.files.length; i++) {
+        dT.items.add(fileInput.files[i]);
+      }
+      mainFileInput.files = dT.files;
+
+      // Add a note about the attachment in the text field
+      const fileName = fileInput.files[0].name;
+      chatInput.value += `[Attachment: ${fileName}] `;
+
+      // Hide the modal
+      fileModal.style.display = 'none';
+
+      // Clear the modal's file input and preview
+      fileInput.value = '';
+      filePreview.style.display = 'none';
+      imagePreview.innerHTML = '';
+      fileInfo.innerHTML = '';
+    } else {
+      alert("Please select a file to attach.");
+    }
+  });
+  /*
+  document.addEventListener('DOMContentLoaded', function() {
+  const searchUserEl = document.getElementById('searchUser');
+  const contactListEl = document.getElementById('contact-list');
+  
+  function filterList(listEl, searchValue) {
+    const items = [...listEl.children];
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(searchValue.toLowerCase()) ? 'block' : 'none';
+    });
+  }
+  
+  searchUserEl.addEventListener('input', (e) => {
+    filterList(contactListEl, e.target.value);
+  });
+  
+});*/
+
+document.addEventListener('DOMContentLoaded', function() {
+  const clearBtn = document.getElementById('clearSelectionBtn');
+  clearBtn.addEventListener('click', function() {
+    document.getElementById('filterForm').reset();
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('showNewChatModal') === 'true') {
+    // Show the modal
+    document.getElementById('newChatModal').style.display = 'block';
+  }
+});
+
+// Search in conversation functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('conversationSearch');
+  const searchButton = document.getElementById('searchButton');
+  
+  let highlightedElements = [];
+
+  function clearHighlights() {
+    highlightedElements.forEach(el => {
+      if (el.parentNode) {
+        el.parentNode.replaceChild(document.createTextNode(el.textContent), el);
+      }
+    });
+    highlightedElements = [];
+  }
+
+  function highlightText(element, searchText) {
+    if (!searchText) return;
+    
+    const regex = new RegExp(searchText, 'gi');
+    const text = element.textContent;
+    const matches = text.match(regex);
+    
+    if (!matches) return;
+    
+    const parts = text.split(regex);
+    const fragment = document.createDocumentFragment();
+    
+    parts.forEach((part, i) => {
+      fragment.appendChild(document.createTextNode(part));
+      if (i < parts.length - 1) {
+        const span = document.createElement('span');
+        span.className = 'search-highlight';
+        span.textContent = matches[i];
+        span.style.backgroundColor = '#ffeb3b';
+        span.style.padding = '2px';
+        span.style.borderRadius = '2px';
+        highlightedElements.push(span);
+        fragment.appendChild(span);
+      }
+    });
+    
+    element.textContent = '';
+    element.appendChild(fragment);
+  }
+
+  function findMatches() {
+    const searchText = searchInput.value.trim();
+    if (!searchText) {
+      clearHighlights();
+      return;
+    }
+
+    clearHighlights();
+    
+    const messages = document.querySelectorAll('.message p');
+    
+    messages.forEach(message => {
+      highlightText(message, searchText);
+    });
+  }
+
+  searchButton.addEventListener('click', findMatches);
+  
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      findMatches();
+    }
+  });
+
+  // Clear highlights when input is cleared
+  searchInput.addEventListener('input', function() {
+    if (!this.value.trim()) {
+      clearHighlights();
+    }
+  });
+});
+
+// Add event listener for the X button
+document.getElementById('xButton').addEventListener('click', function() {
+  const searchInput = document.getElementById('conversationSearch');
+  searchInput.value = '';
+  
+  // Clear all highlights
+  const messages = document.querySelectorAll('.message p');
+  messages.forEach(message => {
+    // Restore original text by replacing highlighted spans with their text content
+    const highlights = message.querySelectorAll('.search-highlight');
+    highlights.forEach(highlight => {
+      const text = document.createTextNode(highlight.textContent);
+      highlight.parentNode.replaceChild(text, highlight);
+    });
+  });
+  
+  // Clear the highlightedElements array
+  highlightedElements = [];
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Grab references to the input, button, and list
+  const newChatSearchInput = document.getElementById('searchInputNewChat');
+  const newChatSearchButton = document.getElementById('searchButtonNewChat');
+  const newChatContactList = document.querySelector('#newChatForm .contact-list');
+
+  // Debug logging
+  console.log('Search Input:', newChatSearchInput);
+  console.log('Search Button:', newChatSearchButton);
+  console.log('Contact List:', newChatContactList);
+
+  function performSearch() {
+    console.log('Performing search...');
+    
+    // Get the search value
+    const searchValue = newChatSearchInput.value.trim().toLowerCase();
+    console.log('Search value:', searchValue);
+
+    // Get all contacts in the new chat modal
+    const allContacts = document.querySelectorAll('#newChatModal .contact');
+    console.log('Found contacts:', allContacts.length);
+
+    let anyVisible = false;
+
+    // Loop over each contact and check if its name matches
+    allContacts.forEach(contact => {
+      const nameEl = contact.querySelector('.contact-name');
+      const contactName = (nameEl ? nameEl.textContent : '').toLowerCase();
+      console.log('Checking contact:', contactName);
+
+      // If the contact name contains the search text OR the search is empty, show it
+      if (contactName.includes(searchValue) || !searchValue) {
+        contact.style.display = 'flex';
+        anyVisible = true;
+      } else {
+        contact.style.display = 'none';
+      }
+    });
+
+    // Handle "No contacts found" message
+    let noContactsMsg = document.querySelector('#newChatModal .no-contacts-message');
+    if (!noContactsMsg) {
+      noContactsMsg = document.createElement('div');
+      noContactsMsg.className = 'no-contacts-message';
+      noContactsMsg.style.textAlign = 'center';
+      noContactsMsg.style.color = '#666';
+      noContactsMsg.style.margin = '10px 0';
+      noContactsMsg.textContent = 'No contacts found';
+      document.querySelector('#newChatModal .modal-body').appendChild(noContactsMsg);
+    }
+
+    // If none are visible, show the "No contacts found" div; otherwise hide it
+    noContactsMsg.style.display = anyVisible ? 'none' : 'block';
+  }
+
+  // Search on button click
+  if (newChatSearchButton) {
+    newChatSearchButton.addEventListener('click', function(e) {
+      console.log('Search button clicked');
+      e.preventDefault();
+      performSearch();
+    });
+  }
+
+  // Search as user types
+  if (newChatSearchInput) {
+    newChatSearchInput.addEventListener('input', function() {
+      console.log('Search input changed');
+      performSearch();
+    });
+
+    // Also search when Enter is pressed
+    newChatSearchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        console.log('Enter pressed');
+        e.preventDefault();
+        performSearch();
+      }
+    });
+  }
+});
+
+</script>
+
+<style>
+.search-highlight {
+  transition: background-color 0.3s ease;
+}
+
+#searchResults {
+  z-index: 1000;
+}
+
+#searchResults button {
+  padding: 2px 8px;
+  margin: 0 2px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+#searchResults button:hover {
+  background: #e0e0e0;
+}
+
+#clearSearch {
+  color: #666;
+  font-size: 18px;
+  padding: 0 8px;
+}
+</style>
+
+{% endblock %}

@@ -1,0 +1,234 @@
+/* -------------------------------
+   Dark Theme Example
+--------------------------------- */
+
+/* Page Background */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    /* Dark background with a slight gradient */
+    background: linear-gradient(120deg, #11171e, #1c1f2a);
+    min-height: 100vh;
+
+    /* Flex container to center the login card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login Container (Card) */
+.login-container {
+    background: #1f1f2f;
+    border-radius: 12px;
+    padding: 15px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    /* Add border property */
+    border: 1px solid #efd959; /* Classic yellow color */
+}
+
+/* Heading */
+.login-container h1 {
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff; 
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #393c4f;  /* Subtle border for focus/hover states */
+    border-radius: 8px;
+    font-size: 14px;
+    color: #ffffff;
+    background: #2c2c3c; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #999999;
+}
+
+.form-group input:focus {
+    border-color: #5865F2; 
+    box-shadow: 0 0 8px rgba(88, 101, 242, 0.3); /* Slight glow with accent color */
+    outline: none;
+}
+
+/* "Remember Me" + "Forgot Password" row */
+.form-group.options {
+    margin-bottom: 20px;
+    color: #bbbbbb;
+}
+
+.options-container {
+    display: flex;             /* Put both wrapper & link in one row */
+    align-items: center;       /* Vertically center them */
+    justify-content: space-between;  /* Left item on left, link on right */
+    margin-bottom: 20px;       /* Keep spacing if you like */
+  }
+  
+  .remember-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;                  /* Space between checkbox & label */
+  }
+  
+  .forgot-password {
+    color: #9AC3FB;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
+
+.options-container input[type="checkbox"] {
+    margin-right: 6px;
+    max-width: 20px;
+}
+
+.options-container label {
+    font-size: 14px;
+    margin-right: auto;
+    min-width: 100px;
+}
+
+.options-container a {
+    color: #9AC3FB; 
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.options-container a:hover {
+    text-decoration: underline;
+}
+
+/* Login Button */
+.btn-login {
+    background: #5865F2; 
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.btn-login:hover {
+    background: #4752C4; 
+    transform: translateY(-1px);
+}
+
+/* Additional Text Below the Button */
+.login-container p {
+    color: #cccccc;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-container a {
+    color: #9AC3FB;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+/* Error Message */
+.error-message {
+    color: #FF6B6B;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Social Login */
+.social-login {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* stack vertically */
+    gap: 10px;
+    align-items: center;
+}
+
+.social-button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 1rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; 
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* Keep Brand Colors for Google & Facebook */
+.google-button {
+    /* Darker red for Google */
+    background-color: #8B2B25;
+    color: #ffffff;
+    border: none;           /* or 1px solid #db4437 if you want a red border accent */
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.google-button:hover {
+    background-color: #7B251F;
+    transform: translateY(-2px);
+}
+
+.facebook-button {
+    /* Darker blue for Facebook */
+    background-color: #2C3B66;
+    color: #ffffff;
+    border: none;           /* or 1px solid #3b5998 if you want a blue border accent */
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.facebook-button:hover {
+    background-color: #1C2B46;
+    transform: translateY(-2px);
+}
+
+
+
+
+
+
+

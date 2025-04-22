@@ -1,0 +1,90 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+{% load socialaccount %}  {# For {% provider_login_url 'google' %} or 'facebook' %}
+
+{% block title %}Register as Client{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register_client.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+
+    <!-- Register as a Client Section -->
+    <form method="POST" action="{% url 'register_client' %}">
+     {% csrf_token %}
+    <div class="section-container">
+        <h1>Register as a Client</h1>
+            <!-- Username Field -->
+            <div class="form-group">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+
+            <!-- Name Field -->
+            <div class="form-group">
+                <input type="text" id="realname" name="realname" placeholder="Full Name" required>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                {% if errors.email %}
+                    <div class="error-message" style="color: red;">{{ errors.email }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                {% if errors.password %}
+                    <div class="error-message" style="color: red;">{{ errors.password }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Re-Password Field -->
+            <div class="form-group">
+                <input type="password" id="repassword" name="repassword" placeholder="Confirm Password" required>
+            </div>
+    </div>
+
+    <!-- Login with Google or Facebook Section -->
+    <div class="section-container">
+        <div class="social-login">
+            <div class="button-container">
+                <!-- Link to Google OAuth flow -->
+                <a href="{% provider_login_url 'google' %}" class="social-button google-button">
+                    <img src="{% static 'images/dark-google-v2.png' %}" alt="Google Icon" class="social-icon">
+                    <span>Sign in with Google</span>
+                </a>
+                
+                <!-- Link to Facebook OAuth flow -->
+                <a href="{% provider_login_url 'facebook' %}" class="social-button facebook-button">
+                    <img src="{% static 'images/dark-facebook.png' %}" alt="Facebook Icon" class="social-icon">
+                    <span>Sign In with Facebook</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions -->
+    <div class="section-container">
+        <div class="terms">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">I agree that my personal data be processed by Doctor Appointments for an indefinite period.</label>
+            {% if errors.terms %}
+                <div style="color: red; margin-top: 5px;">
+                    {{ errors.terms }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <a href="{% url 'create_account' %}" class="back-button">Back</a>
+            <button type="submit" class="create-button">Create Account</button>
+        </div>
+    </div>
+    </form>
+</div>
+{% endblock %}

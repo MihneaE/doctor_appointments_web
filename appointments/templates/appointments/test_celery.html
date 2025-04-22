@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Celery</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Test Celery with Button</h1>
+  <button id="triggerTask">Trigger Celery Task</button>
+  <p id="feedback"></p>
+
+  <script>
+    $(document).ready(function () {
+      $("#triggerTask").click(function () {
+        $.ajax({
+          url: "{% url 'test_celery' %}", // Django URL
+          type: "POST",
+          headers: { "X-CSRFToken": "{{ csrf_token }}" }, // Include CSRF token
+          success: function (response) {
+            $("#feedback").text(response.message + " Task ID: " + response.task_id);
+          },
+          error: function () {
+            $("#feedback").text("An error occurred while triggering the task.");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

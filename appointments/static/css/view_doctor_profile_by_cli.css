@@ -1,0 +1,148 @@
+/* styles.css */
+
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.profile-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #2c2c3c;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #efd959;  /* Gold accent border */
+}
+
+/* Left Section Styling */
+.left-section {
+    flex: 2;
+    padding-right: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.doctor-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.doctor-details h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.doctor-details p {
+    margin: 5px 0;
+}
+
+.doctor-details a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.doctor-description {
+    margin-top: 20px;
+}
+
+.doctor-description h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.doctor-description p {
+    line-height: 1.6;
+}
+
+.weekly-schedule {
+    margin-top: 20px;
+}
+
+.weekly-schedule h2 {
+    margin-bottom: 10px;
+}
+
+.weekly-schedule table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.weekly-schedule table th,
+.weekly-schedule table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.reviews-section {
+    margin-top: 20px;
+}
+
+.reviews-section h2 {
+    margin-bottom: 10px;
+}
+
+/* Right Section Styling */
+.right-section {
+    background-color: #1c1f2a;
+    flex: 1;
+    padding-left: 20px;
+}
+
+.appointment-box {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-box h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.appointment-box label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.appointment-box select,
+.appointment-box input,
+.appointment-box textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.appointment-box .book-btn {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.appointment-box .book-btn:hover {
+    background: #0056b3;
+}
+
+/* Container that holds the two buttons side-by-side */
+.switch-buttons {
+    background: #20d0b0; /* Teal background for the unselected side */
+    /* Already has border-radius: 30px and overflow: hidden inline, but you can move it here if you prefer */
+  }

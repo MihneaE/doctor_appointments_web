@@ -1,0 +1,55 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Payment{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/free_payment.css' %}">
+<!-- If you're using Font Awesome for icons, also include this: -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+<!-- Main container, centered on the page -->
+<div class="about-free-container" style="position: relative;">
+    <a href="{% url 'subscription' %}" class="undo-button" style="position: absolute; top: 10px; left: 10px;">
+      <img src="{% static 'images/back_image.png' %}" alt="Undo" style="width: 40px; height: 40px; border-radius: 5px;">
+    </a>
+  
+    <h1 class="about-title">About the FREE Subscription</h1>
+    
+    <div class="about-content">
+      <p class="about-highlight">
+        $0/month &nbsp; | &nbsp; No Savings
+      </p>
+      
+      <ul class="about-features">
+        <li><strong>Up to 20 Clients/Month</strong></li>
+        <li><strong>Up to 50 Appointments/Month</strong></li>
+        <li><strong>Email Support</strong></li>
+        <li><strong>Basic Analytics</strong></li>
+      </ul>
+      
+      <p class="about-description">
+        Our Free Subscription plan is perfect for doctors looking to get started 
+        with our platform at no initial cost. It allows you to manage 50 appointments 
+        per month, connect with a single doctor profile, and access basic analytical 
+        tools to track your practice. <br><br>
+        This is an excellent option if you’re just testing the waters and want 
+        a risk-free way to explore our core features. You’ll have email support 
+        available for quick assistance, along with simple analytics to help you 
+        understand your patient flow.
+      </p>
+      
+      <p class="about-note">
+        For enhanced capabilities—like managing more appointments or linking 
+        multiple doctors—explore our paid subscriptions. But if you’re looking 
+        for a simple, zero-cost solution to keep your practice organized, 
+        this Free plan is a reliable choice.
+      </p>
+    </div>
+  </div>
+
+  {% include 'appointments/underground.html' %}
+  {% endblock %}

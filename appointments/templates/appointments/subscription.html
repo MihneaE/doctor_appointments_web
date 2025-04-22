@@ -1,0 +1,73 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Subscription{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/subscription.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="subscription-container">
+    <h1 class="subscription-title">Subscription Plans (Only for Doctors)</h1>
+    <p class="subscription-subtitle">
+        Choose the best plan for your practice and get the most out of Doctor Appointments.
+    </p>
+    
+    <!-- Plans Container: This is the new container grouping all plans -->
+    <div class="plans-container">
+        <!-- 3-Column Plans Row -->
+        <div class="plans-row">
+            <!-- 1) FREE Plan -->
+            <div class="plan-card plan-free">
+                <h2 class="plan-name">Free</h2>
+                <p class="plan-price">$0/month</p>
+                <p class="plan-save">No Savings</p>
+                <ul class="plan-features">
+                    <li>Up to 20 Clients/Month</li>
+                    <li>Up to 50 Appointments/Month</li>
+                    <li>Email Support</li>
+                    <li>Basic Analytics</li>
+                </ul>
+                <a href="{% url 'free_payment' %}" class="subscribe-button free-button">About</a>
+            </div>
+            
+            <!-- 2) NORMAL Plan -->
+            <div class="plan-card plan-normal">
+                <h2 class="plan-name">Normal</h2>
+                <p class="plan-price">$1.99/month</p>
+                <p class="plan-save">Save 50%</p>
+                <ul class="plan-features">
+                    <li>Up to 50 Clients/Month</li>
+                    <li>Up to 100 Appointments/Month</li>
+                    <li>Email &amp; Chat Support</li>
+                    <li>Basic Analytics</li>
+                </ul>
+                <a href="{% url 'normal_payment' %}" class="subscribe-button normal-button">Get Started</a>
+            </div>
+            
+            <!-- 3) PLUS Plan (BEST DEAL) -->
+            <div class="plan-card plan-plus">
+                <div class="plan-badge">BEST DEAL</div>
+                <h2 class="plan-name">Plus</h2>
+                <p class="plan-price">$4.99/month</p>
+                <p class="plan-save">Save 60%</p>
+                <ul class="plan-features">
+                    <li>Unlimited Clients</li>
+                    <li>Unlimited Appointments</li>
+                    <li>Priority Chat &amp; Phone Support</li>
+                    <li>Advanced Analytics</li>
+                </ul>
+                <a href="{% url 'plus_payment' %}" class="subscribe-button plus-button">Upgrade</a> 
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'appointments/underground.html' %}
+{% endblock %}
+
+
+
+
+

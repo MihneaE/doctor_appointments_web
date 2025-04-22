@@ -1,0 +1,285 @@
+<!-- appointments/templates/appointments/about.html -->
+
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Full-Width Banner -->
+<section class="about-banner">
+    <div class="banner-content">
+        <h1>About Doctor Appointments</h1>
+        <p>
+            A modern platform designed to simplify the way you connect with healthcare professionals.
+            We make healthcare accessible, efficient, and stress-free for patients and doctors.
+        </p>
+        <!-- Optional: Replace with Contact Us button or remove if not needed -->
+        <!-- <a href="{% url 'contact' %}" class="cta-button">Contact Us</a> -->
+    </div>
+
+    <div class="squares-wrapper">
+        <div class="square">
+            <a href="#vision">
+                <img id="our-vision" class="square-image" src="{% static 'images/our-vision-v2.png' %}" alt="Our Vision">
+                <p>Our Vision</p>
+            </a>
+        </div>
+        <div class="square">
+            <a href="#what-we-do_">
+                <img id="what-we-do" class="square-image" src="{% static 'images/what-we-do-v3.png' %}" alt="What We Do">
+                <p>What We Do</p>
+            </a>
+        </div>
+        <div class="square">
+            <a href="#how-it-works_">
+                <img id="how-it-works" class="square-image" src="{% static 'images/how-it-works.png' %}" alt="How It Works">
+                <p>How It Works</p>
+            </a> 
+        </div>
+        <div class="square">
+            <a href="#why-choose-us_">
+                <img id="why-choose-us" class="square-image" src="{% static 'images/easy-to-use.png' %}" alt="Why Choose Us">
+                <p>Why Choose Us</p>
+            </a>
+        </div>
+        <div class="square">
+            <a href="#commitment_">
+                <img id="our-commitment-to-quality" class="square-image" src="{% static 'images/user-icon.png' %}" alt="Our Commitment to Quality">
+                <p>Our Commitment to Quality</p>
+            </a>
+        </div>
+        <div class="square">
+            <a href="#join-us_">
+                <img id="join-us-on-our-journey" class="square-image" src="{% static 'images/twitter.png' %}" alt="Join Us on Our Journey">
+                <p>Join Us on Our Journey</p>
+            </a>
+        </div>
+    </div>
+    
+</section>
+
+<!-- About Content Container -->
+<section class="about-content">
+    <div class="content-wrapper">
+        <!-- Vision Section with Icon -->
+        <div class="vision-container" id="vision">
+            <div class="vision-content">
+                <img src="{% static 'images/our-vision-v2.png' %}" alt="Our Vision" class="vision-icon">
+                <div class="vision-text">
+                    <h2>Our Vision</h2>
+                    <p>
+                        At <strong>Doctor Appointments</strong>, we believe everyone deserves timely and hassle-free 
+                        access to quality healthcare. We strive to bridge the gap between patients and healthcare 
+                        providers through a user-friendly, transparent platform that fosters trust and convenience.
+                    </p>
+                    <p>
+                        We envision a world where innovative technology and compassionate care merge to create a 
+                        healthcare ecosystem that is both accessible and advanced. Our commitment is to continuously 
+                        enhance the patient experience and empower healthcare professionals with the tools they need to 
+                        excel in a rapidly evolving digital age.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- What We Do Section with Image -->
+        <div class="what-we-do-container" id="what-we-do_">
+            <div class="what-we-do-content">
+                <img src="{% static 'images/what-we-do-v3.png' %}" alt="What We Do" class="what-we-do-icon">
+                <div class="what-we-do-text">
+                    <h2>What We Do</h2>
+                    <p><strong>Doctor Appointments</strong> is your one-stop solution for:</p>
+                    <ul>
+                        <li>
+                            <p class="step-description">
+                                <strong>Scheduling Appointments:</strong> 
+                                Book consultations with experienced doctors. Our scheduling system streamlines your booking process by offering a user-friendly interface that displays real-time availability. You can easily select a time slot that fits your schedule, and your appointment is confirmed instantly. Automated reminders help ensure you never miss an appointment, making the entire process seamless and efficient.
+                            </p>
+                        </li>
+                        <li>
+                            <p class="step-description">
+                                <strong>Doctor Discovery:</strong> 
+                                Search by specialty, location, reviews, and more. Our advanced search tools empower you to find the right specialist quickly by filtering based on location, specialty, and patient reviews. Detailed doctor profiles provide insights into qualifications, experience, and patient satisfaction. This transparency allows you to make informed decisions about your healthcare provider.
+                            </p>
+                        </li>
+                        <li>
+                            <p class="step-description">
+                                <strong>Online Consultations:</strong> 
+                                Connect with doctors remotely for added convenience. Enjoy the convenience of remote healthcare with our secure online consultation platform. Connect with trusted professionals from the comfort of your home via high-quality video calls. This service reduces travel time and waiting room delays while ensuring you receive timely, expert medical advice.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Section with Steps -->
+        <div class="how-it-works-container" id="how-it-works_">
+            <div class="how-it-works-content">
+                <img src="{% static 'images/how-it-works.png' %}" alt="How It Works" class="how-it-works-icon">
+                <div class="how-it-works-text">
+                    <h2>How It Works</h2>
+                    <div class="steps-container">
+                        <div class="step">
+                            <h3>1. Search</h3>
+                            <p>Find the right specialist based on your needs and preferences.</p>
+                        </div>
+                        <div class="step">
+                            <h3>2. Schedule</h3>
+                            <p>Choose a convenient time and book your appointment seamlessly.</p>
+                        </div>
+                        <div class="step">
+                            <h3>3. Consult</h3>
+                            <p>Meet your doctor in person or through our secure online platform.</p>
+                        </div>
+                    </div>
+                    <div class="what-we-do-text">
+                        <p class="step-description">
+                            <strong>1. Search system:</strong> Our advanced search system allows you to filter through a comprehensive database of doctors. Refine your search by specialty, location, experience, and patient ratings—ensuring that you find the ideal healthcare professional quickly and efficiently.
+                        </p>
+                        <p class="step-description">
+                            <strong>2. Schedule an appointment:</strong> Our intuitive scheduling interface displays real-time availability, making it simple to select an appointment slot that fits your busy schedule. Once you book, you receive an immediate confirmation along with automated reminders so you never miss an appointment.
+                        </p>
+                        <p class="step-description">
+                            <strong>3. Consult the doctor:</strong> Enjoy a comprehensive consultation either in-person or via our secure telehealth service. Our platform ensures a smooth, reliable connection with your doctor, offering expert advice and personalized care to address your unique health needs.
+                        </p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+
+        <!-- Why Choose Us Section with Icons -->
+        <div class="why-choose-us-container" id="why-choose-us_">
+            <div class="why-choose-us-content">
+                <h2>Why Choose Us?</h2>
+                <ul class="why-choose-list">
+                    <li class="why-choose-item">
+                        <img src="{% static 'images/wide-network.png' %}" alt="Wide Network" class="why-choose-icon">
+                        <div class="why-choose-text">
+                            <strong>Wide Network of Specialists:</strong> Covering everything from cardiology to pediatrics.
+                        </div>
+                    </li>
+                    <li class="why-choose-item">
+                        <img src="{% static 'images/easy-to-use.png' %}" alt="Easy to Use" class="why-choose-icon">
+                        <div class="why-choose-text">
+                            <strong>Easy to Use:</strong> An intuitive interface for all age groups.
+                        </div>
+                    </li>
+                    <li class="why-choose-item">
+                        <img src="{% static 'images/doctor-icon-png-18.png' %}" alt="Verified Doctors" class="why-choose-icon">
+                        <div class="why-choose-text">
+                            <strong>Verified Doctors:</strong> All healthcare professionals are licensed and vetted.
+                        </div>
+                    </li>
+                    <li class="why-choose-item">
+                        <img src="{% static 'images/flexible-icon.png' %}" alt="Flexible Options" class="why-choose-icon">
+                        <div class="why-choose-text">
+                            <strong>Flexible Options:</strong> In-person or online—your choice.
+                        </div>
+                    </li>
+                    <li class="why-choose-item">
+                        <img src="{% static 'images/24-7-access.png' %}" alt="24/7 Access" class="why-choose-icon">
+                        <div class="why-choose-text">
+                            <strong>24/7 Access:</strong> Book appointments anytime, anywhere.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Commitment to Quality Section with Testimonials -->
+        <div class="commitment-container" id="commitment_">
+            <div class="commitment-content">
+                <h2>Our Commitment to Quality</h2>
+                <p>
+                    Your privacy and security are paramount. We encrypt data and comply with healthcare privacy regulations. 
+                    Our team strives to enhance your experience through continuous improvements.
+                </p>
+                <div class="testimonials">
+                    <h3>What Our Users Say</h3>
+                    {% if testimonials %}
+                        {% for testimonial in testimonials %}
+                            <blockquote class="testimonial">
+                                {% if testimonial.user_photo %}
+                                    <img src="{{ testimonial.user_photo.url }}" alt="{{ testimonial.user.username }}" class="testimonial-photo">
+                                {% else %}
+                                    <img src="{% static 'images/user1.png' %}" alt="{{ testimonial.user.username }}" class="testimonial-photo">
+                                {% endif %}
+                                <div class="testimonial-text">
+                                    "{{ testimonial.content }}"
+                                    <footer>— {{ testimonial.user.username }}</footer>
+                                </div>
+                            </blockquote>
+                        {% endfor %}
+                    {% else %}
+                        <blockquote class="testimonial">
+                            <img src="{% static 'images/user1.png' %}" alt="Sarah L." class="testimonial-photo">
+                            <div class="testimonial-text">
+                                "Doctor Appointments has revolutionized the way I manage my health. Booking appointments is now effortless!"
+                                <footer>— Sarah L.</footer>
+                            </div>
+                        </blockquote>
+                        <blockquote class="testimonial">
+                            <img src="{% static 'images/user1.png' %}" alt="Dr. Michael B." class="testimonial-photo">
+                            <div class="testimonial-text">
+                                "As a healthcare provider, Doctor Appointments has streamlined my scheduling and increased my patient reach."
+                                <footer>— Dr. Michael B.</footer>
+                            </div>
+                        </blockquote>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Us Section -->
+        <div class="join-us-container" id="join-us_">
+            <div class="join-us-content">
+                <h2>Join Us on Our Journey</h2>
+                <p>
+                    At <strong>Doctor Appointments</strong>, we're more than just a booking platform—we're your partner in health. 
+                    Whether you need a second opinion or regular check-ups, we make it easier and more efficient for everyone.
+                </p>
+                <!-- Community Links -->
+                <div class="community-links">
+                    <a href="https://www.facebook.com/encean.mihnea" target="_blank" class="community-link" style="text-decoration: none;">
+                        <img src="{% static 'images/facebook.png' %}" alt="Facebook" class="community-icon">
+                        <span style="color: #efd959;">Facebook</span>
+                    </a>
+                    <a href="https://x.com/EnceanM77754" target="_blank" class="community-link" style="text-decoration: none;">
+                        <img src="{% static 'images/twitter.png' %}" alt="Twitter" class="community-icon">
+                        <span style="color: #efd959;">X</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/encean-mihnea-478872246/" target="_blank" class="community-link" style="text-decoration: none;">
+                        <img src="{% static 'images/linkedin.png' %}" alt="LinkedIn" class="community-icon">
+                        <span style="color: #efd959;">LinkedIn</span>
+                    </a>
+                    <a href="https://www.instagram.com/mihnea.encean/?next=%2F" target="_blank" class="community-link" style="text-decoration: none;">
+                        <img src="{% static 'images/insta-png.png' %}" alt="Instagram" class="community-icon">
+                        <span style="color: #efd959;">Instagram</span>
+                    </a>
+                    <!-- Add more community links as needed -->
+                </div>
+                <!-- Optional: CTA Button -->
+                <!-- <a href="#" class="cta-button">Subscribe to Our Newsletter</a> -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+
+{% include 'appointments/underground.html' %}
+{% endblock %}
+
+
+
+
+
+
+

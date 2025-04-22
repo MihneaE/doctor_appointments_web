@@ -1,0 +1,1010 @@
+{% extends 'appointments/base.html' %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}Doctor Profile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/client_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container" style="border: 1px solid #efd959; /* Gold accent border */">
+    <!-- Left Section -->
+    <div class="left-section">
+        <div class="profile-picture">
+            <img 
+                {% if doctor.profile_picture %}
+                    src="{{ doctor.profile_picture.url }}"
+                {% else %}
+                    src="https://via.placeholder.com/150"
+                {% endif %}
+                alt="Profile Picture">
+            <h2 class="username">{{ doctor.user.username }}</h2>
+        </div>
+        <div class="buttons">
+            <button class="section-btn" data-section="dashboard">Dashboard</button>
+            <button class="section-btn" data-section="professional-details">Professional Details</button>
+            <button class="section-btn" data-section="work-details">Work Details</button>
+            <button class="section-btn" data-section="contact-details">Contact Details</button>
+            <button class="section-btn" data-section="additional-details">Additional Details</button>
+            <button class="section-btn" data-section="availability-d">Availability Details</button>
+            <button class="section-btn" data-section="update-photo">Update Photo</button>
+            <button class="section-btn" data-section="edit-password">Edit Password</button>
+        </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-section">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="details-section" style="display: block;">
+            <div class="dashboard-header">
+                <h3>Dashboard</h3>
+            </div>
+        
+            <!-- Personal Details Section -->
+            <div class="personal-details-section">
+                <div class="personal-details-header">
+                    <h3>Personal Details</h3>
+                </div>
+                <div class="info-cards">
+                    <!-- Username -->
+                    <div class="info-card">
+                        <span class="info-label">Username</span>
+                        <span class="info-value">{{ doctor.user.username }}</span>
+                    </div>
+                    <!-- Real Name -->
+                    <div class="info-card">
+                        <span class="info-label">Real Name</span>
+                        <span class="info-value">
+                            {{ doctor.user.first_name }} {{ doctor.user.last_name }}
+                        </span>
+                    </div>
+                    <!-- Email -->
+                    <div class="info-card">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">
+                            {{ doctor.user.email }}
+                        </span>
+                    </div>
+                    <!-- Gender -->
+                    <div class="info-card">
+                        <span class="info-label">Gender</span>
+                        <span class="info-value">
+                            {{ doctor.gender|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Date of Birth -->
+                    <div class="info-card">
+                        <span class="info-label">Date of Birth</span>
+                        <span class="info-value">
+                            {{ doctor.date_of_birth|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Languages Spoken -->
+                    <div class="info-card">
+                        <span class="info-label">Languages Spoken</span>
+                        <span class="info-value">
+                            {{ doctor.languages_spoken|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Rating -->
+                    <div class="info-card">
+                        <span class="info-label">Rating</span>
+                        <span class="info-value">
+                            {{ doctor.rating|default:"0.0" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Professional Details Section -->
+            <div class="professional-details-section">
+                <div class="professional-details-header">
+                    <h3>Professional Details</h3>
+                </div>
+                <div class="info-cards">
+                    <!-- Specialization -->
+                    <div class="info-card">
+                        <span class="info-label">Specialization</span>
+                        <span class="info-value">
+                            {{ doctor.specialization|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Qualification -->
+                    <div class="info-card">
+                        <span class="info-label">Qualification</span>
+                        <span class="info-value">
+                            {{ doctor.qualification|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Experience -->
+                    <div class="info-card">
+                        <span class="info-label">Experience</span>
+                        <span class="info-value">
+                            {{ doctor.experience|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Certifications -->
+                    <div class="info-card">
+                        <span class="info-label">Certifications</span>
+                        <span class="info-value">
+                            {{ doctor.certifications|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Professional Description -->
+                    <div class="info-card">
+                        <span class="info-label">Professional Description</span>
+                        <span class="info-value">
+                            {{ doctor.professional_description|default:"Not specified" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Work Details Section -->
+            <div class="work-details-section">
+                <div class="work-details-header">
+                    <h3>Work Details</h3>
+                </div>
+                <div class="info-cards">
+                    <!-- Clinic/Hospital -->
+                    <div class="info-card">
+                        <span class="info-label">Clinic/Hospital</span>
+                        <span class="info-value">
+                            {{ doctor.clinic_hospital|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Address -->
+                    <div class="info-card">
+                        <span class="info-label">Address</span>
+                        <span class="info-value">
+                            {{ doctor.address|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- City -->
+                    <div class="info-card">
+                        <span class="info-label">City</span>
+                        <span class="info-value">
+                            {{ doctor.city|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Country -->
+                    <div class="info-card">
+                        <span class="info-label">Country</span>
+                        <span class="info-value">
+                            {{ doctor.country|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Services -->
+                    <div class="info-card">
+                        <span class="info-label">Services</span>
+                        <span class="info-value">
+                            {{ doctor.services|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Consultation Fee -->
+                    <div class="info-card">
+                        <span class="info-label">Consultation Fee</span>
+                        <span class="info-value">
+                            {{ doctor.consultation_fee|default:"Not specified" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Contact Details Section -->
+            <div class="contact-details-section">
+                <div class="contact-details-header">
+                    <h3>Contact Details</h3>
+                </div>
+                <div class="info-cards">
+                    <!-- Contact -->
+                    <div class="info-card">
+                        <span class="info-label">Contact</span>
+                        <span class="info-value">
+                            {{ doctor.contact|default:"Not specified" }}
+                        </span>
+                    </div>
+                    <!-- Website -->
+                    <div class="info-card">
+                        <span class="info-label">Website</span>
+                        <span class="info-value">
+                            {% if doctor.website %}
+                                <a href="{{ doctor.website }}" target="_blank" style="color: #efd959;">
+                                    {{ doctor.website }}
+                                </a>
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Availability Details Section -->
+            <div class="availability-details-section">
+                <div class="availability-details-header">
+                    <h3>Availability Details</h3>
+                </div>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <span class="info-label">Monday Hours</span>
+                        <span class="info-value">
+                            {{ doctor.monday_start|default:"Not available" }} -
+                            {{ doctor.monday_end|default:"Not available" }}
+                        </span>
+                    </div>
+                    <div class="info-card">
+                        <span class="info-label">Tuesday Hours</span>
+                        <span class="info-value">
+                            {{ doctor.tuesday_start|default:"Not available" }} -
+                            {{ doctor.tuesday_end|default:"Not available" }}
+                        </span>
+                    </div>
+                    <div class="info-card">
+                        <span class="info-label">Wednesday Hours</span>
+                        <span class="info-value">
+                            {{ doctor.wednesday_start|default:"Not available" }} -
+                            {{ doctor.wednesday_end|default:"Not available" }}
+                        </span>
+                    </div>
+                    <div class="info-card">
+                        <span class="info-label">Thursday Hours</span>
+                        <span class="info-value">
+                            {{ doctor.thursday_start|default:"Not available" }} -
+                            {{ doctor.thursday_end|default:"Not available" }}
+                        </span>
+                    </div>
+                    <div class="info-card">
+                        <span class="info-label">Friday Hours</span>
+                        <span class="info-value">
+                            {{ doctor.friday_start|default:"Not available" }} -
+                            {{ doctor.friday_end|default:"Not available" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Details Section -->
+        <div id="professional-details" class="details-section" style="display: none;">
+            <div class="personal-details-header">
+            <h3>Professional Details</h3>
+            </div>
+            <form method="post" enctype="multipart/form-data" action="{% url 'update_doctor_profile_proffessional' %}" class="personal-details-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="specialization">Specialization</label>
+                    <input type="text" id="specialization" name="specialization" value="{{ doctor.specialization }}">
+                </div>
+                <div class="form-group">
+                    <label for="qualification">Qualification</label>
+                    <input type="text" id="qualification" name="qualification" value="{{ doctor.qualification }}">
+                </div>
+                <div class="form-group">
+                    <label for="experience">Experience</label>
+                    <input type="text" id="experience" name="experience" value="{{ doctor.experience }}">
+                </div>
+                <div class="form-group">
+                    <label for="certifications">Certifications</label>
+                    <input type="text" id="certifications" name="certifications" value="{{ doctor.certifications }}">
+                </div>
+                <div class="form-group" style="flex: 1 1 100%;">
+                    <label for="professional_description">Professional Description</label>
+                    <textarea id="professional_description" name="professional_description" style="height: 120px;">{{ doctor.professional_description }}</textarea>
+                </div>
+                <div class="form-group submit-group">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Update Photo Section -->
+        <div id="update-photo" class="details-section" style="display: none;">
+            <div class="personal-details-header">
+                <h3>Update Profile Photo</h3>
+            </div>
+            <form method="post" action="{% url 'update_photo' %}" enctype="multipart/form-data" class="personal-details-form">
+            {% csrf_token %}
+                <div class="form-group" style="flex: 1 1 100%;">
+                    <label for="photoInput">New Photo</label>
+                    <input type="file" id="photoInput" name="profile_picture" accept="image/*" required>
+                </div>
+                <div class="form-group submit-group">
+                    <button type="submit" class="save-btn">Upload Photo</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Edit Password Section -->
+        <div id="edit-password" class="details-section" style="display: none;">
+            <div class="personal-details-header">
+                <h3>Edit Password</h3>
+            </div>
+            <form method="post" action="{% url 'send_reset_email_doctor' %}" class="personal-details-form">
+                {% csrf_token %}
+                <div class="form-group" style="flex: 1 1 100%;">
+                    <label for="emailInput">Email Address</label>
+                    <input type="email" id="emailInput" name="email" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group submit-group">
+                    <button type="submit" class="save-btn">Send Reset Email</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Work Details -->
+        <div id="work-details" class="details-section" style="display: none;">
+            <div class="personal-details-header">
+                <h3>Work Details</h3>
+            </div>
+            <form method="post" action="{% url 'update_doctor_profile_work' %}" class="personal-details-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="clinic_hospital">Clinic/Hospital</label>
+                    <input type="text" id="clinic_hospital" name="clinic_hospital" value="{{ doctor.clinic_hospital }}">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" value="{{ doctor.address }}">
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" value="{{ doctor.city }}">
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <input type="text" id="country" name="country" value="{{ doctor.country }}">
+                </div>
+                <div class="form-group">
+                    <label for="services">Services</label>
+                    <input type="text" id="services" name="services" value="{{ doctor.services }}">
+                </div>
+                <div class="form-group">
+                    <label for="consultation_fee">Consultation Fee</label>
+                    <input type="number" id="consultation_fee" name="consultation_fee" value="{{ doctor.consultation_fee }}" step="0.01" min="0" placeholder="{% if doctor.consultation_fee %}{{ doctor.consultation_fee }}{% else %}Enter fee amount{% endif %}">
+                </div>
+                <div class="form-group submit-group">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </div>
+        </form>
+        </div>
+
+        <!-- Additional Details Section -->
+            <div id="additional-details" class="details-section" style="display: none;">
+            <div class="personal-details-header">
+                <h3>Additional Details</h3>
+                </div>
+            <form method="post" action="{% url 'update_doctor_profile_additional' %}" class="personal-details-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="realName">Real Name</label>
+                    <input type="text" id="realName" name="realName" value="{{ doctor.user.first_name }} {{ doctor.user.last_name }}" placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ doctor.user.email }}" placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" value="{{ doctor.date_of_birth|date:'Y-m-d' }}">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="male" {% if doctor.gender == "male" %}selected{% endif %}>Male</option>
+                        <option value="female" {% if doctor.gender == "female" %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <input type="number" id="rating" name="rating" value="{{ doctor.rating }}" step="0.1" min="0" max="5" placeholder="{% if doctor.rating %}{{ doctor.rating }}{% else %}0.0{% endif %}">
+                </div>
+                <div class="form-group">
+                    <label for="languages_spoken">Languages Spoken</label>
+                    <input type="text" id="languages_spoken" name="languages_spoken" value="{{ doctor.languages_spoken }}" placeholder="English, Spanish, etc.">
+                </div>
+                <div style="flex-basis: 100%;"></div>
+                <div class="form-group submit-group">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Contact Details Section -->
+        <div id="contact-details" class="details-section" style="display: none;">
+            <div class="personal-details-header">
+                <h3>Contact Details</h3>
+            </div>
+            <form method="post" action="{% url 'update_doctor_profile_details' %}" class="personal-details-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="contact">Contact</label>
+                    <input type="text" id="contact" name="contact" value="{{ doctor.contact }}" placeholder="Phone number">
+                </div>
+                <div class="form-group">
+                    <label for="website">Website</label>
+                    <input type="url" id="website" name="website" value="{{ doctor.website }}" placeholder="https://example.com">
+                </div>
+                <div class="form-group submit-group">
+                    <button type="submit" class="save-btn">Save Changes</button>
+            </div>
+        </form>
+        </div>
+
+        <!-- Availability Section -->
+        <div id="availability-d" class="details-section">
+            <div class="availability-details-header">
+                <h3>Doctor Availability</h3>
+            </div>
+        <form method="post" enctype="multipart/form-data" 
+        action="{% url 'update_doctor_profile_availability' %}"
+            style="max-height: 80vh; padding: 15px;">
+      {% csrf_token %}
+  
+      <!-- Heading -->
+      <div class="row">
+          {% for slot in availability_list %}
+              <!-- Day Start -->
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="{{ slot.day_lower }}-start">
+                          {{ slot.day }} Start:
+                      </label>
+                      <select id="{{ slot.day_lower }}-start" 
+                              name="{{ slot.day_lower }}_start" 
+                                    class="form-control"
+                                    title="Current: {% if slot.start %}{{ slot.start }}{% else %}Not set{% endif %}">
+                                <option value="">{{ slot.start }}</option>
+                          {% for hour in hours %}
+                              <option value="{{ hour }}:00"
+                                  {% if slot.start == hour|add:":00" %}selected{% endif %}>
+                                  {{ hour }}:00
+                              </option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              </div>
+  
+              <!-- Day End -->
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="{{ slot.day_lower }}-end">
+                          {{ slot.day }} End:
+                      </label>
+                      <select id="{{ slot.day_lower }}-end" 
+                              name="{{ slot.day_lower }}_end" 
+                                    class="form-control"
+                                    title="Current: {% if slot.end %}{{ slot.end }}{% else %}Not set{% endif %}">
+                                <option value="">{{ slot.end }}</option>
+                          {% for hour in hours %}
+                              <option value="{{ hour }}:00"
+                                  {% if slot.end == hour|add:":00" %}selected{% endif %}>
+                                  {{ hour }}:00
+                              </option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+  
+      <!-- Save Changes button right under Doctor Availability -->
+      <div class="form-group" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-primary">
+              Save Changes
+          </button>
+      </div>
+  
+      <!-- Appointment Duration -->
+      <h2>Appointment Duration</h2>
+      <div class="form-group">
+          <label for="appointment-duration">Appointment Duration (minutes):</label>
+          <select id="appointment-duration" name="appointment_duration" class="form-control">
+              {% for duration in duration_list %}
+                  <option value="{{ duration }}" {% if duration == 30 %}selected{% endif %}>
+                      {{ duration }} Minutes
+                  </option>
+              {% endfor %}
+          </select>
+      </div>
+  
+      <!-- Generate Slots button under Appointment Duration -->
+      <div class="form-group" style="margin-top: 10px;">
+          <button type="button" class="btn btn-success" onclick="generateSlots()">
+              Generate Slots
+          </button>
+      </div>
+  
+      <!-- Manual Slot Creation -->
+      <h2>Manual Slot Creation</h2>
+      <div class="row">
+          
+          <div class="col-md-6">
+
+            <!-- Start Time -->
+            <div class="form-group">
+                <label for="manual-slot-start">Start Time:</label>
+                <select id="manual-slot-start" name="manual_slot_start" class="form-control">
+                    {% for hour in hours %}
+                        {% for minute in minutes %}
+                            <option value="{{ hour }}:{{ minute|add:"00"|slice:"-2" }}">{{ hour }}:{{ minute|add:"00"|slice:"-2" }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Day Selection -->
+            <div class="form-group">
+                <label for="manual-slot-day">Day:</label>
+                <select id="manual-slot-day" name="manual_slot_day" class="form-control">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <!-- End Time -->
+            <div class="form-group">
+                <label for="manual-slot-end">End Time:</label>
+                <select id="manual-slot-end" name="manual_slot_end" class="form-control">
+                    {% for hour in hours %}
+                        {% for minute in minutes %}
+                            <option value="{{ hour }}:{{ minute|add:"00"|slice:"-2" }}">{{ hour }}:{{ minute|add:"00"|slice:"-2" }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+      </div>
+  
+      <!-- Add Slot Button under the fields -->
+      <div class="form-group" style="margin-top: 10px;">
+          <button type="button" class="btn btn-success" onclick="addManualSlot()">
+              Add Slot
+          </button>
+      </div>
+  
+      <!-- Optional: View Slots Button -->
+      <div class="form-group" style="margin-top: 10px;">
+          <button type="button" class="btn btn-info" onclick="openSlotModal()">
+              View Slots
+          </button>
+      </div>
+  
+  </form>
+  </div>
+        
+
+        <!-- Upload Clinic Photo Section -->
+        <div id="upload-clinic-photo" class="details-section" style="display: none;">
+            <h3>Upload Clinic Photo</h3>
+
+            <!-- Display the clinic photo -->
+            <div class="clinic-photo-preview" style="margin-top: 20px; text-align: center;">
+                {% if doctor.clinic_picture %}
+                    <img src="{{ doctor.clinic_picture.url }}" alt="Clinic Photo" style="width: 400px; height: 400px; object-fit: cover; border: 1px solid #ddd; border-radius: 8px;">
+                {% else %}
+                    <img src="https://via.placeholder.com/400" alt="No Clinic Photo Available" style="width: 400px; height: 400px; object-fit: cover; border: 1px solid #ddd; border-radius: 8px;">
+                    <p style="color: gray; margin-top: 10px;">No clinic photo uploaded yet</p>
+                {% endif %}
+            </div>
+
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload_clinic_photo' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="clinic_photo">Choose a photo</label>
+                    <input type="file" id="clinic_photo" name="clinic_photo" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="save-btn">Upload Photo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Viewing Slots -->
+<div id="slotsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000;">
+    <div style="position: relative; margin: 50px auto; background: #2c2c3c; width: 80%; height: 70%; border-radius: 10px; overflow: hidden; padding: 20px; border: 1px solid #efd959; color: #cfcfcf;">
+        <h3 style="margin-bottom: 15px; color: #efd959;">Slots</h3>
+        <button id="closeSlotsModal" style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4444;
+            color: #ffffff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #ff6666;
+        ">Close</button>
+        <button id="deleteAllSlots" style="
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #ff6347;
+            color: #ffffff;
+        border: none;
+            padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 5px;
+            border: 1px solid #ff8367;
+        ">Delete All</button>
+
+        <div id="slotsContent" style="overflow-y: auto; max-height: calc(100% - 60px); margin-top: 20px;">
+            <!-- Dynamic slots will be injected here -->
+        </div>
+    </div>
+</div>
+
+<!-- Overwrite generated slots modal-->
+<div id="warningModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000;">
+    <div style="position: relative; margin: 20vh auto; background: #2c2c3c; width: 400px; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #efd959; color: #cfcfcf;">
+        <h3 style="color: #efd959; margin-bottom: 15px;">Warning</h3>
+        <p>Slots are already generated. Do you want to overwrite them?</p>
+        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+            <button onclick="overwriteSlots(); hideWarningModal();" style="background: #ff6347; color: white; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; border: 1px solid #ff8367;">Yes</button>
+            <button onclick="hideWarningModal();" style="background: #4a4a5a; color: #cfcfcf; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; border: 1px solid #5a5a6a;">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Delete Slots Modal -->
+<div id="confirmDeleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1100;">
+    <div style="position: relative; margin: 20vh auto; background: #2c2c3c; width: 400px; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #efd959; color: #cfcfcf;">
+        <h3 style="color: #efd959; margin-bottom: 15px;">Confirm Delete</h3>
+        <p>Are you sure you want to delete all slots?</p>
+        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+            <button id="confirmYes" style="background: #ff6347; color: white; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; border: 1px solid #ff8367;">Yes</button>
+            <button id="confirmNo" style="background: #4a4a5a; color: #cfcfcf; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; border: 1px solid #5a5a6a;">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- Load Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+    document.querySelectorAll('.section-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.details-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            const sectionId = button.getAttribute('data-section');
+            document.getElementById(sectionId).style.display = 'block';
+        });
+    });
+
+    function openSlotModal() {
+        const slotsContent = document.getElementById('slotsContent');
+        slotsContent.innerHTML = '<p style="text-align: center; color: #cfcfcf;">Loading...</p>'; // Updated loading message color
+
+        fetch('/get-slots/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const slots = data.slots;
+                    slotsContent.innerHTML = '';
+
+                    if (Object.keys(slots).length === 0) {
+                        slotsContent.innerHTML = `
+                        <p style="
+                        text-align: center; 
+                        color: #cfcfcf; 
+                        font-size: 1.5rem; 
+                        font-weight: bold; 
+                        margin-top: 20px;">
+                        No slots set
+                        </p>`;
+                        return;
+                    }
+
+                    for (const [day, slots] of Object.entries(data.slots)) {
+                        const dayDiv = document.createElement('div');
+                        dayDiv.style.marginBottom = '20px';
+                        dayDiv.innerHTML = `<h4 style="color: #efd959; margin-bottom: 10px;">${day}</h4>`;
+                        
+                        const slotsWrapper = document.createElement('div');
+                        slotsWrapper.style.display = 'flex';
+                        slotsWrapper.style.gap = '10px';
+                        slotsWrapper.style.flexWrap = 'wrap';
+
+                        slots.forEach(slot => {
+                            const slotDiv = document.createElement('div');
+                            slotDiv.style = `
+                                padding: 10px;
+                                background: ${slot.reserved ? '#3d3d4d' : '#4a4a5a'};
+                                border: 1px solid ${slot.reserved ? '#ff6347' : '#5a5a6a'};
+                                border-radius: 5px;
+                                text-align: center;
+                                width: 100px;
+                                position: relative;
+                                color: #cfcfcf;
+                            `;
+                            slotDiv.innerHTML = `
+                                ${slot.start_time} - ${slot.end_time}
+                                <button class="delete-slot-btn" data-slot-id="${slot.id}" style="
+                                    position: absolute;
+                                    top: -5px;
+                                    right: -5px;
+                                    background: #ff4444;
+                                    color: white;
+                                    border: none;
+                                    border-radius: 50%;
+                                    width: 20px;
+                                    height: 20px;
+                                    cursor: pointer;
+                                    font-size: 12px;
+                                    border: 1px solid #ff6666;
+                                ">×</button>
+                            `;
+
+                            slotsWrapper.appendChild(slotDiv);
+                        });
+                        dayDiv.appendChild(slotsWrapper);
+                        slotsContent.appendChild(dayDiv);
+                    }
+
+                    document.querySelectorAll('.delete-slot-btn').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const slotId = this.getAttribute('data-slot-id');
+                            deleteSlot(slotId);
+                        });
+                    });
+                } 
+                else 
+                {
+                    slotsContent.innerHTML = `<p style="color: #ff6347;">Error: ${data.message}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                slotsContent.innerHTML = '<p style="color: #ff6347;">Failed to load slots. Please try again later.</p>';
+            });
+
+        document.getElementById('slotsModal').style.display = 'block';
+    }
+
+    function deleteSlot(slotId) {
+        fetch(`/delete-slot/${slotId}/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                openSlotModal(); // Refresh the slots
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete the slot.');
+        });
+    }
+
+    document.getElementById('deleteAllSlots').addEventListener('click', function () {
+        document.getElementById('confirmDeleteModal').style.display = 'block';
+    });
+
+    document.getElementById('confirmYes').addEventListener('click', function() {
+        
+        fetch('/delete-all-slots/', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+                // Close both modals on success
+                document.getElementById('confirmDeleteModal').style.display = 'none';
+                openSlotModal();
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+            alert('Failed to delete all slots.');
+        });
+    });
+
+    document.getElementById('confirmNo').addEventListener('click', function () {
+        document.getElementById('confirmDeleteModal').style.display = 'none';
+    });
+
+    // Close the modal
+    document.getElementById('closeSlotsModal').addEventListener('click', function () {
+        document.getElementById('slotsModal').style.display = 'none';
+    });
+
+    function showWarningModal() {
+        const modal = document.getElementById('warningModal');
+        modal.style.display = 'block';
+    }
+
+    function hideWarningModal() {
+        const modal = document.getElementById('warningModal');
+        modal.style.display = 'none';
+}
+
+    function generateSlots() {
+    fetch('/check-slots/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            if (data.slots_exist) {
+                // Show warning modal if slots already exist
+                showWarningModal();
+            } else {
+                // Proceed with generating slots
+                createSlots();
+            }
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to check slots.');
+    });
+}
+
+    function createSlots() {
+    const appointmentDuration = document.getElementById('appointment-duration').value;
+
+    fetch('/generate-slots/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({ appointment_duration: appointmentDuration })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Display the created slots
+            const slotsContainer = document.getElementById('slotsContent'); // Updated to match modal
+            if (!slotsContainer) {
+                console.error('Element with ID "slotsContent" not found.');
+                return;
+            }
+
+            data.created_slots.forEach(slot => {
+                const slotDiv = document.createElement('div');
+                slotDiv.innerText = `${slot.day}: ${slot.start_time} - ${slot.end_time}`;
+                slotsContainer.appendChild(slotDiv);
+            });
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to generate slots.');
+    });
+}
+
+function overwriteSlots() {
+    fetch('/delete-all-slots/', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const appointmentDuration = document.getElementById('appointment-duration').value;
+
+                fetch('/generate-slots/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({ appointment_duration: appointmentDuration })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Display the created slots
+            const slotsContainer = document.getElementById('slotsContent'); // Updated to match modal
+            if (!slotsContainer) {
+                console.error('Element with ID "slotsContent" not found.');
+                return;
+            }
+
+            data.created_slots.forEach(slot => {
+                const slotDiv = document.createElement('div');
+                slotDiv.innerText = `${slot.day}: ${slot.start_time} - ${slot.end_time}`;
+                slotsContainer.appendChild(slotDiv);
+            });
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to generate slots.');
+    });
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete all slots.');
+        }); 
+}
+
+    function addManualSlot() {
+        const day = document.getElementById('manual-slot-day').value;  // Get selected day
+        const startTime = document.getElementById('manual-slot-start').value;
+        const endTime = document.getElementById('manual-slot-end').value;
+
+        // Check if start time is before end time
+        if (new Date(`1970-01-01T${startTime}`) >= new Date(`1970-01-01T${endTime}`)) {
+            alert('Start time must be before end time.');
+                    return;
+                }
+
+        fetch('/add-manual-slot/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({
+                day: day,  // Pass the selected day
+                start_time: startTime,
+                end_time: endTime
+            })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Slot successfully created.');
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to add the slot.');
+        });
+    }
+</script>
+
+{% endblock %}

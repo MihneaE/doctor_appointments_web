@@ -1,0 +1,185 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Settings{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/settings.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Inline style block that applies user’s chosen styles to .settings-container -->
+<style>
+    .settings-container {
+      background-color: {{ setting.background_color }};
+      color: {{ setting.text_color }};
+      font-family: "{{ setting.font_family|default:"Arial" }}";
+      font-size: {{ setting.font_size|default:"16" }}px;
+      font-weight: "{{ setting.font_weight|default:"normal" }}";
+      padding: 20px;
+      border-radius: 6px;
+    }
+</style>
+  
+
+<div class="settings-container" style="background-color: #1c1f2a;">
+
+    <form method="POST" action="{% url 'settings' %}">
+        {% csrf_token %}
+
+  <!-- THEME SECTION -->
+  <div class="section-container">
+        <h2 class="section-title">Theme</h2>
+        <div class="setting-item">
+          <label for="theme-select">Select Theme:</label>
+          <select id="theme-select" name="theme">
+            <option value="light" {% if setting.theme == "light" %}selected{% endif %}>Light</option>
+            <option value="dark" {% if setting.theme == "dark" %}selected{% endif %}>Dark</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <div style="width: 100%;">
+              <label for="background-color-picker">Background Color:</label>
+              <input
+                type="color"
+                id="background-color-picker"
+                name="background_color"
+                value="{{ setting.background_color|default:"#425af5" }}"
+                style="width: 100%;"
+              >
+            </div>
+            <div style="width: 100%;">
+              <label for="text-color-picker">Text Color:</label>
+              <input
+                type="color"
+                id="text-color-picker"
+                name="text_color"
+                value="{{ setting.text_color|default:"#ffffff" }}"
+                style="width: 100%;"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="setting-item">
+          <label>
+            <input
+              type="checkbox"
+              id="custom-theme-checkbox"
+              name="custom_theme"
+              {% if setting.theme == "custom" %}checked{% endif %}
+            >
+            Custom Theme
+          </label>
+        </div>
+      </div>
+  
+  <!-- NOTIFICATION SECTION -->
+  <div class="section-container">
+    <h2 class="section-title">Notifications</h2>
+    
+    <!-- Email Notifications Toggle -->
+    <div class="toggle-container">
+      <span>Email Notifications</span>
+      <label class="switch">
+        <input type="checkbox" id="emailNotifications" name="emailNotifications" {% if setting.email_notifications %}checked{% endif %}>
+        <span class="slider round"></span>
+      </label>
+    </div>
+    
+    <!-- SMS Notifications Toggle -->
+    <div class="toggle-container">
+      <span>SMS Notifications</span>
+      <label class="switch">
+        <input type="checkbox" id="smsNotifications" name="smsNotifications" {% if setting.sms_notifications %}checked{% endif %}>
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <!-- In-App Notifications Toggle -->
+    <div class="toggle-container">
+      <span>In-App Notifications</span>
+      <label class="switch">
+        <input type="checkbox" id="inAppNotifications" name="inAppNotifications" {% if setting.site_notifications %}checked{% endif %}>
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <!-- Push Notifications Toggle -->
+    <div class="toggle-container">
+      <span>Push Notifications</span>
+      <label class="switch">
+        <input type="checkbox" id="pushNotifications" name="pushNotifications" {% if setting.push_notifications %}checked{% endif %}>
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  
+  <!-- TEXT STYLE SECTION -->
+  <div class="section-container">
+    <h2 class="section-title">Text Style</h2>
+    <div class="setting-item">
+      <label for="font-family">Font Family:</label>
+      <select id="font-family" name="font_family">
+        <option value="Arial" {% if setting.font_family == "Arial" %}selected{% endif %}>Arial</option>
+        <option value="Helvetica" {% if setting.font_family == "Helvetica" %}selected{% endif %}>Helvetica</option>
+        <option value="Times New Roman" {% if setting.font_family == "Times New Roman" %}selected{% endif %}>Times New Roman</option>
+        <option value="Verdana" {% if setting.font_family == "Verdana" %}selected{% endif %}>Verdana</option>
+      </select>
+    </div>
+    <div class="setting-item">
+      <label for="font-size">Font Size (px):</label>
+      <input
+        type="number"
+        id="font-size"
+        name="font_size"
+        min="10"
+        max="20"
+        value="{{ setting.font_size|default:16 }}"
+      >
+    </div>
+    <div class="setting-item">
+      <label for="font-weight">Font Weight:</label>
+      <select id="font-weight" name="font_weight">
+        <option value="normal" {% if setting.font_weight == "normal" %}selected{% endif %}>Normal</option>
+        <option value="bold" {% if setting.font_weight == "bold" %}selected{% endif %}>Bold</option>
+        <option value="lighter" {% if setting.font_weight == "lighter" %}selected{% endif %}>Lighter</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- SAVE CHANGES BUTTON -->
+  <div class="save-changes-container">
+    <button type="submit" class="save-changes-btn">Save Changes</button>
+  </div>
+</form>
+</div>
+
+<!-- Inline Script to Toggle Editable Fields -->
+<script>
+  const themeSelect = document.getElementById('theme-select');
+  const backgroundColorPicker = document.getElementById('background-color-picker');
+  const textColorPicker = document.getElementById('text-color-picker');
+  const customThemeCheckbox = document.getElementById('custom-theme-checkbox');
+
+  function toggleThemeFields() {
+    if (customThemeCheckbox.checked) {
+      themeSelect.disabled = true;
+      backgroundColorPicker.disabled = false;
+      textColorPicker.disabled = false;
+    } else {
+      themeSelect.disabled = false;
+      backgroundColorPicker.disabled = true;
+      textColorPicker.disabled = true;
+    }
+  }
+
+  customThemeCheckbox.addEventListener('change', toggleThemeFields);
+  // On page load
+  toggleThemeFields();
+</script>
+
+{% include 'appointments/underground.html' %}
+
+{% endblock %}

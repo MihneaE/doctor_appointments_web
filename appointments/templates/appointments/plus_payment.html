@@ -1,0 +1,192 @@
+{% extends 'appointments/base.html' %}
+{% load static %}
+
+{% block title %}Payment - Plus Plan{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/plus_payment.css' %}">
+<link rel="stylesheet" href="{% static 'css/stripe_elements.css' %}">
+<!-- Optional Font Awesome for icons, if you want -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="subscription-page-container" style="position: relative;">
+  <a href="{% url 'subscription' %}" class="undo-button" style="position: absolute; top: 10px; left: 10px;">
+    <img src="{% static 'images/back_image.png' %}" alt="Undo" style="width: 40px; height: 40px; border-radius: 5px;">
+  </a>
+
+  <h2 class="page-title">Complete Your Plus Subscription</h2>
+  
+  <div class="subscription-wrapper">
+    
+    <!-- LEFT: Plan Details (Centered text, extended "about" info) -->
+    <div class="subscription-left" style="text-align: center;">
+      <h3 class="plan-title">PLUS Plan</h3>
+      <p class="plan-price">$4.99/month</p>
+      <p class="plan-savings">Save 60%</p>
+      
+      <ul class="plan-features">
+        <li><strong>Unlimited Clients</strong></li>
+        <li><strong>Unlimited Appointments</strong></li>
+        <li><strong>Priority Chat &amp; Phone Support</strong></li>
+        <li><strong>Advanced Analytics</strong></li>
+      </ul>
+
+      <!-- Additional "about" style text -->
+      <p class="plan-description">
+        Our Plus Plan is designed for doctors and practices aiming for maximum flexibility 
+        and advanced features. With the ability to link up to ten doctors and handle 
+        unlimited appointments, you'll never have to worry about hitting a cap. 
+      </p>
+      <p class="plan-description">
+        Enjoy priority chat and phone support for immediate assistance, and 
+        take advantage of advanced analytics to gain deeper insights into your practice. 
+        This plan is the perfect choice if you want the ultimate subscription package 
+        at an affordable price.
+      </p>
+    </div>
+    
+    <!-- RIGHT: Payment Details Form -->
+    <div class="subscription-right">
+      <h3 class="payment-title">Payment Details</h3>
+      <form method="post" action="/process-payment-plus/" class="payment-form" id="payment-form">
+        <div id="card-element">
+          <!-- Stripe Elements will be inserted here -->
+        </div>
+
+        <div id="card-errors" role="alert"></div>
+        <button type="submit" class="submit-payment-btn" style="background-color: #007bff; margin-top: 5px;">Submit Payment</button>
+
+
+        <div style="text-align: center; margin-top: 10px;">
+
+          <div style="height: 10px;"></div> <!-- Small space -->
+
+          <p style="font-size: 12px; color: gray; margin-top: 0;">
+              Your payment is securely processed using Stripe. We do not store your card details.
+          </p>
+      
+          <div style="height: 10px;"></div> <!-- Small space -->
+      
+          <p style="font-size: 12px; color: gray; margin-top: 0;">
+              Not satisfied? Get a full refund within the first 7 days!
+          </p>
+      
+          <div style="height: 10px;"></div> <!-- Small space -->
+      
+          <p style="font-size: 12px; color: gray; margin-top: 0;">
+              You can cancel or upgrade your plan anytime without extra fees.
+          </p>
+      
+          <div style="height: 10px;"></div> <!-- Small space -->
+    
+          <p style="font-size: 12px; color: gray; margin-top: 0;">
+              Our support team is available 24/7 via chat and email to help you.
+          </p>
+      
+          <div style="height: 10px;"></div> <!-- Small space -->
+      
+          <p style="font-size: 12px; color: gray; margin-top: 0;">
+              All transactions are encrypted and follow PCI compliance standards.
+          </p> 
+
+          <div style="height: 10px;"></div> <!-- Small space -->
+
+          <p style="font-size: 12px; color: gray; margin-top: 0;">
+            Need help? Visit our <a href="#" style="color: blue; text-decoration: none;">Support Center</a> for assistance.
+          </p> 
+      </div>
+      </form>
+    </div>
+
+  </div> <!-- end .subscription-wrapper -->
+</div> <!-- end .subscription-page-container -->
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+  const stripe = Stripe("{{ stripe_publishable_key }}");
+  const elements = stripe.elements();
+  
+  // Customize the card element with white background
+  const style = {
+    base: {
+      color: '#ffffff', // White text
+      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+      fontSmoothing: 'antialiased',
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#aab7c4'
+      },
+      backgroundColor: '#1f1f2f' // Dark background
+    },
+    invalid: {
+      color: '#ff3b30',
+      iconColor: '#ff3b30'
+    }
+  };
+  
+  const card = elements.create("card", {style: style});
+  card.mount("#card-element");
+
+  document.getElementById('payment-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const {error, paymentMethod} = await stripe.createPaymentMethod({
+      type: "card",
+      card: card,
+    });
+
+    if (error)
+    {
+        document.getElementById('card-errors').textContent = error.message;
+        return;
+    }
+
+    fetch("{% url 'process_payment_plus' %}", {
+        method: "POST",
+        headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+        body: JSON.stringify( {payment_method_id: paymentMethod.id}),
+    })
+    .then(response => response.json())
+    .then(async (data) => {
+        if (data.client_secret)
+        {
+            const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(data.client_secret);
+
+            if (confirmError) {
+                    alert("Payment failed: " + confirmError.message);
+                } else if (paymentIntent.status === "succeeded") {
+                    alert("Payment successful!");
+                } else {
+                    alert(`Payment status: ${paymentIntent.status}`);
+                }
+        }
+        else if (data.success)
+        {
+            alert("Payment successful!");
+        }
+        else
+        {
+            alert("Payment failed: " + (data.error || "Unknown error"));
+        }
+    })
+    .catch(error => {
+            console.error("Error processing payment:", error);
+            alert("An error occurred. Please try again.");
+        });
+  });
+
+});
+</script>
+
+
+{% include 'appointments/underground.html' %}
+{% endblock %}

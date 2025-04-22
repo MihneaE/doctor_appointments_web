@@ -1,0 +1,337 @@
+/* ----------------------------------------------
+   Dark-Themed Contact Page
+   ---------------------------------------------- */
+
+/* Overall Page Background (Dark Gradient) */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(120deg, #11171e, #1c1f2a);
+    color: #ffffff; /* default text color */
+}
+
+/* Top Bar with Title */
+.contact-top-bar {
+    width: 100%;
+    background-color: #1f1f2f;  /* Darker background */
+    color: #ffffff;             /* White text */
+    text-align: center;
+    padding: 50px 20px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #efd959;  /* Gold accent at the bottom */
+}
+
+.contact-top-bar h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Main Wrapper: Two Columns */
+.contact-wrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 0 20px;
+}
+
+/* Shared Column Title Style */
+.column-title {
+    text-align: center; 
+    font-size: 24px; 
+    font-weight: bold; 
+    margin-bottom: 25px;
+    color: #efd959; /* Gold accent for headings */
+}
+
+/* =============== LEFT COLUMN (Info) =============== */
+.info-container {
+    flex: 1 1 550px;
+    min-width: 350px;
+    background-color: #1f1f2f;     /* Dark card background */
+    border: 1px solid #efd959;     /* Gold border */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    padding: 30px;
+}
+
+/* Title above squares */
+.info-container .column-title {
+    color: #efd959; /* Gold text for the subheading */
+    margin-bottom: 25px;
+}
+
+/* 2x2 Grid for the Info Cards */
+.info-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    margin-bottom: 20px;
+}
+
+/* Individual Card */
+.info-card {
+    background-color: #2c2c3c;
+    border: 1px solid #efd959;     /* Gold border on all sides */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    /* Remove or comment out border-bottom */
+    /* border-bottom: 1px solid #efd959; */
+}
+
+
+.info-card-icon {
+    font-size: 36px;
+    color: #efd959; /* Gold icon */
+}
+
+.info-card-text h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.info-card-text p {
+    margin: 0;
+    font-size: 16px;
+    color: #cfcfcf;
+    line-height: 1.4;
+}
+
+/* Note Below the Cards */
+.info-note {
+    margin-top: 20px;
+    text-align: center;
+    color: #cfcfcf;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* =============== RIGHT COLUMN (Form) =============== */
+.form-column {
+    flex: 1 1 550px;
+    min-width: 350px;
+    background-color: #1f1f2f;     /* Dark card background */
+    border: 1px solid #efd959;     /* Gold border */
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    padding: 30px;
+}
+
+/* Form Title */
+.form-column .column-title {
+    color: #efd959; /* Gold accent for form heading */
+    margin-bottom: 25px;
+}
+
+/* Contact Form Layout */
+.contact-form {
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #ffffff;
+}
+
+.form-group input,
+.form-group textarea {
+    background-color: #2c2c3c; 
+    color: #ffffff; 
+    border: 1px solid #3e3b4e; 
+    font-size: 15px;
+    border-radius: 4px; 
+    padding: 12px; 
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #999999;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #5865F2; /* Purple highlight, or #efd959 if you prefer gold */
+}
+
+/* Captcha Section */
+.captcha-group label {
+    color: #ffffff;
+}
+
+.captcha-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#captcha {
+    flex: 1;
+    min-width: 200px;
+    height: 50px;
+    font-size: 1rem;
+    background-color: #2c2c3c;
+    color: #ffffff;
+    border: 1px solid #3e3b4e;
+    border-radius: 4px;
+}
+
+#captchaImage {
+    width: 240px;
+    height: 50px;
+    object-fit: cover;
+    border: 1px solid #3e3b4e; 
+    border-radius: 5px; 
+}
+
+.captcha-refresh {
+    background-color: #2c2c3c; 
+    border: 1px solid #3e3b4e;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.captcha-refresh img {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+}
+
+.captcha-note {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #cfcfcf;
+}
+
+/* Submit Button */
+.submit-button {
+    background-color: #5865F2;  /* Purple or #efd959 if you want gold */
+    color: #ffffff;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    align-self: flex-start;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 548px;
+}
+
+.submit-button:hover {
+    background-color: #4752C4;
+    transform: translateY(-2px);
+}
+
+/* Success Message */
+.success-message {
+    background-color: #0f2025; /* Dark success background */
+    color: #40d48c;           /* Greenish text */
+    border: 1px solid #40d48c;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+    .info-cards {
+        grid-template-columns: 1fr; /* stack the squares */
+    }
+}
+
+@media (max-width: 480px) {
+    .info-card-icon {
+        font-size: 30px;
+    }
+    .info-card-text h3 {
+        font-size: 16px;
+    }
+    .info-card-text p {
+        font-size: 14px;
+    }
+}
+
+/* If you have custom widths for #firstName, #lastName, #email, #mobile, etc., 
+   just override them below in the same dark theme. 
+   For instance: */
+#firstName, #lastName, #mobile, #email {
+    background-color: #2c2c3c;
+    color: #ffffff;
+    border: 1px solid #3e3b4e;
+}
+
+/* Country dropdown example */
+.mobile-input select {
+    background-color: #2c2c3c;
+    color: #ffffff;
+    border: 1px solid #3e3b4e;
+}
+
+#prefix {
+    width: 260px;
+    height: 50px;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    margin-right: 8px;
+    color: #ffffff; /* Use white text */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+  #mobile {
+    width: 260px;          /* Match the same width as #prefix */
+    height: 50px;          /* Match the dropdown height if desired */
+    padding: 0 10px;       /* Similar internal padding */
+    font-size: 1rem;
+  }
+
+ 
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+# requirements.txt
+
+# Django – core framework (4.2 is a current LTS release).
+Django==4.2
+
+# Django REST framework – if you plan to build RESTful APIs.
+djangorestframework==3.14.0
+
+# Database connectors (pick the one you use):
+
+# PostgreSQL connector:
+psycopg2==2.9.6
+
+# MySQL connector:
+mysqlclient==2.1.1
+
+# Pillow – often needed for image processing (ImageField, etc.).
+Pillow==9.5.0
+
+# Celery – for background tasks/distributed processing, if used.
+# celery==5.2.7
+
+# Requests – helpful for making HTTP calls if your app needs them.
+# requests==2.31.0
+

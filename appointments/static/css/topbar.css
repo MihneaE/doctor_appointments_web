@@ -1,0 +1,106 @@
+/* -------------------------------
+   Dark-Themed Topbar
+-------------------------------- */
+
+/* Topbar Container */
+.topbar {
+    background: linear-gradient(120deg, #11171e, #1c1f2a); /* Subtle dark gradient */
+    border-bottom: 1px solid #efd959; /* Gold border at the bottom */
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between; /* Space between logo and buttons */
+    align-items: center;
+    padding: 10px 60px; /* Adjust left/right padding as needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+/* Logo Styling */
+.topbar .logo img {
+    height: 60px; 
+    width: auto;  /* Maintain aspect ratio */
+}
+
+/* Navigation Buttons Container */
+.topbar .nav-buttons {
+    display: flex;
+    gap: 20px; /* Spacing between nav links */
+}
+
+/* Navigation Buttons */
+.topbar .nav-buttons a {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover/Active Effects for Nav Buttons */
+.topbar .nav-buttons a:hover {
+    background-color: #2c2c3c; /* Slightly lighter dark for hover */
+    color: #efd959;           /* Gold text on hover */
+    transform: scale(1.05);
+}
+
+/* Profile/Language Icons (circular) */
+.topbar .profile-logo,
+.topbar .change-language {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff; 
+    transition: transform 0.3s ease;
+}
+
+.topbar .profile-logo:hover,
+.topbar .change-language:hover {
+    transform: scale(1.1);
+}
+
+/* -------------------------------
+   Dark Theming for Bootstrap Dropdowns
+-------------------------------- */
+
+/* Dropdown Menu (Profile, Language, etc.) */
+.dropdown-menu {
+    background-color: #1f1f2f;       /* Dark background */
+    border: 1px solid #efd959;       /* Gold border */
+    color: #ffffff;                  /* White text */
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    font-size: 0.95rem;
+}
+
+/* Dropdown Menu Items */
+.dropdown-menu .dropdown-item {
+    color: #ffffff;                  /* White text by default */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-weight: bold; 
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #2c2c3c;       /* Slightly lighter dark */
+    color: #efd959;                  /* Gold text on hover */
+}
+
+/* Dropdown Divider */
+.dropdown-menu .dropdown-divider {
+    border-color: #444;             /* Grey divider color */
+}
+
+/* Ensure main content is not hidden behind the fixed topbar */
+.content {
+    margin-top: 80px; /* Adjust so content sits below the topbar */
+}
+
+
+
+

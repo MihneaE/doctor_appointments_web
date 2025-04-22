@@ -1,0 +1,221 @@
+/* ================================
+   DARK THEME GLOBAL STYLES
+================================ */
+body {
+    background-color: #1c1f2a; /* Dark background */
+    color: #cfcfcf;            /* Light text for contrast */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Flex Layout */
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px;
+}
+
+/* Left & Right Sections */
+.left-section, .right-section {
+    padding: 20px;
+}
+
+/* Make left side bigger, right side narrower */
+.left-section {
+    flex: 3;
+}
+
+/* Right sidebar/card with a slightly lighter dark tone */
+.right-section {
+    flex: 1;
+    background: #2c2c3c; /* Dark grey background */
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    margin-left: 20px;
+}
+
+/* ================================
+   SEARCH AND FILTER SECTION
+================================ */
+.search-filter {
+    text-align: center;
+    margin-bottom: 20px;
+    background: #2c2c3c; /* Dark background for the filter area */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Layout for Search & Filter rows */
+.search-section,
+.filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Search Input & Button */
+.search-section input {
+    flex: 1;
+    max-width: 780px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #444;  /* darker border */
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #1f1f2f; 
+    color: #fff;
+}
+.search-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #007bff; /* Keep blue accent */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.search-section button:hover {
+    background: #0056b3;
+    transform: scale(1.03);
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Labels and Selects */
+.filter-section label {
+    font-size: 14px;
+    margin-right: 5px;
+    font-weight: bold;
+    color: #cfcfcf; /* Light text */
+}
+.filter-section select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #1f1f2f;
+    color: #fff;
+}
+
+/* Filter Button (Green) */
+.filter-section button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background: #28a745; /* Keep green accent */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.filter-section button:hover {
+    background: #218838;
+    transform: scale(1.03);
+}
+
+/* ================================
+   DOCTOR & MEDICATION CARDS
+================================ */
+.doctor-card,
+.med-card {
+    background: #2c2c3c; /* Dark card background */
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.doctor-card h3,
+.med-card h3 {
+    margin: 0;
+    color: #efd959; /* Optional gold accent for headings */
+}
+.doctor-card p,
+.med-card p {
+    margin: 5px 0;
+    color: #cfcfcf; /* Light text */
+}
+
+/* Book Button (Green) */
+.book-button {
+    padding: 10px 15px;
+    background: #28a745; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s, transform 0.2s;
+}
+.book-button:hover {
+    background: #218838;
+    transform: scale(1.03);
+}
+
+/* ================================
+   CLINIC CARD
+================================ */
+.clinic-card {
+    background: #2c2c3c; 
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.clinic-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #efd959; /* Gold accent */
+}
+.clinic-card p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #cfcfcf;
+}
+
+/* ================================
+   MODAL STYLES
+================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.modal-content {
+    background: #1f1f2f;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    color: #cfcfcf;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+}
+.modal-close {
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+  
+
