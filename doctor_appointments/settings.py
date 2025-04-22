@@ -113,7 +113,7 @@ DATABASES = {
         'NAME': 'study_user',
         'USER': 'mihnea.encean',
         'PASSWORD': 'zm.mnx.csro',
-        'HOST': '13.60.249.153',  # Use the appropriate host
+        'HOST': '127.0.0.1',  # Use the appropriate host
         'PORT': '3306',       # Default MySQL port
     }
 }
