@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '13.60.249.153',
+    '16.170.255.201',
 ]
 
 LOGIN_REDIRECT_URL = 'home'
